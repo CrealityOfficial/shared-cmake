@@ -1,11 +1,12 @@
-set(BIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../bin")
-set(LIB_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../lib")
-set(LIB_DEBUG_PATH "${LIB_OUTPUT_DIR}/Debug/")
-set(LIB_RELEASE_PATH "${LIB_OUTPUT_DIR}/Release/")
-set(GLOBAL_ALL_TARGETS)
+set(BIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../../bin")
+set(LIB_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../../lib")
 
-macro(ConfigureTarget TARGET_NAME)
-set_target_properties(${TARGET_NAME} PROPERTIES
+
+#config targets, separate src, lib, bin
+set(global_all_targets)
+
+macro(configure_target target)
+set_target_properties(${target} PROPERTIES
 					LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
 					ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
@@ -15,17 +16,28 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 					)
 endmacro()
 
-macro(TopAddTarget TARGET_NAME)
-list(APPEND GLOBAL_ALL_TARGETS ${TARGET_NAME})
+macro(add_top_target target)
+list(APPEND global_all_targets ${target})
+list(REMOVE_DUPLICATES global_all_targets)
 endmacro()
 
-macro(AddTarget TARGET_NAME)
-list(APPEND GLOBAL_ALL_TARGETS ${TARGET_NAME})
-set(GLOBAL_ALL_TARGETS ${GLOBAL_ALL_TARGETS} CACHE STRING INTERNAL FORCE)
+macro(add_target target)
+list(APPEND global_all_targets ${target})
+list(REMOVE_DUPLICATES global_all_targets)
+set(global_all_targets ${global_all_targets} CACHE STRING INTERNAL FORCE)
 endmacro()
 
-macro(ConfigureAll)
-foreach(target ${GLOBAL_ALL_TARGETS})
-ConfigureTarget(${target})
+macro(configure_all)
+foreach(target ${global_all_targets})
+configure_target(${target})
 endforeach()
+endmacro()
+
+#internal target macro
+macro(__add_executable target)
+message(STATUS ${ARGV0})
+message(STATUS ${ARGV1})
+message(STATUS ${ARGV2})
+message(STATUS ${ARGN})
+message(STATUS ${ARGC})
 endmacro()
