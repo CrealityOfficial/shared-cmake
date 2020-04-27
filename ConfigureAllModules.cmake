@@ -1,0 +1,3 @@
+include(ConfigureTarget)
+
+include(ConfigureQt)
