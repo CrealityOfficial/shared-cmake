@@ -1,5 +1,5 @@
 macro(__files_group dir src)   #support 2 level
-	file(GLOB _src *.h *.cpp)
+	file(GLOB _src ${dir}/*.h ${dir}/*.cpp)
 	file(GLOB children RELATIVE ${dir} ${dir}/*)
 	foreach(child ${children})
 		set(sub_dir ${dir}/${child})
@@ -10,4 +10,14 @@ macro(__files_group dir src)   #support 2 level
 		endif()
 	endforeach()
 	set(${src} ${_src})
+endmacro()
+
+macro(__recursive_add_subdirectory dir)
+	file(GLOB children RELATIVE ${dir} ${dir}/*)
+	foreach(child ${children})
+		set(sub_dir ${dir}/${child})
+		if(IS_DIRECTORY ${sub_dir} AND EXISTS ${sub_dir}/CMakeLists.txt)
+			add_subdirectory(${sub_dir})
+		endif()
+	endforeach()
 endmacro()
