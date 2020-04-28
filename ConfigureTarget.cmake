@@ -1,5 +1,7 @@
 set(BIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../../bin")
 set(LIB_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../../lib")
+set(LIB_DEBUG_PATH ${LIB_OUTPUT_DIR}/Debug/)
+set(LIB_RELEASE_PATH ${LIB_OUTPUT_DIR}/Release/)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -80,4 +82,5 @@ else(target_description_SOURCE)
 message(FATAL_ERROR "add target ${target} without sources")
 endif()
 endfunction()
+
 

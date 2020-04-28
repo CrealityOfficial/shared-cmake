@@ -12,7 +12,7 @@ macro(__files_group dir src)   #support 2 level
 	set(${src} ${_src})
 endmacro()
 
-macro(__recursive_add_subdirectory dir)
+function(__recursive_add_subdirectory dir)
 	file(GLOB children RELATIVE ${dir} ${dir}/*)
 	foreach(child ${children})
 		set(sub_dir ${dir}/${child})
@@ -20,4 +20,8 @@ macro(__recursive_add_subdirectory dir)
 			add_subdirectory(${sub_dir})
 		endif()
 	endforeach()
+endfunction()
+
+macro(__get_file_name path name)
+	STRING(REGEX REPLACE ".+/(.+)\\..*" "\\1" ${name} ${path})
 endmacro()
