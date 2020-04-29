@@ -25,3 +25,7 @@ endfunction()
 macro(__get_file_name path name)
 	STRING(REGEX REPLACE ".+/(.+)\\..*" "\\1" ${name} ${path})
 endmacro()
+
+macro(__add_all_directory)
+	__recursive_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR})
+endmacro()

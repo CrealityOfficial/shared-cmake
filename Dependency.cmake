@@ -5,8 +5,9 @@
 
 
 set(qtuser_inc "/qtuser/3d/" "/qtuser/core/" "/qtuser/qml/")
-set(qtuser_lib debug qtuser_qml.lib optimized qtuser_qml.lib)
-
+set(qtuser_lib debug qtuser_qml.lib qtuser_3d.lib qtuser_core.lib optimized qtuser_qml.lib qtuser_3d.lib qtuser_core.lib)
+set(trimesh2_inc "/trimesh2/include/")
+set(trimesh2_lib debug trimesh2.lib optimized trimesh2.lib)
 
 function(__add_target_dependency target)
 	cmake_parse_arguments(target_dependency "" "" "DEP" ${ARGN})
