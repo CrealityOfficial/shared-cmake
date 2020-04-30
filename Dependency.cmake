@@ -2,8 +2,10 @@
 
 
 
-
-
+set(freeglut_inc "/freeglut/include/")
+set(freeglut_lib debug freeglutd.lib optimized freeglut.lib)
+set(glew_inc "/glew/include/")
+set(glew_lib debug glew.lib optimized glew.lib)
 set(qtuser_inc "/qtuser/3d/" "/qtuser/core/" "/qtuser/qml/")
 set(qtuser_lib debug qtuser_qml.lib qtuser_3d.lib qtuser_core.lib optimized qtuser_qml.lib qtuser_3d.lib qtuser_core.lib)
 set(trimesh2_inc "/trimesh2/include/")
