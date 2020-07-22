@@ -1,0 +1,12 @@
+macro(__set_target_folder target folder)
+	set_target_properties(${target} PROPERTIES FOLDER ${folder})
+endmacro()
+
+macro(__set_folder_targets folder)
+	cmake_parse_arguments(folder "" "" "TARGET" ${ARGN})
+	if(folder_TARGET)
+		foreach(target ${folder_TARGET})
+			set_target_properties(${target} PROPERTIES FOLDER ${folder})	
+		endforeach()
+	endif()
+endmacro()
