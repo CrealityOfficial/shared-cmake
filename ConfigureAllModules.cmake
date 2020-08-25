@@ -5,3 +5,5 @@ include(ConfigureQt)
 include(FileUtil)
 
 include(ConfigureProperty)
+
+include(Include)

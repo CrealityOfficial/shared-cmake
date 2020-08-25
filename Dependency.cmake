@@ -12,6 +12,8 @@ set(trimesh2_inc "/trimesh2/include/")
 set(trimesh2_lib debug trimesh2.lib optimized trimesh2.lib)
 set(zlib_inc "/zlib/zlib/")
 set(zlib_lib debug zlibd.lib optimized zlib.lib)
+set(mpir_inc "/mpir/")
+set(mpir_lib debug mpir.lib optimized mpir.lib)
 
 function(__add_target_dependency target)
 	cmake_parse_arguments(target_dependency "" "" "DEP" ${ARGN})
