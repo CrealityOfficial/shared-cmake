@@ -12,6 +12,20 @@ macro(__files_group dir src)   #support 2 level
 	set(${src} ${_src})
 endmacro()
 
+macro(__files_group_c dir src)   #support 2 level
+	file(GLOB _src ${dir}/*.c)
+	file(GLOB children RELATIVE ${dir} ${dir}/*)
+	foreach(child ${children})
+		set(sub_dir ${dir}/${child})
+		if(IS_DIRECTORY ${sub_dir})
+			file(GLOB sub_src ${sub_dir}/*.c)
+			source_group(${child} FILES ${sub_src})
+			set(_src ${_src} ${sub_src})
+		endif()
+	endforeach()
+	set(${src} ${_src})
+endmacro()
+
 function(__recursive_add_subdirectory dir)
 	file(GLOB children RELATIVE ${dir} ${dir}/*)
 	foreach(child ${children})
