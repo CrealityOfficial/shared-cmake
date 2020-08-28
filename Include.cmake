@@ -8,3 +8,8 @@ set(QTUSER_INCS ${CMAKE_SOURCE_DIR}/../qtuser/core/
 				${CMAKE_SOURCE_DIR}/../qtuser/qml/)
 				
 set(SLICE_INCLUDE ${CMAKE_SOURCE_DIR}/../slice/)
+
+set(GOOGLE_TEST_INCLUDE ${CMAKE_SOURCE_DIR}/../google-test/google-test/googletest/include/
+						${CMAKE_SOURCE_DIR}/../google-test/google-test/googlemock/include/)
+						
+set(CURA_INCLUDE ${CMAKE_SOURCE_DIR}/../cura/engine/)
