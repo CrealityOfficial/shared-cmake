@@ -1,5 +1,5 @@
-set(BIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../../bin")
-set(LIB_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../../lib")
+set(BIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../bin")
+set(LIB_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../lib")
 set(LIB_DEBUG_PATH ${LIB_OUTPUT_DIR}/Debug/)
 set(LIB_RELEASE_PATH ${LIB_OUTPUT_DIR}/Release/)
 
