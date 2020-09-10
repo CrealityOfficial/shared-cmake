@@ -1,19 +1,49 @@
-if (NOT qtuser_FIND_COMPONENTS)
-    set(qtuser_NOT_FOUND_MESSAGE "The qtuser package requires at least one component")
-    set(qtuser_FOUND False)
-    return()
+# Find qtuser
+#
+# This sets the following variables:
+# qtuser_INCLUDE_DIRS
+# qtuser_LIBRARIES
+# qtuser_FOUND
+# qtuser_targets
+
+find_path(qtuser_INCLUDE_DIR qtusercore/module/job.h
+    HINTS "$ENV{CX_CORELIB_ROOT}/include")
+	
+if(qtuser_INCLUDE_DIR)
+	set(qtuser_INCLUDE_DIRS ${qtuser_INCLUDE_DIR})
 endif()
 
-set(qtuser_INCLUDE_DIRS ${CMAKE_SOURCE_DIR}/../qtuser/)
-set(qtuser_LIB_DIRS ${CMAKE_BINARY_DIR}/../../lib/)
-foreach(module ${qtuser_FIND_COMPONENTS})
-	set(target qtuser::${module})
-    if (NOT TARGET ${target})
-		add_library(${target} SHARED IMPORTED)
-		set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${qtuser_INCLUDE_DIRS}/${module})
-		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_RELEASE ${qtuser_LIB_DIRS}/Release/qtuser_${module}.lib)
-		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${qtuser_LIB_DIRS}/Debug/qtuser_${module}.lib)
-	endif()
-endforeach()
+find_library(qtuser_core_LIBRARIES_DEBUG
+             NAMES qtuser_core
+             HINTS "$ENV{CX_CORELIB_ROOT}/lib/debug")
 
-set(qtuser_FOUND True)
+find_library(qtuser_3d_LIBRARIES_DEBUG
+             NAMES qtuser_3d
+             HINTS "$ENV{CX_CORELIB_ROOT}/lib/debug")
+
+find_library(qtuser_qml_LIBRARIES_DEBUG
+             NAMES qtuser_qml
+             HINTS "$ENV{CX_CORELIB_ROOT}/lib/debug")
+			 
+find_library(qtuser_core_LIBRARIES_RELEASE
+             NAMES qtuser_core
+             HINTS "$ENV{CX_CORELIB_ROOT}/lib/release")
+
+find_library(qtuser_3d_LIBRARIES_RELEASE
+             NAMES qtuser_3d
+             HINTS "$ENV{CX_CORELIB_ROOT}/lib/release")
+
+find_library(qtuser_qml_LIBRARIES_RELEASE
+             NAMES qtuser_qml
+             HINTS "$ENV{CX_CORELIB_ROOT}/lib/release")
+			 
+if(qtuser_INCLUDE_DIRS AND qtuser_core_LIBRARIES_DEBUG AND qtuser_core_LIBRARIES_RELEASE
+	AND qtuser_3d_LIBRARIES_DEBUG AND qtuser_3d_LIBRARIES_RELEASE
+	AND qtuser_qml_LIBRARIES_DEBUG AND qtuser_qml_LIBRARIES_RELEASE)
+	set(qtuser_FOUND "True")
+	__import_target(qtuser)
+	__import_target(qtuser_core)
+	__import_target(qtuser_3d)
+	__import_target(qtuser_qml)
+	set(qtuser_targets qtuser qtuser_core qtuser_3d qtuser_qml)
+endif()
