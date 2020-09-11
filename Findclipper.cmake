@@ -11,20 +11,24 @@ find_path(clipper_INCLUDE_DIR clipper.hpp
     HINTS "$ENV{CX_THIRDPARTY_ROOT}/include"
 	PATHS "/usr/include")
 	
-message("clipper_INCLUDE_DIR  ${clipper_INCLUDE_DIR}")
-
 if(clipper_INCLUDE_DIR)
 	set(clipper_INCLUDE_DIRS ${clipper_INCLUDE_DIR})
 endif()
 
 find_library(clipper_LIBRARIES_DEBUG
              NAMES clipper
-             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug" "/usr/lib/debug")
+             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
+			 PATHS "/usr/lib/debug")
 			 
 find_library(clipper_LIBRARIES_RELEASE
          NAMES clipper
-         HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release" "/usr/lib/release")
+         HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
+		 PATHS "/usr/lib/release")
 			 
+message("clipper_INCLUDE_DIR  ${clipper_INCLUDE_DIR}")
+message("clipper_LIBRARIES_DEBUG  ${clipper_LIBRARIES_DEBUG}")
+message("clipper_LIBRARIES_RELEASE  ${clipper_LIBRARIES_RELEASE}")
+
 if(clipper_INCLUDE_DIRS AND clipper_LIBRARIES_DEBUG AND clipper_LIBRARIES_RELEASE)
 	set(clipper_FOUND "True")
 	__import_target(clipper)
