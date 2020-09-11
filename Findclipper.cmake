@@ -10,6 +10,7 @@
 find_path(clipper_INCLUDE_DIR clipper.hpp
     HINTS "$ENV{CX_THIRDPARTY_ROOT}/include" "/usr/include")
 	
+message("-----------------------------------")
 if(clipper_INCLUDE_DIR)
 	set(clipper_INCLUDE_DIRS ${clipper_INCLUDE_DIR})
 endif()
