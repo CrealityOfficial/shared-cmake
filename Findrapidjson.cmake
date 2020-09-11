@@ -6,7 +6,7 @@
 # rapidjson_FOUND
 
 find_path(rapidjson_INCLUDE_DIR rapidjson/rapidjson.h
-    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include")
+    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include" "/usr/include")
 	
 if(rapidjson_INCLUDE_DIR)
 	set(rapidjson_INCLUDE_DIRS ${rapidjson_INCLUDE_DIR})
