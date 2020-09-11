@@ -8,8 +8,8 @@
 # clipper_FOUND
 
 find_path(clipper_INCLUDE_DIR clipper.hpp
-    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include"
-	PATHS "/usr/include")
+    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/clipper"
+	PATHS "/usr/include/clipper")
 	
 if(clipper_INCLUDE_DIR)
 	set(clipper_INCLUDE_DIRS ${clipper_INCLUDE_DIR})
@@ -17,13 +17,13 @@ endif()
 
 find_library(clipper_LIBRARIES_DEBUG
              NAMES clipper
-             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
-			 PATHS "/usr/lib/debug")
+             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/Debug"
+			 PATHS "/usr/lib/Debug")
 			 
 find_library(clipper_LIBRARIES_RELEASE
          NAMES clipper
-         HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
-		 PATHS "/usr/lib/release")
+         HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/Release"
+		 PATHS "/usr/lib/Release")
 			 
 message("clipper_INCLUDE_DIR  ${clipper_INCLUDE_DIR}")
 message("clipper_LIBRARIES_DEBUG  ${clipper_LIBRARIES_DEBUG}")
