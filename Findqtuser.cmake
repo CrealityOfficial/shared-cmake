@@ -13,6 +13,10 @@ if(qtuser_INCLUDE_DIR)
 	set(qtuser_INCLUDE_DIRS ${qtuser_INCLUDE_DIR})
 endif()
 
+set(qtuser_core_INCLUDE_DIRS ${qtuser_INCLUDE_DIRS})
+set(qtuser_3d_INCLUDE_DIRS ${qtuser_INCLUDE_DIRS})
+set(qtuser_qml_INCLUDE_DIRS ${qtuser_INCLUDE_DIRS})
+
 find_library(qtuser_core_LIBRARIES_DEBUG
              NAMES qtuser_core
              HINTS "$ENV{CX_CORELIB_ROOT}/lib/debug")
@@ -41,9 +45,8 @@ if(qtuser_INCLUDE_DIRS AND qtuser_core_LIBRARIES_DEBUG AND qtuser_core_LIBRARIES
 	AND qtuser_3d_LIBRARIES_DEBUG AND qtuser_3d_LIBRARIES_RELEASE
 	AND qtuser_qml_LIBRARIES_DEBUG AND qtuser_qml_LIBRARIES_RELEASE)
 	set(qtuser_FOUND "True")
-	__import_target(qtuser)
-	__import_target(qtuser_core)
-	__import_target(qtuser_3d)
-	__import_target(qtuser_qml)
-	set(qtuser_targets qtuser qtuser_core qtuser_3d qtuser_qml)
+	__import_target(qtuser_core dll)
+	__import_target(qtuser_3d dll)
+	__import_target(qtuser_qml dll)
+	set(qtuser qtuser_core qtuser_3d qtuser_qml)
 endif()
