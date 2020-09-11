@@ -31,5 +31,5 @@ message("clipper_LIBRARIES_RELEASE  ${clipper_LIBRARIES_RELEASE}")
 
 if(clipper_INCLUDE_DIRS AND clipper_LIBRARIES_DEBUG AND clipper_LIBRARIES_RELEASE)
 	set(clipper_FOUND "True")
-	__import_target(clipper)
+	__import_target(clipper lib)
 endif()

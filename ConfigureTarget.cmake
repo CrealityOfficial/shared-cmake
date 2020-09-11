@@ -129,17 +129,23 @@ function(__add_shared_lib target)
 	endif()
 endfunction()
 
-macro(__import_target target)
-	if (NOT TARGET ${target})
-		add_library(${target} SHARED IMPORTED)
-		set_property(TARGET ${target} PROPERTY
-		  INTERFACE_INCLUDE_DIRECTORIES ${${target}_INCLUDE_DIRS})
+macro(__import_target target type)
+	if (NOT TARGET ${target})		
+		if(${type} STREQUAL "dll")
+			add_library(${target} SHARED IMPORTED)
+		else()
+			add_library(${target} STATIC IMPORTED)
+		endif()
 		
-		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "DEBUG")
-		set_target_properties(${target} PROPERTIES "IMPORTED_IMPLIB_DEBUG" ${${target}_LIBRARIES_DEBUG})
+		set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${${target}_INCLUDE_DIRS})
+		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Debug")
+		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Release")
 		
-		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "RELEASE")
-		set_target_properties(${target} PROPERTIES "IMPORTED_IMPLIB_RELEASE" ${${target}_LIBRARIES_RELEASE})
+		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${${target}_LIBRARIES_DEBUG})
+		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_RELEASE ${${target}_LIBRARIES_RELEASE})
+		
+		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_DEBUG ${${target}_LIBRARIES_DEBUG})
+		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_RELEASE ${${target}_LIBRARIES_RELEASE})
 	endif()
 endmacro()
 
