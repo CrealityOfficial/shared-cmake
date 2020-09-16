@@ -1,20 +1,22 @@
-macro(__enable_qt5)
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_AUTORCC ON)
+SET(CMAKE_PREFIX_PATH $ENV{QT5_DIR})
 
-	find_package(Qt5 COMPONENTS core widgets gui svg quick qml 3dcore 3drender 3dextras 3dinput 3dlogic 3dquick concurrent REQUIRED)
+macro(__enable_qt5)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick Concurrent REQUIRED)
 endmacro()
 
 
 macro(__target_copyqt_plugins target)
-	if(Qt5Core_DIR)
-		set(COPY_SOURCE_DLL_DIR "${Qt5Core_DIR}/../../../plugins/platforms/")
-		add_custom_command(TARGET ${target} POST_BUILD
-					COMMAND ${CMAKE_COMMAND} -E copy_directory
-					${COPY_SOURCE_DLL_DIR}
-					"$<TARGET_FILE_DIR:${target}>/platforms/"
-					)
-	else()
-		message("Qt5Core_DIR not exits.  __enable_qt5 first")
-	endif()
+if(Qt5Core_DIR)
+	set(COPY_SOURCE_DLL_DIR "${Qt5Core_DIR}/../../../plugins/platforms/")
+	add_custom_command(TARGET ${target} POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy_directory
+				${COPY_SOURCE_DLL_DIR}
+				"$<TARGET_FILE_DIR:${target}>/platforms/"
+				)
+else()
+	message("Qt5Core_DIR not exits.  __enable_qt5 first")
+endif()
 endmacro()
