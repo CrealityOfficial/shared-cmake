@@ -8,8 +8,8 @@
 # trimesh2_FOUND
 
 find_path(trimesh2_INCLUDE_DIR trimesh2/TriMesh.h
-    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/trimesh2/include"
-	PATHS "/usr/include/trimesh2/include")
+    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/"
+	PATHS "/usr/include/")
 	
 if(trimesh2_INCLUDE_DIR)
 	set(trimesh2_INCLUDE_DIRS ${trimesh2_INCLUDE_DIR})
