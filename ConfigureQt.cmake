@@ -20,3 +20,4 @@ else()
 	message("Qt5Core_DIR not exits.  __enable_qt5 first")
 endif()
 endmacro()
+
