@@ -81,7 +81,7 @@ function(protobuf_generate)
   set(_generated_srcs_all)
   foreach(_proto ${protobuf_generate_PROTOS})
   
-	#message(STATUS "protobuf generate ................... ${protobuf_generate_PROTOS}")
+	message(STATUS "protobuf generate ................... ${protobuf_generate_PROTOS}")
     get_filename_component(_abs_file ${_proto} ABSOLUTE)
     get_filename_component(_abs_dir ${_abs_file} DIRECTORY)
     get_filename_component(_basename ${_proto} NAME_WE)
@@ -116,7 +116,7 @@ function(protobuf_generate)
       COMMENT "Running ${protobuf_generate_LANGUAGE} protocol buffer compiler on ${_proto}"
       VERBATIM )
 	  
-	#message(STATUS "--${protobuf_generate_LANGUAGE}_out ${_dll_export_decl}${protobuf_generate_PROTOC_OUT_DIR} ${_dll_desc_out} ${_protobuf_include_path} ${_abs_file}")
+	message(STATUS "--${protobuf_generate_LANGUAGE}_out ${_dll_export_decl}${protobuf_generate_PROTOC_OUT_DIR} ${_dll_desc_out} ${_protobuf_include_path} ${_abs_file}")
   endforeach()
 
   set_source_files_properties(${_generated_srcs_all} PROPERTIES GENERATED TRUE)

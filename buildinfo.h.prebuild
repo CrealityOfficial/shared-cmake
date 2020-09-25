@@ -3,4 +3,12 @@
 
 #define SOURCE_ROOT "@CMAKE_SOURCE_DIR@"
 #define BUILD_ROOT "@CMAKE_BINARY_DIR@"
+
+#ifdef _DEBUG
+#define BINARY_ROOT "@BIN_OUTPUT_DIR@/Debug/"
+#define BIN_RESOURCES_DIR "@DEBUG_RESOURCES_DIR@"
+#else
+#define BINARY_ROOT "@BIN_OUTPUT_DIR@/Release/"
+#define BIN_RESOURCES_DIR "@RELEASE_RESOURCES_DIR@"
+#endif
 #endif // BUILD_INFO_H
