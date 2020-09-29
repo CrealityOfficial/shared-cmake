@@ -21,3 +21,6 @@ else()
 endif()
 endmacro()
 
+set(QtQmlQ3dLibs Qt5::Widgets Qt5::Quick Qt5::Qml Qt5::3DExtras)
+set(QtQmlLibs Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml)
+

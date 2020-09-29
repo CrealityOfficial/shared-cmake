@@ -12,6 +12,20 @@ macro(__files_group dir src)   #support 2 level
 	set(${src} ${_src})
 endmacro()
 
+macro(__files_group_2 dir folder src)   #support 2 level
+	file(GLOB _src ${dir}/*.h ${dir}/*.cpp)
+	file(GLOB children RELATIVE ${dir} ${dir}/*)
+	foreach(child ${children})
+		set(sub_dir ${dir}/${child})
+		if(IS_DIRECTORY ${sub_dir})
+			file(GLOB sub_src ${sub_dir}/*.h ${sub_dir}/*.cpp)
+			source_group(${folder}/${child} FILES ${sub_src})
+			set(_src ${_src} ${sub_src})
+		endif()
+	endforeach()
+	set(${src} ${_src})
+endmacro()
+
 macro(__files_group_c dir src)   #support 2 level
 	file(GLOB _src ${dir}/*.c)
 	file(GLOB children RELATIVE ${dir} ${dir}/*)
@@ -47,6 +61,19 @@ endmacro()
 macro(__build_info_header)
 	string(TIMESTAMP BUILD_TIME "%y_%m_%d_%H_%M")
 	set(BUILD_INFO_HEAD "${PROJECT_NAME}_${BUILD_TIME}")
+	set(DEBUG_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Debug/resources/")
+	set(RELEASE_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Release/resources/")
 	configure_file(${CMAKE_SOURCE_DIR}/cmake/buildinfo.h.prebuild
                ${CMAKE_BINARY_DIR}/buildinfo.h)
+endmacro()
+
+function(__scope_add tlist item)
+	list(APPEND ${tlist} ${item})
+	list(REMOVE_DUPLICATES ${tlist})
+	#set(${tlist} ${${tlist}} CACHE STRING INTERNAL FORCE)
+endfunction()
+
+macro(__duplicates_add tlist item)
+	list(APPEND ${tlist} ${item})
+	list(REMOVE_DUPLICATES ${tlist})
 endmacro()
