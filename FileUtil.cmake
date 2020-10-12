@@ -47,6 +47,8 @@ endmacro()
 macro(__build_info_header)
 	string(TIMESTAMP BUILD_TIME "%y_%m_%d_%H_%M")
 	set(BUILD_INFO_HEAD "${PROJECT_NAME}_${BUILD_TIME}")
+	set(DEBUG_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Debug/resources/")
+	set(RELEASE_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Release/resources/")
 	configure_file(${CMAKE_SOURCE_DIR}/cmake/buildinfo.h.prebuild
                ${CMAKE_BINARY_DIR}/buildinfo.h)
 endmacro()
