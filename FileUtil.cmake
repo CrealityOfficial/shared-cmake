@@ -1,3 +1,9 @@
+macro(__source_recurse dir src)
+	file(GLOB_RECURSE _tmp_list ${dir}/*.h ${dir}/*.hpp ${dir}/*.cpp ${dir}/*.c ${dir}/*.inl)
+	set(${src} ${_tmp_list})
+	#message("${${src}}")
+endmacro()
+
 macro(__files_group dir src)   #support 2 level
 	file(GLOB _src ${dir}/*.h ${dir}/*.cpp)
 	file(GLOB children RELATIVE ${dir} ${dir}/*)
