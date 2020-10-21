@@ -32,6 +32,7 @@ if(WIN32 AND NOT WINDEPLOYQT_EXECUTABLE)
     message(FATAL_ERROR "windeployqt not found")
 endif()
 
+message(STATUS "deploy ${WINDEPLOYQT_EXECUTABLE}")
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 if(APPLE AND NOT MACDEPLOYQT_EXECUTABLE)
     message(FATAL_ERROR "macdeployqt not found")
