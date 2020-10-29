@@ -7,3 +7,5 @@ include(FileUtil)
 include(ConfigureProperty)
 
 include(FindUtil)
+
+include(Boost)

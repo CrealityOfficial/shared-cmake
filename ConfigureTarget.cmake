@@ -130,6 +130,7 @@ function(__add_shared_lib target)
 endfunction()
 
 macro(__import_target target type)
+	message("${target}...........")
 	if (NOT TARGET ${target})		
 		if(${type} STREQUAL "dll")
 			add_library(${target} SHARED IMPORTED)
