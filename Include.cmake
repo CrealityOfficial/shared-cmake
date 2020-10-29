@@ -1,5 +1,3 @@
-
-set(CLIPPER_INCLUDE ${CMAKE_SOURCE_DIR}/../clipper/clipper/)
 set(HEAD_ONLY_INCLUDE ${CMAKE_SOURCE_DIR}/headonly/)
 
 set(QTUSER_LIBS qtuser_core qtuser_3d qtuser_qml)
