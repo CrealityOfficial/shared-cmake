@@ -1,5 +1,5 @@
 function(protobuf_generate)
-	set(_options APPEND_PATH DESCRIPTORS)
+	set(_options APPEND_PATH DESCRIPTORS GRPC)
 	set(_singleargs LANGUAGE OUT_VAR EXPORT_MACRO PROTOC_OUT_DIR)
 	if(COMMAND target_sources)
 		list(APPEND _singleargs TARGET)
@@ -86,6 +86,21 @@ function(protobuf_generate)
 		endif()
 	endif()
 	
+	if(GRPC_PLUGIN_EXE)
+		set(grpc_exe ${GRPC_PLUGIN_EXE})
+	else()
+		if(WIN32)
+			set(grpc_exe "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/grpc_cpp_plugin.exe")
+		else()
+			set(grpc_exe "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/grpc_cpp_plugin")
+		endif()
+	endif()
+	
+	if(protobuf_generate_GRPC)
+		set(protobuf_generate_GENERATE_EXTENSIONS ${protobuf_generate_GENERATE_EXTENSIONS} .grpc.pb.h .grpc.pb.cc)
+		set(grpc_out --grpc_out=${_dll_export_decl}${protobuf_generate_PROTOC_OUT_DIR} --plugin=protoc-gen-grpc=${grpc_exe})
+	endif()
+	
 	foreach(_proto ${protobuf_generate_PROTOS})	
 		get_filename_component(_abs_file ${_proto} ABSOLUTE)
 		get_filename_component(_abs_dir ${_abs_file} DIRECTORY)
@@ -117,7 +132,7 @@ function(protobuf_generate)
 		list(APPEND _generated_srcs_all ${_generated_srcs})
 		
 		set(language_out --${protobuf_generate_LANGUAGE}_out ${_dll_export_decl}${protobuf_generate_PROTOC_OUT_DIR})
-		set(proto_args  ${language_out} ${_dll_desc_out} ${_protobuf_include_path} ${_abs_file})
+		set(proto_args  ${language_out} ${grpc_out} ${_dll_desc_out} ${_protobuf_include_path} ${_abs_file})
 		
 		add_custom_command(
 			OUTPUT ${_generated_srcs}
@@ -140,7 +155,7 @@ function(protobuf_generate)
 endfunction()
 
 function(protobuf_generate_cpp SRCS HDRS)
-	cmake_parse_arguments(generate_cpp "" "EXPORT_MACRO;DESCRIPTORS" "" ${ARGN})
+	cmake_parse_arguments(generate_cpp "" "EXPORT_MACRO;DESCRIPTORS;GRPC" "" ${ARGN})
 	
 	set(_proto_files "${generate_cpp_UNPARSED_ARGUMENTS}")
 
@@ -155,6 +170,10 @@ function(protobuf_generate_cpp SRCS HDRS)
 	
 	if(generate_cpp_DESCRIPTORS)
 		set(_descriptors DESCRIPTORS)
+	endif()
+	
+	if(generate_cpp_GRPC)
+		set(_append_arg ${_append_arg} GRPC)
 	endif()
 	
 	if(DEFINED PROTOBUF_IMPORT_DIRS AND NOT DEFINED Protobuf_IMPORT_DIRS)
