@@ -31,3 +31,7 @@ macro(__cgal_include_common_packages)
 	__cgal_include_package(BGL)
 	__cgal_include_package(Property_map)
 endmacro()
+
+macro(__cgal_include_source)
+	set(CGAL_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/cgal/include/)
+endmacro()
