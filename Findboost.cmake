@@ -9,7 +9,8 @@
 
 find_path(boost_INCLUDE_DIR boost/functional.hpp
     HINTS "$ENV{CX_BOOST_ROOT}/boost/"
-	PATHS "/usr/boost/")
+		  "$ENV{CX_THIRDPARTY_ROOT}/include/"
+	PATHS "/usr/boost/" "/usr/include/")
 	
 if(boost_INCLUDE_DIR)
 	set(boost_INCLUDE_DIRS ${boost_INCLUDE_DIR})
