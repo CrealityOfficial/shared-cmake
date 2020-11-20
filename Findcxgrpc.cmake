@@ -9,7 +9,7 @@
 
 find_path(grpc_INCLUDE_DIR grpc/grpc.h
     HINTS "$ENV{CX_GRPC_ROOT}/include/"
-	PATHS "/usr/include/")
+	PATHS "/usr/include/" "/include/")
 	
 if(grpc_INCLUDE_DIR)
 	set(grpc_INCLUDE_DIRS ${grpc_INCLUDE_DIR})
@@ -20,15 +20,15 @@ endif()
 find_library(grpc_LIBRARIES_DEBUG
              NAMES grpc
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Debug"
-			 PATHS "/usr/lib/Debug")
+			 PATHS "/usr/lib/Debug" "/lib/" )
 find_library(grpc++_LIBRARIES_DEBUG
              NAMES grpc++
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Debug"
-			 PATHS "/usr/lib/Debug")			 
+			 PATHS "/usr/lib/Debug" "/lib/")			 
 find_library(gpr_LIBRARIES_DEBUG
              NAMES gpr
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Debug"
-			 PATHS "/usr/lib/Debug")
+			 PATHS "/usr/lib/Debug" "/lib/" )
 
 #find_library(protobuf_LIBRARIES_DEBUG
 #             NAMES libprotobuf
@@ -44,15 +44,15 @@ find_library(gpr_LIBRARIES_DEBUG
 find_library(grpc_LIBRARIES_RELEASE
              NAMES grpc
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Release"
-			 PATHS "/usr/lib/Release")
+			 PATHS "/usr/lib/Release" "/lib/")
 find_library(grpc++_LIBRARIES_RELEASE
              NAMES grpc++
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Release"
-			 PATHS "/usr/lib/Release")			 
+			 PATHS "/usr/lib/Release" "/lib/")			 
 find_library(gpr_LIBRARIES_RELEASE
              NAMES gpr
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Release"
-			 PATHS "/usr/lib/Release")
+			 PATHS "/usr/lib/Release" "/lib")
 #find_library(protobuf_LIBRARIES_RELEASE
 #             NAMES libprotobuf
 #             HINTS "$ENV{CX_GRPC_ROOT}/lib/Release"

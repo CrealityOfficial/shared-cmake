@@ -7,9 +7,9 @@
 # grpc_LIBRARIE_DIRS
 # grpc_FOUND
 
-find_path(protobuf_INCLUDE_DIR protobuf/google/protobuf/any.h
+find_path(protobuf_INCLUDE_DIR google/protobuf/any.h
     HINTS "$ENV{CX_GRPC_ROOT}/include/"
-	PATHS "/usr/include/")
+	PATHS "/usr/include/" "/include/")
 	
 if(protobuf_INCLUDE_DIR)
 	set(protobuf_INCLUDE_DIRS ${protobuf_INCLUDE_DIR})
@@ -17,25 +17,25 @@ endif()
 	set(protoc_INCLUDE_DIRS ${protobuf_INCLUDE_DIRS})
 
 find_library(libprotobuf_LIBRARIES_DEBUG
-             NAMES libprotobuf
+             NAMES libprotobuf protobuf
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Debug"
-			 PATHS "/usr/lib/Debug")
+			 PATHS "/usr/lib/Debug" "/include/")
 find_library(libprotoc_LIBRARIES_DEBUG
-             NAMES libprotoc
+             NAMES libprotoc protoc
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Debug"
-			 PATHS "/usr/lib/Debug")			 
+			 PATHS "/usr/lib/Debug" "/include/")			 
 
 
 
 
 find_library(libprotobuf_LIBRARIES_RELEASE
-             NAMES libprotobuf
+             NAMES libprotobuf protobuf
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Release"
-			 PATHS "/usr/lib/Release")
+			 PATHS "/usr/lib/Release" "/include/")
 find_library(libprotoc_LIBRARIES_RELEASE
-             NAMES libprotoc
+             NAMES libprotoc protoc
              HINTS "$ENV{CX_GRPC_ROOT}/lib/Release"
-			 PATHS "/usr/lib/Release")			 
+			 PATHS "/usr/lib/Release" "/include/")			 
 		 
 			 
 message("protobuf_INCLUDE_DIR  ${protobuf_INCLUDE_DIR}")
