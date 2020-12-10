@@ -7,9 +7,9 @@
 # clipper_LIBRARIE_DIRS
 # clipper_FOUND
 
-find_path(clipper_INCLUDE_DIR clipper.hpp
-    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/clipper"
-	PATHS "/usr/include/clipper")
+find_path(clipper_INCLUDE_DIR clipper/clipper.hpp
+    HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/"
+	PATHS "/usr/include/")
 	
 if(clipper_INCLUDE_DIR)
 	set(clipper_INCLUDE_DIRS ${clipper_INCLUDE_DIR})
