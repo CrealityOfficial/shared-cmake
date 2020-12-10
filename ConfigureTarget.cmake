@@ -56,7 +56,7 @@ endmacro()
 include(Dependency)
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP" ${ARGN})
+	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")

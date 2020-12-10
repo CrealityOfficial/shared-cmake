@@ -11,3 +11,5 @@ include(FindUtil)
 include(Boost)
 include(openmp)
 
+include(CXX)
+
