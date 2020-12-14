@@ -25,3 +25,11 @@ set(QtQmlQ3dLibs Qt5::Widgets Qt5::Quick Qt5::Qml Qt5::3DExtras)
 set(QtQmlLibs Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml)
 set(QtGuiLibs Qt5::Core Qt5::Gui Qt5::Widgets)
 
+macro(__qt5_translate RES DIR)
+	file(GLOB TS_FILES ${DIR}/*.ts)
+	qt5_add_translation(QM_FILES ${TS_FILES})
+	
+	configure_file(translations.qrc ${CMAKE_CURRENT_BINARY_DIR} COPYONLY)
+	qt5_add_resources(${RES} ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
+endmacro()
+
