@@ -14,3 +14,7 @@ macro(__enable_cxx17)
 		set( CMAKE_CXX_STANDARD 17 )
 	endif()
 endmacro()
+
+if(WIN32)
+	add_definitions(-DCXX_CHECK_MEMORY_LEAKS)
+endif()
