@@ -116,6 +116,7 @@ function(__add_real_target target type)
 			target_precompile_headers(${target} PUBLIC ${CMAKE_SOURCE_DIR}/cmake/source/leak.h)
 			target_compile_definitions(${target} PRIVATE ${target}_USE_PCH)
 		endif()
+		
 		configure_target(${target})
 	else(target_SOURCE)
 		message("add target ${target} without sources")
@@ -233,6 +234,36 @@ macro(__find_one_package target inc type env)
 	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES_DEBUG AND ${target}_LIBRARIES_RELEASE)
 		set(${target}_FOUND "True")
 		__import_target(${target} ${type})
+	endif()
+endmacro()
+
+macro(__find_vld)
+	if(WIN32)
+		find_path(vld_INCLUDE_DIR vld/vld.h
+			HINTS  "$ENV{CX_THIRDPARTY_ROOT}/include/"
+			PATHS "/usr/include")
+		
+		if(vld_INCLUDE_DIR)
+			set(vld_INCLUDE_DIRS ${vld_INCLUDE_DIR})
+		endif()
+		
+		find_library(vld_LIBRARIES_DEBUG
+					NAMES vld
+					HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/Debug"
+					PATHS "/usr/lib/Debug")
+					
+		find_library(vld_LIBRARIES_RELEASE
+				NAMES vld
+				HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/Release"
+				PATHS "/usr/lib/Release")
+					
+		message("vld_INCLUDE_DIR  ${vld_INCLUDE_DIRS}")
+		message("vld_LIBRARIES_DEBUG  ${vld_LIBRARIES_DEBUG}")
+		message("vld_LIBRARIES_RELEASE  ${vld_LIBRARIES_RELEASE}")
+		
+		if(vld_INCLUDE_DIRS AND vld_LIBRARIES_DEBUG AND vld_LIBRARIES_RELEASE)
+			__import_target(vld dll)
+		endif()
 	endif()
 endmacro()
 
