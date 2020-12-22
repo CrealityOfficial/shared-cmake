@@ -12,4 +12,4 @@ include(Boost)
 include(openmp)
 
 include(CXX)
-
+include(pch)
