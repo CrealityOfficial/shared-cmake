@@ -15,6 +15,13 @@ macro(__enable_cxx17)
 	endif()
 endmacro()
 
+macro(__enable_mem_leak_check)
+	if(WIN32)
+		add_definitions(-DCXX_MEMORY_LEAK_CHECK)
+	else()
+	endif()
+endmacro()
+
 if(NOT WIN32)
 	if(NOT CMAKE_BUILD_TYPE)
 		set(CMAKE_BUILD_TYPE "Release")
