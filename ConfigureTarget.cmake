@@ -56,7 +56,7 @@ endmacro()
 include(Dependency)
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE" ${ARGN})
+	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -99,6 +99,9 @@ function(__add_real_target target type)
 		endif()
 		if(target_INTERFACE)
 			set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${target_INTERFACE})
+		endif()
+		if(target_FOLDER)
+			set_target_properties(${target} PROPERTIES FOLDER ${target_FOLDER})
 		endif()
 		
 		configure_target(${target})
