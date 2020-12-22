@@ -14,3 +14,27 @@ macro(__enable_cxx17)
 		set( CMAKE_CXX_STANDARD 17 )
 	endif()
 endmacro()
+
+if(NOT WIN32)
+	if(NOT CMAKE_BUILD_TYPE)
+		set(CMAKE_BUILD_TYPE "Release")
+		message(STATUS "Default Build Type ${CMAKE_BUILD_TYPE}")
+	endif()
+	
+	if(CMAKE_BUILD_TYPE STREQUAL "Release")
+		add_definitions(-DNDEBUG)
+	else()
+		add_definitions(-DDEBUG)
+		add_definitions(-D_DEBUG)
+	endif()
+endif()
+
+if(WIN32)
+	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
+		$<$<CONFIG:Debug>:_DEBUG>
+		$<$<CONFIG:Release>:NDEBUG>)
+	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
+		$<$<CONFIG:Debug>:CXX_CHECK_MEMORY_LEAKS>)
+	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
+		$<$<CONFIG:Debug>:DEBUG>)
+endif()

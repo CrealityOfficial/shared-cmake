@@ -194,4 +194,34 @@ macro(__find_simple_package target type)
 	endif()
 endmacro()
 
+macro(__find_one_package target inc type env)
+	message(STATUS ${target})
+	find_path(${target}_INCLUDE_DIR ${inc}
+		HINTS  "$ENV{${env}}/include"
+		PATHS "/usr/include")
+	
+	if(${target}_INCLUDE_DIR)
+		set(${target}_INCLUDE_DIRS ${${target}_INCLUDE_DIR})
+	endif()
+	
+	find_library(${target}_LIBRARIES_DEBUG
+				 NAMES ${target}
+				 HINTS "$ENV{${env}}/lib/Debug"
+				 PATHS "/usr/lib/Debug")
+				 
+	find_library(${target}_LIBRARIES_RELEASE
+			 NAMES ${target}
+			 HINTS "$ENV{${env}}/lib/Release"
+			 PATHS "/usr/lib/Release")
+				 
+	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
+	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
+	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
+	
+	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES_DEBUG AND ${target}_LIBRARIES_RELEASE)
+		set(${target}_FOUND "True")
+		__import_target(${target} ${type})
+	endif()
+endmacro()
+
 
