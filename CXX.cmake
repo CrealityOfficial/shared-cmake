@@ -53,6 +53,7 @@ macro(__enable_vld)
 		link_directories(${CMAKE_SOURCE_DIR}/cmake/vld)
 		add_custom_target(vld ALL COMMENT "memory leak check!")
 		add_custom_command(TARGET vld PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E make_directory ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/vld_x64.dll ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/dbghelp.dll ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/Microsoft.DTfW.DHL.manifest ${BIN_OUTPUT_DIR}/Debug/
