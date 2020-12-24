@@ -63,6 +63,6 @@ macro(__enable_vld)
 	endif()
 endmacro()
 
-if(CMAKE_VLD_ON)
+if(CXX_VLD)
 	__enable_vld()
 endif()

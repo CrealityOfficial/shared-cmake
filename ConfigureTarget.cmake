@@ -122,6 +122,10 @@ function(__add_real_target target type)
 			target_compile_definitions(${target} PRIVATE ${target}_USE_PCH)
 		endif()
 				
+		if(CXX_VLD_ENABLED STREQUAL "ON")
+			add_dependencies(${target} __vld)
+		endif()
+		
 		configure_target(${target})
 	else(target_SOURCE)
 		message("add target ${target} without sources")
