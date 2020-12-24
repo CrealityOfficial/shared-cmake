@@ -48,11 +48,13 @@ endif()
 
 macro(__enable_vld)
 	if(WIN32)
+		message(STATUS "------------${CMAKE_SOURCE_DIR}")
 		include_directories(${CMAKE_SOURCE_DIR}/cmake/vld)
 		link_directories(${CMAKE_SOURCE_DIR}/cmake/vld)
 		add_custom_target(__vld ALL COMMENT "memory leak check!")
 		__set_target_folder(__vld CMakePredefinedTargets) 
 		add_custom_command(TARGET __vld PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E make_directory ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/vld_x64.dll ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/dbghelp.dll ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/Microsoft.DTfW.DHL.manifest ${BIN_OUTPUT_DIR}/Debug/
