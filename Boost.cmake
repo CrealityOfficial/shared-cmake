@@ -11,3 +11,8 @@ macro(__find_boost_root)
 		HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/"
 		PATHS "/usr/include/")
 endmacro()
+
+macro(__include_boost)
+	__include_dir(boost boost/core/typeinfo.hpp "" CX_BOOST_ROOT)
+	include_directories(${boost_INCLUDE_DIR})
+endmacro()

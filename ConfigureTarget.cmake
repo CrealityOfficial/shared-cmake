@@ -216,11 +216,10 @@ macro(__find_simple_package target type)
 	endif()
 endmacro()
 
-macro(__find_one_package target inc type env)
-	message(STATUS ${target})
+macro(__find_one_package target inc prefix type env)
 	find_path(${target}_INCLUDE_DIR ${inc}
-		HINTS  "$ENV{${env}}/include"
-		PATHS "/usr/include")
+		HINTS  "$ENV{${env}}/include/${prefix}"
+		PATHS "/usr/include/${prefix}")
 	
 	if(${target}_INCLUDE_DIR)
 		set(${target}_INCLUDE_DIRS ${${target}_INCLUDE_DIR})
@@ -236,13 +235,30 @@ macro(__find_one_package target inc type env)
 			 HINTS "$ENV{${env}}/lib/Release"
 			 PATHS "/usr/lib/Release")
 				 
-	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
-	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
-	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
+	#message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
+	#message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
+	#message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
 	
 	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES_DEBUG AND ${target}_LIBRARIES_RELEASE)
 		set(${target}_FOUND "True")
 		__import_target(${target} ${type})
+		message(STATUS "${target} include : ${${target}_INCLUDE_DIRS}")
+		message(STATUS "${target} lib debug : ${${target}_LIBRARIES_DEBUG}")
+		message(STATUS "${target} lib release : ${${target}_LIBRARIES_RELEASE}")
+	else()
+		message(FATAL_ERROR "${target} not found!")
+	endif()
+endmacro()
+
+macro(__include_dir target inc prefix env)
+	find_path(${target}_INCLUDE_DIR ${inc}
+		HINTS  "$ENV{${env}}/include/${prefix}"
+		PATHS "/usr/include/${prefix}")
+	
+	if(${target}_INCLUDE_DIR)
+		message(STATUS "${target} include : ${${target}_INCLUDE_DIR}")
+	else()
+		message(FATAL_ERROR "${target} include not found!")
 	endif()
 endmacro()
 

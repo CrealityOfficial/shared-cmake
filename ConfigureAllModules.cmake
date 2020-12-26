@@ -7,6 +7,7 @@ include(FileUtil)
 include(ConfigureProperty)
 
 include(FindUtil)
+include(PackageUtil)
 
 include(Boost)
 include(openmp)
