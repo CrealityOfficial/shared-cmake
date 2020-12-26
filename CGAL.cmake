@@ -3,7 +3,7 @@ macro(__cgal_find_package package dir)
 endmacro()
 
 macro(__cgal_include_package package)
-	include_directories(${CGAL_ROOT}/${package})
+	include_directories(${CGAL_ROOT_DIR}/${package})
 endmacro()
 
 macro(__cgal_include_common_packages)
@@ -32,6 +32,13 @@ macro(__cgal_include_common_packages)
 	__cgal_include_package(Property_map)
 endmacro()
 
-macro(__cgal_include_source)
-	set(CGAL_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/cgal/include/)
-endmacro()
+find_path(CGAL_ROOT_DIR Kernel_23/CGAL/basic_classes.h
+	HINTS  "$ENV{CX_CGAL_ROOT}/include/"
+	PATHS "/usr/include/cgal/include")
+
+if(CGAL_ROOT_DIR)
+	message(STATUS "CGAL ROOT DIR : ${CGAL_ROOT_DIR}")
+	__cgal_include_common_packages()
+else()
+	message(FATAL_ERROR "CGAL ROOT DIR not found!")
+endif()
