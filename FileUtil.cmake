@@ -106,3 +106,7 @@ endmacro()
 macro(__tree_add_current src)
 	__tree_add_source(${CMAKE_CURRENT_SOURCE_DIR} ${src})
 endmacro()
+
+macro(__copy_third_party_dlls dlls)
+	
+endmacro()
