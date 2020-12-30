@@ -1,10 +1,11 @@
 SET(CMAKE_PREFIX_PATH $ENV{QT5_DIR})
 
 macro(__enable_qt5)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
+	set(CMAKE_AUTOMOC ON)
+	set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick Concurrent REQUIRED)
+	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick Concurrent REQUIRED)
+	include(qml)
 endmacro()
 
 
