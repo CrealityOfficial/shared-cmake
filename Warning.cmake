@@ -7,5 +7,6 @@ if(WIN32)    #disable some common vs warnning
 	add_compile_options(/wd4267)
 	add_compile_options(/wd4251)
 	add_compile_options(/wd4127)
+	add_compile_options(/wd4828)
 else(WIN32)
 endif(WIN32)
