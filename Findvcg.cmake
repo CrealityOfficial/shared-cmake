@@ -7,7 +7,9 @@
 
 find_path(vcg_INCLUDE_DIR vcg/complex/base.h
     HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/vcglib/"
-	PATHS "/usr/include/vcglib")
+	PATHS "/usr/local/include/openssl/"
+	NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+	)
 	
 if(vcg_INCLUDE_DIR)
 	set(vcg_INCLUDE_DIRS ${vcg_INCLUDE_DIR})
