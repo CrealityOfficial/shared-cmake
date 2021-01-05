@@ -34,6 +34,9 @@ if(NOT WIN32)
 		add_definitions(-DDEBUG)
 		add_definitions(-D_DEBUG)
 	endif()
+
+    set(CMAKE_CXX_FLAGS "-fPIC")
+    set(CMAKE_C_FLAGS "-fPIC")
 endif()
 
 if(WIN32)
