@@ -9,28 +9,28 @@ if(openssl_INCLUDE_DIR)
 endif()
 
 find_library(ssl_LIBRARIES_DEBUG
-             NAMES libssl
+             NAMES ssl
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
 			 PATHS "/usr/local/lib/Debug"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			 )
 			 
 find_library(ssl_LIBRARIES_RELEASE
-             NAMES libssl
+             NAMES ssl
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
 			 PATHS "/usr/local/lib/Release"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			 )
 		
 find_library(crypto_LIBRARIES_DEBUG
-             NAMES libcrypto
+             NAMES crypto
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
 			 PATHS "/usr/local/lib/Debug"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			 )
 			 
 find_library(crypto_LIBRARIES_RELEASE
-             NAMES libcrypto
+             NAMES crypto
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
 			 PATHS "/usr/local/lib/Release"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
