@@ -10,6 +10,7 @@ macro(__build_qml_plugin target)
 			COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${target}>/${targetName}" "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target}"
 			)
 			
+if(WIN32)
 	if(CMAKE_BUILD_TYPE MATCHES "Release")
 		set(COPY_DIST_QML_DIR "${Qt5Core_DIR}/../../../qml/${target}")
 		add_custom_command(TARGET ${target} POST_BUILD
@@ -17,4 +18,5 @@ macro(__build_qml_plugin target)
                 COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/qmldir" "${COPY_DIST_QML_DIR}/qmldir"
                 )
 	endif()
+endif()
 endmacro()
