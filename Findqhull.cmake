@@ -1,6 +1,8 @@
 find_path(qhull_INCLUDE_DIR libqhullcpp/Qhull.h
     HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/qhull/"
-	PATHS "/usr/include/qhull/" "/usr/local/include/qhull/")
+	PATHS "/usr/local/include/qhull/"
+	NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH
+	)
 	
 if(qhull_INCLUDE_DIR)
 	set(qhull_INCLUDE_DIRS ${qhull_INCLUDE_DIR})
@@ -9,22 +11,30 @@ endif()
 find_library(qhullcpp_LIBRARIES_DEBUG
              NAMES qhullcpp
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
-			 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
+			 PATHS "/usr/local/lib/Debug"
+			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH
+			 )
 			 
 find_library(qhullcpp_LIBRARIES_RELEASE
              NAMES qhullcpp
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
+			 PATHS "/usr/local/lib/Release"
+			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH
+			 )
 		
 find_library(qhullstatic_LIBRARIES_DEBUG
              NAMES qhullstatic_r
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
-			 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
+			 PATHS "/usr/local/lib/Debug"
+			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH
+			 )
 			 
 find_library(qhullstatic_LIBRARIES_RELEASE
              NAMES qhullstatic_r
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
+			 PATHS "/usr/local/lib/Release"
+			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH
+			 )
 			 
 message(STATUS ${qhull_INCLUDE_DIRS})
 message(STATUS ${qhullcpp_LIBRARIES_DEBUG})
