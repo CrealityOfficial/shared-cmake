@@ -219,7 +219,9 @@ endmacro()
 macro(__find_one_package target inc prefix type env)
 	find_path(${target}_INCLUDE_DIR ${inc}
 		HINTS  "$ENV{${env}}/include/${prefix}"
-		PATHS "/usr/include/${prefix}" "/usr/local/include/${prefix}")
+		PATHS "/usr/include/${prefix}" "/usr/local/include/${prefix}"
+		NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH
+		)
 	
 	if(${target}_INCLUDE_DIR)
 		set(${target}_INCLUDE_DIRS ${${target}_INCLUDE_DIR})
@@ -228,12 +230,14 @@ macro(__find_one_package target inc prefix type env)
 	find_library(${target}_LIBRARIES_DEBUG
 				 NAMES ${target}
 				 HINTS "$ENV{${env}}/lib/Debug"
-				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
+				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug"
+				 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	find_library(${target}_LIBRARIES_RELEASE
 			 NAMES ${target}
 			 HINTS "$ENV{${env}}/lib/Release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release"
+			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
 	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
