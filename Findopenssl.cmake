@@ -25,7 +25,13 @@ find_library(crypto_LIBRARIES_RELEASE
              NAMES libcrypto
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
 			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
-			 
+	
+message(STATUS ${openssl_INCLUDE_DIRS})
+message(STATUS ${ssl_LIBRARIES_DEBUG})
+message(STATUS ${ssl_LIBRARIES_RELEASE})
+message(STATUS ${crypto_LIBRARIES_DEBUG})
+message(STATUS ${crypto_LIBRARIES_RELEASE})
+	
 if(openssl_INCLUDE_DIRS AND ssl_LIBRARIES_DEBUG AND ssl_LIBRARIES_RELEASE
 					AND crypto_LIBRARIES_DEBUG AND crypto_LIBRARIES_RELEASE)
 	set(openssl_FOUND "True")
