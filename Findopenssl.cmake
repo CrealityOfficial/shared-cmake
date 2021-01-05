@@ -1,6 +1,6 @@
 find_path(openssl_INCLUDE_DIR openssl/aes.h
     HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/openssl/"
-	PATHS "/usr/include/openssl/")
+	PATHS "/usr/include/openssl/" "/usr/local/include/openssl/")
 	
 if(openssl_INCLUDE_DIR)
 	set(openssl_INCLUDE_DIRS ${openssl_INCLUDE_DIR})
@@ -8,19 +8,23 @@ endif()
 
 find_library(ssl_LIBRARIES_DEBUG
              NAMES libssl
-             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug")
+             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
+			 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
 			 
 find_library(ssl_LIBRARIES_RELEASE
              NAMES libssl
-             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release")
+             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
 		
 find_library(crypto_LIBRARIES_DEBUG
              NAMES libcrypto
-             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug")
+             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
+			 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
 			 
 find_library(crypto_LIBRARIES_RELEASE
              NAMES libcrypto
-             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release")
+             HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
 			 
 if(openssl_INCLUDE_DIRS AND ssl_LIBRARIES_DEBUG AND ssl_LIBRARIES_RELEASE
 					AND crypto_LIBRARIES_DEBUG AND crypto_LIBRARIES_RELEASE)
