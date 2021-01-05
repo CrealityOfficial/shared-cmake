@@ -219,7 +219,7 @@ endmacro()
 macro(__find_one_package target inc prefix type env)
 	find_path(${target}_INCLUDE_DIR ${inc}
 		HINTS  "$ENV{${env}}/include/${prefix}"
-		PATHS "/usr/include/${prefix}")
+		PATHS "/usr/include/${prefix}" "/usr/local/include/${prefix}")
 	
 	if(${target}_INCLUDE_DIR)
 		set(${target}_INCLUDE_DIRS ${${target}_INCLUDE_DIR})
@@ -228,16 +228,16 @@ macro(__find_one_package target inc prefix type env)
 	find_library(${target}_LIBRARIES_DEBUG
 				 NAMES ${target}
 				 HINTS "$ENV{${env}}/lib/Debug"
-				 PATHS "/usr/lib/Debug")
+				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
 				 
 	find_library(${target}_LIBRARIES_RELEASE
 			 NAMES ${target}
 			 HINTS "$ENV{${env}}/lib/Release"
-			 PATHS "/usr/lib/Release")
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
 				 
-	#message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
-	#message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
-	#message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
+	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
+	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
+	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
 	
 	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES_DEBUG AND ${target}_LIBRARIES_RELEASE)
 		set(${target}_FOUND "True")
