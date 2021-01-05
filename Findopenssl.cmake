@@ -1,6 +1,6 @@
 find_path(openssl_INCLUDE_DIR openssl/aes.h
     HINTS "$ENV{CX_THIRDPARTY_ROOT}/include/openssl/"
-	PATHS "/usr/include/openssl/" "/usr/local/include/openssl/")
+	PATHS "/usr/local/include/openssl/")
 	
 if(openssl_INCLUDE_DIR)
 	set(openssl_INCLUDE_DIRS ${openssl_INCLUDE_DIR})
@@ -9,22 +9,22 @@ endif()
 find_library(ssl_LIBRARIES_DEBUG
              NAMES libssl
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
-			 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
+			 PATHS "/usr/local/lib/Debug")
 			 
 find_library(ssl_LIBRARIES_RELEASE
              NAMES libssl
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
+			 PATHS "/usr/local/lib/Release")
 		
 find_library(crypto_LIBRARIES_DEBUG
              NAMES libcrypto
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/debug"
-			 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug")
+			 PATHS "/usr/local/lib/Debug")
 			 
 find_library(crypto_LIBRARIES_RELEASE
              NAMES libcrypto
              HINTS "$ENV{CX_THIRDPARTY_ROOT}/lib/release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release")
+			 PATHS "/usr/local/lib/Release")
 	
 message(STATUS ${openssl_INCLUDE_DIRS})
 message(STATUS ${ssl_LIBRARIES_DEBUG})
