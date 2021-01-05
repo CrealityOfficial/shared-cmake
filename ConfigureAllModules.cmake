@@ -14,3 +14,4 @@ include(openmp)
 
 include(CXX)
 include(pch)
+include(Warning)
