@@ -39,6 +39,8 @@ if(NOT WIN32)
     set(CMAKE_C_FLAGS "-fPIC")
 endif()
 
+add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+
 if(WIN32)
 	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
 		$<$<CONFIG:Debug>:_DEBUG>

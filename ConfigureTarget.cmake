@@ -54,6 +54,7 @@ macro(__debug_all_configurations)
 endmacro()
 
 include(Dependency)
+
 #target function
 function(__add_real_target target type)
 	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH" ${ARGN})
@@ -130,6 +131,14 @@ function(__add_real_target target type)
 	else(target_SOURCE)
 		message("add target ${target} without sources")
 	endif(target_SOURCE)
+endfunction()
+
+function(__add_exe_target target)
+	__add_real_target(${target} exe ${ARGN})
+	if(WIN32)
+		set_target_properties(${target} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+		set_target_properties(${target} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE /ENTRY:mainCRTStartup")
+	endif()
 endfunction()
 
 function(build_inner target)
