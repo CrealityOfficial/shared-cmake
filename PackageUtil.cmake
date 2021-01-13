@@ -13,8 +13,11 @@ endif()
 
 message(STATUS "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 __build_info_header()
-
-SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../install/)
+if(APPLE)
+	SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/)
+else()
+	SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../install/)
+endif()
 
 macro(__package_project)
 	if(WIN32)
