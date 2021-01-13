@@ -115,7 +115,6 @@ macro(__tree_add_source dir src)
 		qt5_add_resources(QT_QRC ${QRCFILES})
 		list(APPEND ${src} ${QT_QRC})
 	endif()
-	#message(STATUS ${${src}})
 endmacro()
 
 macro(__tree_add_current src)
