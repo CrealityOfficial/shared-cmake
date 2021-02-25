@@ -13,11 +13,15 @@ endif()
 
 message(STATUS "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 __build_info_header()
+
+
 if(APPLE)
 	SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/)
-else()
+elseif(WIN32)
 	SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../install/)
 endif()
+
+message(STATUS "CMAKE INSTALL PREFIX ${CMAKE_INSTALL_PREFIX}")
 
 macro(__package_project)
 	if(WIN32)
