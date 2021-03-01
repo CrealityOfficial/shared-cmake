@@ -6,7 +6,8 @@ macro(__enable_qt5)
 
 	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick Concurrent OpenGL REQUIRED)
 	include(qml)
-	option(QT5_ENABLED "qt5" ON)
+	
+	set(QT5_ENABLED 1)
 endmacro()
 
 
