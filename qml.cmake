@@ -18,5 +18,12 @@ macro(__build_qml_plugin target)
 					COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/qmldir" "${COPY_DIST_QML_DIR}/qmldir"
 					)
 		endif()
-	endif()
+        endif()
+        if(APPLE)
+            set(COPY_DIST_QML_DIR "${Qt5Core_DIR}/../../../qml/${target}")
+            add_custom_command(TARGET ${target} POST_BUILD
+                            COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${target}>/${targetName}" "${COPY_DIST_QML_DIR}/${targetName}"
+                            COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/qmldir" "${COPY_DIST_QML_DIR}/qmldir"
+                            )
+        endif()
 endmacro()
