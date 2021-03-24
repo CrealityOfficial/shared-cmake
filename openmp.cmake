@@ -6,3 +6,10 @@ macro(__enable_openmp)
 		set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
 	endif()
 endmacro()
+macro(__add_openmp_lib arg1)
+    find_library(OPENOMP_LIBRARIES
+             NAMES omp
+             PATHS "/usr/local/lib")
+    message(STATUS ${OPENOMP_LIBRARIES})
+    target_link_libraries(${arg1} PRIVATE ${OPENOMP_LIBRARIES})
+endmacro()
