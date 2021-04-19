@@ -35,8 +35,8 @@ if(NOT WIN32)
 		add_definitions(-D_DEBUG)
 	endif()
 
-    set(CMAKE_CXX_FLAGS "-fPIC")
-    set(CMAKE_C_FLAGS "-fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 endif()
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
