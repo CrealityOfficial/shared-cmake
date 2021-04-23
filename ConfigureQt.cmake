@@ -37,3 +37,11 @@ macro(__qt5_translate RES DIR)
 	qt5_add_resources(${RES} ${CMAKE_CURRENT_BINARY_DIR}/translations.qrc)
 endmacro()
 
+macro(__remap_qt_debug_2_release)
+	set(REMAP_LIBS Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::Xml
+		Qt5::Qml Qt5::Quick Qt5::3DCore Qt5::3DRender Qt5::3DCore Qt5::3DExtras
+		Qt5::OpenGL Qt5::3DInput Qt5::3DLogic Qt5::3DQuick Qt5::Concurrent Qt5::Gamepad)
+	
+	__remap_target_debug_2_release(REMAP_LIBS)
+endmacro()
+

@@ -155,3 +155,20 @@ macro(__copy_third_party_dlls dlls)
 		endforeach()
 	endif()
 endmacro()
+
+macro(__copy_files copy_target files)
+	add_custom_target(${copy_target} ALL COMMENT "copy third party dll!")
+	__set_target_folder(${copy_target} CMakePredefinedTargets)
+
+	add_custom_command(TARGET ${copy_target} PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+		)
+	foreach(file ${${files}})
+		add_custom_command(TARGET ${copy_target} PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+				"$<$<CONFIG:Release>:${file}>"  
+				"$<$<CONFIG:Debug>:${file}>" 
+				"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+			)	
+	endforeach()
+endmacro()

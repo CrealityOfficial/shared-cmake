@@ -15,4 +15,4 @@ if(THIRD0_INSTALL_ROOT)
 else()
 endif()
 
-__test_import(zlib lib)
+__test_import(zlib dll)
