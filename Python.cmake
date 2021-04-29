@@ -10,6 +10,7 @@ macro(__use_python)
 		message(FATAL_ERROR "Can't find Python3.")
 	endif()
 	
+	set(PYTHON_INCLUDE_DIR ${Python3_INCLUDE_DIRS})
 	list(GET Python3_LIBRARIES 3 Python3_LIBRARIES_DEBUG)
 	list(GET Python3_LIBRARIES 1 Python3_LIBRARIES_RELEASE)
 	message(STATUS "Python3 Debug LIBRARIES : ${Python3_LIBRARIES_DEBUG}")

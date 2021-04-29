@@ -16,8 +16,7 @@ macro(__add_openmp_lib arg1)
 endmacro()
 
 macro(__disable_openmp)
-	include(AdjustToolFlags)
-	AdjustToolFlags(CMAKE_C_FLAGS REMOVALS "${OpenMP_C_FLAGS}")
-	AdjustToolFlags(CMAKE_CXX_FLAGS REMOVALS "${OpenMP_CXX_FLAGS}")
-	AdjustToolFlags(CMAKE_EXE_LINKER_FLAGS REMOVALS "${OpenMP_EXE_LINKER_FLAGS}")
+	string(REPLACE "-openmp" "" CMAKE_C_FLAGS "${CMAKE_C_FLAGS}")
+	string(REPLACE "-openmp" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 endmacro()
+
