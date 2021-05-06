@@ -40,6 +40,7 @@ if(NOT WIN32)
 endif()
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if(WIN32)
 	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
@@ -119,4 +120,13 @@ macro(__remove_MDd)
 					CMAKE_CXX_FLAGS_RELWITHDEBINFO
 				REMOVALS "/MDd? /MTd? /RTC1 /D_DEBUG")
 	ENDIF(MSVC)
+endmacro()
+
+macro(__enable_spycc)
+	add_definitions(-DUSE_SPYCC)
+	
+	__cc_find(Spycc)
+	__assert_target(spycc)
+	
+	set(SPYCC_LIB spycc)
 endmacro()
