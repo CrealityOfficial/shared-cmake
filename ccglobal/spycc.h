@@ -2,6 +2,7 @@
 #define _CC_GLOBAL_SPYCC_H
 
 #if USE_SPYCC
+#define SPYCC_SESSION
 #include "spycc/session.h"
 #include "spycc/cmdparser.h"
 
