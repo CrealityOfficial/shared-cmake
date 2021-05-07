@@ -32,9 +32,11 @@ macro(__cgal_include_common_packages)
 	__cgal_include_package(Property_map)
 endmacro()
 
-find_path(CGAL_ROOT_DIR Kernel_23/CGAL/basic_classes.h
-	HINTS  "$ENV{CX_CGAL_ROOT}/include/"
-	PATHS "/usr/include/cgal/include")
+if(NOT CGAL_ROOT_DIR)
+	find_path(CGAL_ROOT_DIR Kernel_23/CGAL/basic_classes.h
+		HINTS  "$ENV{CX_CGAL_ROOT}/include/"
+		PATHS "/usr/include/cgal/include")
+endif()
 
 if(CGAL_ROOT_DIR)
 	message(STATUS "CGAL ROOT DIR : ${CGAL_ROOT_DIR}")
