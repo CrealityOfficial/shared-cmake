@@ -52,6 +52,14 @@ if(BOOST_INSTALL_ROOT)
 							   INC boost/python.hpp
 							   DLIB boost_python
 							   LIB boost_python
+							   )
+
+	set(boost_serialization_INCLUDE_ROOT ${BOOST_INSTALL_ROOT}/include/)
+	set(boost_serialization_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)
+	__search_target_components(boost_serialization
+							   INC boost/serialization/access.hpp
+							   DLIB boost_serialization
+							   LIB boost_serialization
 							   )								   
 else()
 endif()
@@ -65,6 +73,7 @@ __test_import(boost_program_options dll)
 __test_import(boost_regex dll)
 __test_import(boost_system dll)
 __test_import(boost_python dll)
+__test_import(boost_serialization dll)
 
 if(BOOST_INCLUDE_DIRS)
 	set(BOOST_INCLUDE_FOUND 1)
