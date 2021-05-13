@@ -7,7 +7,7 @@ macro(__use_python)
 		message(STATUS "LIBRARIES : ${Python3_LIBRARIES}")
 		message(STATUS "LIBRARY DIRS : ${Python3_LIBRARY_DIRS}")
 	else()
-		message(FATAL_ERROR "Can't find Python3.")
+		message(STATUS "Can't find Python3.")
 	endif()
 	
 	set(PYTHON_INCLUDE_DIR ${Python3_INCLUDE_DIRS})
