@@ -22,7 +22,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.4)
 endif()
 
 macro(configure_target target)
-	if(WIN32)
+	if(WIN32 OR APPLE)
 		set_target_properties(${target} PROPERTIES
 							LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
 							ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
