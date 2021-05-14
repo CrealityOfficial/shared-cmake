@@ -99,8 +99,12 @@ macro(__assign_source_group dir)
     endforeach()
 endmacro()
 
+macro(__gather_source dir DEST_SOURCE)
+	file(GLOB_RECURSE ${DEST_SOURCE} RELATIVE "${dir}" "*.cpp" "*.h" "*.c" "*.cc" "*.hpp" "*.CPP" "*.hxx" "*.cxx")
+endmacro()
+
 macro(__tree_add_source dir src)
-	file(GLOB_RECURSE _SRCS RELATIVE "${dir}" "*.cpp" "*.h" "*.c" "*.cc" "*.hpp" "*.CPP")
+	file(GLOB_RECURSE _SRCS RELATIVE "${dir}" "*.cpp" "*.h" "*.c" "*.cc" "*.hpp" "*.CPP" "*.hxx" "*.cxx")
 	__assign_source_group(${dir} ${_SRCS})
 	
 	#message(STATUS ${dir})
