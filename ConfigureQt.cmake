@@ -4,7 +4,7 @@ macro(__enable_qt5)
 	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_AUTORCC ON)
 
-	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick Concurrent OpenGL REQUIRED)
+	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Concurrent OpenGL REQUIRED)
 	include(qml)
 	
 	set(QT5_ENABLED 1)
@@ -40,7 +40,7 @@ endmacro()
 macro(__remap_qt_debug_2_release)
 	set(REMAP_LIBS Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::Xml
 		Qt5::Qml Qt5::Quick Qt5::3DCore Qt5::3DRender Qt5::3DCore Qt5::3DExtras
-		Qt5::OpenGL Qt5::3DInput Qt5::3DLogic Qt5::3DQuick Qt5::Concurrent Qt5::Gamepad)
+		Qt5::OpenGL Qt5::3DInput Qt5::3DLogic Qt5::3DQuick Qt5::SerialPort Qt5::Concurrent Qt5::Gamepad)
 	
 	__remap_target_debug_2_release(REMAP_LIBS)
 endmacro()
