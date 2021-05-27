@@ -21,6 +21,7 @@ set(OCC_LIBS TKVCAF
 			 TKGeomBase
 			 TKHLR
 			 TKMath
+			 TKMesh
 			 TKOffset
 			 TKPrim
 			 TKService
