@@ -99,6 +99,12 @@ function(__add_real_target target type)
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		endif()
 		__add_target(${target})
+        if(APPLE)
+            set_target_properties(${target}
+            PROPERTIES
+            INSTALL_RPATH "@executable_path/../Frameworks"
+        )
+        endif()
 		#libs
 		if(target_LIB)
 			foreach(lib ${target_LIB})
