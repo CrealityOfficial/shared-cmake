@@ -25,7 +25,7 @@ endif()
 endmacro()
 
 set(QtQmlQ3dLibs Qt5::Widgets Qt5::Quick Qt5::Qml Qt5::3DExtras Qt5::OpenGL)
-set(QtQmlLibs Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml)
+set(QtQmlLibs Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::SerialPort)
 set(QtGuiLibs Qt5::Core Qt5::Gui Qt5::Widgets)
 set(qtuser qtuser_core qtuser_3d qtuser_qml)
 
