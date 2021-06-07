@@ -16,6 +16,7 @@ macro(__use_python)
 	message(STATUS "Python3 Debug LIBRARIES : ${Python3_LIBRARIES_DEBUG}")
 	message(STATUS "Python3 Release LIBRARIES : ${Python3_LIBRARIES_RELEASE}")
 	__import_target(Python3 dll)
+	set(PYTHON_LIBRARY Python3)
 endmacro()
 
 macro(__copy_python_pyc)

@@ -1,13 +1,14 @@
 # This sets the following variables:
-# zlib target
+# OCC target
+# OCC_INCLUDE_DIRS
 
 set(OCC_LIBS TKVCAF
 			 TKVrml
-			 TKStl
-			 TKBrep
+			 TKSTL
+			 TKBRep
 			 TKIGES
 			 TKShHealing
-			 TKStep
+			 TKSTEP
 			 TKXSBase
 			 TKBool
 			 TKCAF
@@ -29,6 +30,16 @@ set(OCC_LIBS TKVCAF
 			 TKV3d
 			 TKOpenGl
 			 TKLCAF
+			 TKBO
+			 TKSTEPBase
+			 TKSTEPAttr
+			 TKSTEP209
+			 TKBin
+			 TKBinL
+			 TKXCAF
+			 TKXDESTEP
+			 TKXDEIGES
+			 TKMeshVS
 			 )
 if(OCC_INSTALL_ROOT)
 	message(STATUS "Specified OCC_INSTALL_ROOT : ${OCC_INSTALL_ROOT}")
@@ -42,6 +53,8 @@ if(OCC_INSTALL_ROOT)
 								LIB ${item}
 								)
 	endforeach()
+	
+	set(OCC_INCLUDE_DIRS ${OCC_INSTALL_ROOT}/include/occ/)
 else()
 endif()
 
