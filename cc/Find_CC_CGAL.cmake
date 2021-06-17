@@ -74,6 +74,7 @@ __cc_cgal_include(Triangulation_2)
 __cc_cgal_include(TDS_2)
 __cc_cgal_include(Surface_mesh)
 __cc_cgal_include(Surface_mesh_simplification)
+__cc_cgal_include(HalfedgeDS)
 
 #enable cluster point 
 __cc_cgal_include(Point_set_processing_3)
