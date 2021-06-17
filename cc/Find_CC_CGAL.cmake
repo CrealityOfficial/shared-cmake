@@ -36,6 +36,7 @@ __cc_cgal_include(Stream_support)
 __cc_cgal_include(Number_types)
 __cc_cgal_include(Solver_interface)
 __cc_cgal_include(Polygon_mesh_processing)
+
 __cc_cgal_include(BGL)
 __cc_cgal_include(Circulator)
 __cc_cgal_include(Profiling_tools)
