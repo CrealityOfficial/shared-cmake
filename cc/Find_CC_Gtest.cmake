@@ -22,5 +22,5 @@ if(ANALYSIS_INSTALL_ROOT)
 else()
 endif()
 
-__test_import(gtest lib)
+__test_import(gtest dll)
 __test_import(gtest_main lib)
