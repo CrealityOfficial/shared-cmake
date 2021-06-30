@@ -40,6 +40,10 @@ macro(__find_dxflib)
 	__find_one_package(dxflib dxf/dl_attributes.h "" lib CX_THIRDPARTY_ROOT)
 endmacro()
 
+macro(__find_alibabacloud)
+	__find_one_package(AliyunOss alibabacloud/oss/Config.h "oss" lib CX_THIRDPARTY_ROOT)
+endmacro()
+
 macro(__find_cura)
 	__find_one_package(cura Application.h cura lib CX_THIRDPARTY_ROOT)
 endmacro()
