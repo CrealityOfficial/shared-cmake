@@ -1,5 +1,5 @@
 macro(__use_python)
-	find_package(Python3 REQUIRED COMPONENTS Interpreter Development)
+	find_package(Python3 COMPONENTS Interpreter Development)
 		
 	if(Python3_FOUND AND Python3_Development_FOUND)
 		message(STATUS "Find Python3 ${Python3_VERSION}")
