@@ -1,7 +1,12 @@
-set(BIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../bin")
-set(LIB_OUTPUT_DIR "${CMAKE_BINARY_DIR}/../lib")
+set(USER_BINARY_DIR ${CMAKE_BINARY_DIR}/..)
+
+set(BIN_OUTPUT_DIR "${USER_BINARY_DIR}/bin")
+set(LIB_OUTPUT_DIR "${USER_BINARY_DIR}/lib")
 set(LIB_DEBUG_PATH ${LIB_OUTPUT_DIR}/Debug/)
 set(LIB_RELEASE_PATH ${LIB_OUTPUT_DIR}/Release/)
+
+message(STATUS "bin : ${BIN_OUTPUT_DIR}")
+message(STATUS "lib : ${LIB_OUTPUT_DIR}")
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -17,14 +22,26 @@ if(${CMAKE_VERSION} VERSION_LESS 3.4)
 endif()
 
 macro(configure_target target)
-	set_target_properties(${target} PROPERTIES
-						LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
-						ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
+	if(WIN32 OR APPLE)
+		set_target_properties(${target} PROPERTIES
+							LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
+							ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
+							RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
+							LIBRARY_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
+							ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
+							RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
+							)
+	else()
+		#message(STATUS "${target} ----> ${BIN_OUTPUT_DIR}")
+		set_target_properties(${target} PROPERTIES
+						LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
+						ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
 						RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						LIBRARY_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
-						ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
+						LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
+						ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 						RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 						)
+	endif()
 endmacro()
 
 macro(add_top_target target)
@@ -57,7 +74,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH" ${ARGN})
+	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -76,10 +93,18 @@ function(__add_real_target target type)
 			add_library(${target} SHARED ${target_SOURCE} ${ExtraSrc})
 		elseif(${type} STREQUAL "lib")
 			add_library(${target} STATIC ${target_SOURCE} ${ExtraSrc})
+		elseif(${type} STREQUAL "obj")
+			add_library(${target} OBJECT ${target_SOURCE})
 		else()
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		endif()
 		__add_target(${target})
+        if(APPLE)
+            set_target_properties(${target}
+            PROPERTIES
+            INSTALL_RPATH "@executable_path/../Frameworks"
+        )
+        endif()
 		#libs
 		if(target_LIB)
 			foreach(lib ${target_LIB})
@@ -129,6 +154,9 @@ function(__add_real_target target type)
 			add_dependencies(${target} __vld)
 		endif()
 		
+		if(SPYCC_LIB)
+			target_link_libraries(${target} PRIVATE ${SPYCC_LIB})
+		endif()
 		configure_target(${target})
 	else(target_SOURCE)
 		message("add target ${target} without sources")
@@ -182,7 +210,7 @@ function(__add_shared_lib target)
 endfunction()
 
 macro(__import_target target type)
-	message("${target}...........")
+	#message("${target}...........")
 	if (NOT TARGET ${target})		
 		if(${type} STREQUAL "dll")
 			add_library(${target} SHARED IMPORTED)
@@ -307,4 +335,21 @@ macro(__find_vld)
 	endif()
 endmacro()
 
+macro(__assert_target target)
+	if(NOT TARGET ${target})
+		message(FATAL_ERROR "assert ${target} exist.")
+	endif()
+endmacro()
+
+macro(__remap_target_debug_2_release targets)
+	foreach(target ${${targets}})
+		#message(STATUS "__remap_target_debug_2_release : ${target}")
+		if(TARGET ${target})
+			get_target_property(DEBUG_IMPORTED_LIB ${target} "IMPORTED_IMPLIB_DEBUG")
+			get_target_property(RELEASE_IMPORTED_LIB ${target} "IMPORTED_IMPLIB_RELEASE")
+			message(STATUS "remap target ${target} implib ${DEBUG_IMPORTED_LIB} --> ${RELEASE_IMPORTED_LIB}")
+			set_target_properties(${target} PROPERTIES "IMPORTED_IMPLIB_DEBUG" ${RELEASE_IMPORTED_LIB})
+		endif()
+	endforeach()
+endmacro()
 

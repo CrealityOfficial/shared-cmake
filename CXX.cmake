@@ -35,20 +35,24 @@ if(NOT WIN32)
 		add_definitions(-D_DEBUG)
 	endif()
 
-    set(CMAKE_CXX_FLAGS "-fPIC")
-    set(CMAKE_C_FLAGS "-fPIC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 endif()
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
 if(WIN32)
 	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
-		$<$<CONFIG:Debug>:_DEBUG>
 		$<$<CONFIG:Release>:NDEBUG>)
 	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
 		$<$<CONFIG:Debug>:CXX_CHECK_MEMORY_LEAKS>)
-	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
-		$<$<CONFIG:Debug>:DEBUG>)
+	if(NOT DISABLE_DEBUG_DEF)
+		set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
+			$<$<CONFIG:Debug>:_DEBUG>)
+		set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
+			$<$<CONFIG:Debug>:DEBUG>)
+	endif()
 endif()
 
 macro(__enable_vld)
@@ -79,4 +83,50 @@ macro(__enable_cxdef)
 	
 	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cxdef)
 	include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cxdef/interface)
+endmacro()
+
+macro(__remove_MDd)
+	include(AdjustToolFlags)
+	IF(MSVC)
+		# Change warning level to something saner
+		# Force to always compile with W0
+		if(CMAKE_CXX_FLAGS MATCHES "/W[0-4]")
+			string(REGEX REPLACE "/W[0-4]" "/W0" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+		else()
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W0")
+		endif()
+	
+		# Base settings
+	
+		# Disable incremental linking, because LTCG is currently triggered by
+		# linking with a pre-built lib and then we'll see a warning:
+		AdjustToolFlags(
+					CMAKE_EXE_LINKER_FLAGS_DEBUG
+					CMAKE_MODULE_LINKER_FLAGS_DEBUG
+					CMAKE_SHARED_LINKER_FLAGS_DEBUG
+				ADDITIONS "/INCREMENTAL:NO"
+				REMOVALS "/INCREMENTAL(:YES|:NO)?")
+	
+		# Always link with the release runtime DLL:
+		AdjustToolFlags(CMAKE_C_FLAGS CMAKE_CXX_FLAGS "/MD")
+		AdjustToolFlags(
+					CMAKE_C_FLAGS_DEBUG
+					CMAKE_C_FLAGS_RELEASE
+					CMAKE_C_FLAGS_MINSIZEREL
+					CMAKE_C_FLAGS_RELWITHDEBINFO
+					CMAKE_CXX_FLAGS_DEBUG
+					CMAKE_CXX_FLAGS_RELEASE
+					CMAKE_CXX_FLAGS_MINSIZEREL
+					CMAKE_CXX_FLAGS_RELWITHDEBINFO
+				REMOVALS "/MDd? /MTd? /RTC1 /D_DEBUG")
+	ENDIF(MSVC)
+endmacro()
+
+macro(__enable_spycc)
+	add_definitions(-DUSE_SPYCC)
+	
+	__cc_find(Spycc)
+	__assert_target(spycc)
+	
+	set(SPYCC_LIB spycc)
 endmacro()

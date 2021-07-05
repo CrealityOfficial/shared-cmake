@@ -69,7 +69,7 @@ macro(__build_info_header)
 	set(BUILD_INFO_HEAD "${PROJECT_NAME}_${BUILD_TIME}")
 	set(DEBUG_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Debug/resources/")
 	set(RELEASE_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Release/resources/")
-	configure_file(${CMAKE_SOURCE_DIR}/cmake/buildinfo.h.prebuild
+	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.prebuild
                ${CMAKE_BINARY_DIR}/buildinfo.h)
 endmacro()
 
@@ -99,8 +99,12 @@ macro(__assign_source_group dir)
     endforeach()
 endmacro()
 
+macro(__gather_source dir DEST_SOURCE)
+	file(GLOB_RECURSE ${DEST_SOURCE} RELATIVE "${dir}" "*.cpp" "*.h" "*.c" "*.cc" "*.hpp" "*.CPP" "*.hxx" "*.cxx")
+endmacro()
+
 macro(__tree_add_source dir src)
-	file(GLOB_RECURSE _SRCS RELATIVE "${dir}" "*.cpp" "*.h" "*.c" "*.cc" "*.hpp" "*.CPP")
+	file(GLOB_RECURSE _SRCS RELATIVE "${dir}" "*.cpp" "*.h" "*.c" "*.cc" "*.hpp" "*.CPP" "*.hxx" "*.cxx")
 	__assign_source_group(${dir} ${_SRCS})
 	
 	#message(STATUS ${dir})
@@ -122,7 +126,13 @@ macro(__tree_add_source dir src)
 		foreach(item ${QRCS})
 			list(APPEND QRCFILES "${dir}/${item}")
 		endforeach()
-		qt5_add_resources(QT_QRC ${QRCFILES})
+		
+		list(LENGTH QRCFILES ARGC)
+		#message(STATUS ${ARGC} ${QRCFILES})
+		if(${ARGC} GREATER 0)
+			qt5_add_resources(QT_QRC ${QRCFILES})
+			#message(STATUS ${QRCFILES})
+		endif()
 		list(APPEND ${src} ${QT_QRC})
 	endif()
 endmacro()
@@ -148,4 +158,39 @@ macro(__copy_third_party_dlls dlls)
 				)	
 		endforeach()
 	endif()
+endmacro()
+
+macro(__copy_files copy_target files)
+	add_custom_target(${copy_target} ALL COMMENT "copy third party dll!")
+	__set_target_folder(${copy_target} CMakePredefinedTargets)
+
+	add_custom_command(TARGET ${copy_target} PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+		)
+	foreach(file ${${files}})
+		add_custom_command(TARGET ${copy_target} PRE_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+				"$<$<CONFIG:Release>:${file}>"  
+				"$<$<CONFIG:Debug>:${file}>" 
+				"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+			)	
+	endforeach()
+endmacro()
+
+macro(__add_cdirectory_test)
+	#message(STATUS "__add_cdirectory_test ${ARGN}")
+	file(GLOB files *.cpp *.c *.cc)
+	foreach(var ${files})
+		string(REGEX REPLACE ".+/(.+)\\..*" "\\1" name ${var})
+		__add_real_target(${name} exe SOURCE ${var} ${ARGN})
+	endforeach()
+endmacro()
+
+macro(__add_cdirectory_prefix_test prefix)
+	#message(STATUS "__add_cdirectory_prefix_test ${ARGN}")
+	file(GLOB files *.cpp *.c *.cc)
+	foreach(var ${files})
+		string(REGEX REPLACE ".+/(.+)\\..*" "\\1" name ${var})
+		__add_real_target(${prefix}_${name} exe SOURCE ${var} ${ARGN})
+	endforeach()
 endmacro()

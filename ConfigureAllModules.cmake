@@ -15,3 +15,6 @@ include(openmp)
 include(CXX)
 include(pch)
 include(Warning)
+
+include(cc)
+include(InstallUtil)
