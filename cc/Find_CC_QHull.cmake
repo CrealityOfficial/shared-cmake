@@ -12,18 +12,19 @@ elseif(CXQHULL_INSTALL_ROOT)
 	set(qhullcpp_LIB_ROOT ${CXQHULL_INSTALL_ROOT}/lib/)
 	__search_target_components(qhullcpp
 							   INC libqhullcpp/Qhull.h
-							   DLIB quazip
-							   LIB quazip
+							   DLIB qhullcpp
+							   LIB qhullcpp
 							   )
 							   
 	set(qhullstatic_r_INCLUDE_ROOT ${CXQHULL_INSTALL_ROOT}/include/qhull/)
 	set(qhullstatic_r_LIB_ROOT ${CXQHULL_INSTALL_ROOT}/lib/)
 	__search_target_components(qhullstatic_r
 							   INC libqhullcpp/Qhull.h
-							   DLIB quazip
-							   LIB quazip
+							   DLIB qhullstatic_r
+							   LIB qhullstatic_r
 							   )
 endif()
 
 __test_import(qhullcpp lib)
 __test_import(qhullstatic_r lib)
+set(qhull qhullstatic_r qhullcpp)
