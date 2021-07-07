@@ -73,7 +73,8 @@ macro(__find_spdlog)
 endmacro()
 
 macro(__find_alibabacloud)
-	__find_one_package(AliyunOss alibabacloud/oss/Config.h "oss" lib CX_THIRDPARTY_ROOT)
+	__cc_find(AliyunOss)
+	__assert_target(AliyunOss)
 endmacro()
 
 macro(__find_cura)
