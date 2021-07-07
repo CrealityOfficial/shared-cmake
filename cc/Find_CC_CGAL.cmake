@@ -1,8 +1,8 @@
 # This sets the following variables:
 # CGAL_INCLUDE_DIRS
 
-__cc_find(Boost)
-__cc_find(Eigen)
+#__cc_find(Boost)
+#__cc_find(Eigen)
 
 if(NOT BOOST_INCLUDE_DIRS)
 	message(FATAL_ERROR "Please Specified BOOST_INCLUDE_DIRS")
@@ -25,9 +25,13 @@ macro(__cc_cgal_include package)
 endmacro()
 
 if(CGAL_INSTALL_ROOT)
-	message(STATUS "Eigen Specified CGAL_INSTALL_ROOT : ${CGAL_INSTALL_ROOT}")
+	message(STATUS "CGAL Specified CGAL_INSTALL_ROOT : ${CGAL_INSTALL_ROOT}")
 	set(CGAL_INCLUDE_DIRS ${CGAL_INSTALL_ROOT})
-else()
+elseif(CXCGAL_INSTALL_ROOT)
+	message(STATUS "CGAL Specified CXCGAL_INSTALL_ROOT : ${CXCGAL_INSTALL_ROOT}")
+	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
+		HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
+		PATHS "/usr/include/cgal/include")
 endif()
 
 __cc_cgal_include(Installation)

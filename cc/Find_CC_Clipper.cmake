@@ -10,7 +10,14 @@ if(THIRD1_INSTALL_ROOT)
 							   DLIB clipper
 							   LIB clipper
 							   )
-else()
+elseif(CXCLIPPER_INSTALL_ROOT)
+	set(clipper_INCLUDE_ROOT ${CXCLIPPER_INSTALL_ROOT}/include/)
+	set(clipper_LIB_ROOT ${CXCLIPPER_INSTALL_ROOT}/lib/)
+	__search_target_components(clipper
+							   INC clipper/clipper.hpp
+							   DLIB clipper
+							   LIB clipper
+							   )
 endif()
 
 __test_import(clipper lib)

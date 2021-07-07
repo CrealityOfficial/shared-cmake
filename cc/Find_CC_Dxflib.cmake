@@ -1,7 +1,7 @@
 # This sets the following variables:
-# zlib_INCLUDE_DIRS
-# zlib_LIBRARIES_DEBUG zlib_LIBRARIES_RELEASE
-# zlib target
+# dxflib_INCLUDE_DIRS
+# dxflib_LIBRARIES_DEBUG dxflib_LIBRARIES_RELEASE
+# dxflib target
 
 if(THIRD0_INSTALL_ROOT)
 	message(STATUS "Specified THIRD0_INSTALL_ROOT : ${THIRD0_INSTALL_ROOT}")
@@ -12,14 +12,14 @@ if(THIRD0_INSTALL_ROOT)
 							   DLIB zlib
 							   LIB zlib
 							   )
-elseif(CXZLIB_INSTALL_ROOT)
-	set(zlib_INCLUDE_ROOT ${CXZLIB_INSTALL_ROOT}/include/zlib/)
-	set(zlib_LIB_ROOT ${CXZLIB_INSTALL_ROOT}/lib/)
-	__search_target_components(zlib
-							   INC zlib.h
-							   DLIB zlib
-							   LIB zlib
+elseif(CXDXFLIB_INSTALL_ROOT)
+	set(dxflib_INCLUDE_ROOT ${CXDXFLIB_INSTALL_ROOT}/include/)
+	set(dxflib_LIB_ROOT ${CXDXFLIB_INSTALL_ROOT}/lib/)
+	__search_target_components(dxflib
+							   INC dxf/dl_attributes.h
+							   DLIB dxflib
+							   LIB dxflib
 							   )
 endif()
 
-__test_import(zlib dll)
+__test_import(dxflib dll)

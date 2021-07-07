@@ -1,26 +1,27 @@
 # This sets the following variables:
-# VCG_INCLUDE_DIRS
-# VCG_FOUND
+# STB_INCLUDE_DIRS
+# STB_FOUND
 
 if(HEADER_INSTALL_ROOT)
 	message(STATUS "Eigen Specified HEADER_INSTALL_ROOT : ${HEADER_INSTALL_ROOT}")
-	set(VCG_INSTALL_ROOT ${HEADER_INSTALL_ROOT}/include/vcglib/)
-	find_path(VCG_INCLUDE_DIRS vcg/complex/complex.h
+	set(STB_INSTALL_ROOT ${HEADER_INSTALL_ROOT}/include/vcglib/)
+	find_path(STB_INCLUDE_DIRS vcg/complex/complex.h
 				HINTS "${VCG_INSTALL_ROOT}"
 				PATHS "/usr/local/include/eigen"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
-elseif(CXVCG_INSTALL_ROOT)
-	find_path(VCG_INCLUDE_DIRS vcg/complex/complex.h
-				HINTS "${CXVCG_INSTALL_ROOT}"
+elseif(CXSTB_INSTALL_ROOT)
+	message(STATUS "****Specified CXSTB_INSTALL_ROOT : ${CXSTB_INSTALL_ROOT}")
+	find_path(STB_INCLUDE_DIRS stb/stb.h
+				HINTS "${CXSTB_INSTALL_ROOT}"
 				PATHS "/usr/local/include/eigen"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
 endif()
 	
-if(VCG_INCLUDE_DIRS)
-	set(VCG_FOUND 1)
-	message(STATUS "VCG_INCLUDE_DIRS : ${VCG_INCLUDE_DIRS}")
+if(STB_INCLUDE_DIRS)
+	set(STB_FOUND 1)
+	message(STATUS "STB_INCLUDE_DIRS : ${STB_INCLUDE_DIRS}")
 else()
-	message(STATUS "Find vcg Failed")
+	message(STATUS "Find stb Failed")
 endif()
