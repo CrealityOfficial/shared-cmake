@@ -75,7 +75,7 @@ macro(__simple_package)
 				set(CPACK_SYSTEM_NAME "win32")
 			endif()
 			# 设置 WIX 打包的外部配置文件
-			set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/wixConfig.wxs")
+			set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/wixConfig.wxs"
 		ELSEIF(APPLE)
 			 SET(CPACK_GENERATOR "DragNDrop")
 			 SET(CPACK_DMG_FORMAT "UDBZ")
