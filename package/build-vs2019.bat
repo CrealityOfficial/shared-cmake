@@ -37,31 +37,42 @@ echo %MINOR%
 echo %PATCH%
 echo %BUILD%
 echo %VERSION_EXTRA%
+
+@echo off
+
+call "%~dp0\find-msvcinfo.bat"
+if not %errorlevel%==0 (exit /b 1)
+		
+call "%VSDir%\VC\Auxiliary\Build\vcvars64.bat"
+
+REM 从注册表查询 win10 SDK 安装目录，主要用于判断注册表查询是否被禁，如果被禁 vcvars64.bat 将无法正常配置环境，需要手动配置环境依赖
+call "%~dp0\check-vcvars64.bat"
+
 rem Configure the application in the current directory
-set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-if exist %VSENV% (
-call %VSENV% 
-goto :build
-) else (echo "not find vs in" %VSENV%)
-
-
-
-set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-if exist %VSENV% (
-call %VSENV% 
-goto :build
-) else (echo "not find vs in" %VSENV%)
-
-
-
-set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-if exist %VSENV% (
-call %VSENV% 
-goto :build
-) else (echo "not find vs in" %VSENV%)
-
-set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-if exist %VSENV% (call %VSENV% ) else (exit /B)
+rem set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+rem if exist %VSENV% (
+rem call %VSENV% 
+rem goto :build
+rem ) else (echo "not find vs in" %VSENV%)
+rem 
+rem 
+rem 
+rem set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
+rem if exist %VSENV% (
+rem call %VSENV% 
+rem goto :build
+rem ) else (echo "not find vs in" %VSENV%)
+rem 
+rem 
+rem 
+rem set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+rem if exist %VSENV% (
+rem call %VSENV% 
+rem goto :build
+rem ) else (echo "not find vs in" %VSENV%)
+rem 
+rem set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+rem if exist %VSENV% (call %VSENV% ) else (exit /B)
 
 :build
 echo "build"
