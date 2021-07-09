@@ -1,8 +1,8 @@
 @echo off
 
-REM 从注册表查询 win10 SDK 安装目录，主要用于判断注册表查询是否被禁，如果被禁 vcvars64.bat 将无法正常配置环境，需要通过 setEnv 手动配置环境依赖
-for /F "tokens=1,2*" %%i in ('reg query "%1\Microsoft\Microsoft SDKs\Windows\v10.0" /v "InstallationFolder"') DO (
-    if "%%i"=="InstallationFolder" (
+REM 从注册表查询注册表版本号，主要用于判断注册表查询是否被禁，如果被禁 vcvars64.bat 将无法正常配置环境，需要通过 setEnv 手动配置环境依赖
+for /F "tokens=1,2*" %%i in ('REG QUERY HKLM\Software\Microsoft\ResKit /v Version') DO (
+    if not "%%i"=="" (
         exit /b 0
     )
 )
