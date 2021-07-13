@@ -160,6 +160,25 @@ macro(__copy_third_party_dlls dlls)
 	endif()
 endmacro()
 
+macro(__copy_occ_dlls dlls)
+	if(WIN32)
+		add_custom_target(__copy_occ ALL COMMENT "copy occ dll!")
+		__set_target_folder(__copy_occ CMakePredefinedTargets)
+
+		foreach(dll ${${dlls}})
+			set(_debug_dll "$ENV{CX_OCC_ROOT}/bin/Debug/${dll}")
+			set(_release_dll "$ENV{CX_OCC_ROOT}/bin/Release/${dll}")
+			add_custom_command(TARGET __copy_occ PRE_BUILD
+				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+					"$<$<CONFIG:Release>:${_release_dll}>"  
+					"$<$<CONFIG:Debug>:${_debug_dll}>" 
+					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+				)	
+		endforeach()
+	endif()
+endmacro()
+
 macro(__copy_files copy_target files)
 	add_custom_target(${copy_target} ALL COMMENT "copy third party dll!")
 	__set_target_folder(${copy_target} CMakePredefinedTargets)
