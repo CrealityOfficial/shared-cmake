@@ -29,6 +29,15 @@ macro(__install_inc_directory source)
 	INSTALL(DIRECTORY ${source} DESTINATION include FILES_MATCHING REGEX "/[^.]+$")
 endmacro()
 
+macro(__install_linux_binary target)
+	if(NOT WIN32)
+		INSTALL(TARGETS ${target}
+						LIBRARY DESTINATION lib
+						ARCHIVE DESTINATION .
+						RUNTIME DESTINATION bin)
+	endif()
+endmacro()
+
 macro(__install_directory_specif source dest)
 	INSTALL(DIRECTORY ${source} DESTINATION include/${dest}/ FILES_MATCHING PATTERN "*.h")
 	INSTALL(DIRECTORY ${source} DESTINATION include/${dest}/ FILES_MATCHING PATTERN "*.hpp")
