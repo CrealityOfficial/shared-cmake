@@ -16,8 +16,9 @@ macro(__assert_parameter param)
 endmacro()
 
 macro(__find_gtest)
-	__find_one_package(gtest gtest/gtest.h lib CX_ANALYSIS_ROOT)
-	__find_one_package(gtest_main gtest/gtest.h lib CX_ANALYSIS_ROOT)
+	__cc_find(Gtest)
+	__assert_target(gtest)
+	__assert_target(gtest_main)
 endmacro()
 
 macro(__find_librevenge)

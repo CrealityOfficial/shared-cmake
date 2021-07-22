@@ -19,8 +19,24 @@ if(ANALYSIS_INSTALL_ROOT)
 							   DLIB gtest_main
 							   LIB gtest_main
 							   )
-else()
+else(CXGTEST_INSTALL_ROOT)
+	message(STATUS "Specified CXGTEST_INSTALL_ROOT : ${CXGTEST_INSTALL_ROOT}")
+	set(gtest_INCLUDE_ROOT ${CXGTEST_INSTALL_ROOT}/include/)
+	set(gtest_LIB_ROOT ${CXGTEST_INSTALL_ROOT}/lib/)
+	__search_target_components(gtest
+							   INC gtest/gtest.h
+							   DLIB gtest
+							   LIB gtest
+							   )
+							   
+	set(gtest_main_INCLUDE_ROOT ${CXGTEST_INSTALL_ROOT}/include/)
+	set(gtest_main_LIB_ROOT ${CXGTEST_INSTALL_ROOT}/lib/)
+	__search_target_components(gtest_main
+							   INC gtest/gtest.h
+							   DLIB gtest_main
+							   LIB gtest_main
+							   )
 endif()
 
-__test_import(gtest dll)
+__test_import(gtest lib)
 __test_import(gtest_main lib)
