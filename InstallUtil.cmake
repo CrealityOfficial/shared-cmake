@@ -29,6 +29,15 @@ macro(__install_inc_directory source)
 	INSTALL(DIRECTORY ${source} DESTINATION include FILES_MATCHING REGEX "/[^.]+$")
 endmacro()
 
+macro(__install_linux_binary target)
+	if(NOT WIN32)
+		INSTALL(TARGETS ${target}
+						LIBRARY DESTINATION lib
+						ARCHIVE DESTINATION .
+						RUNTIME DESTINATION bin)
+	endif()
+endmacro()
+
 macro(__install_directory_specif source dest)
 	INSTALL(DIRECTORY ${source} DESTINATION include/${dest}/ FILES_MATCHING PATTERN "*.h")
 	INSTALL(DIRECTORY ${source} DESTINATION include/${dest}/ FILES_MATCHING PATTERN "*.hpp")
@@ -100,6 +109,16 @@ macro(__specific_package_root)
 		set(CXGTEST_INSTALL_ROOT $ENV{CX_THIRDPARTY_ROOT})
 	else()
 		message(STATUS "not specific Env CX_THIRDPARTY_ROOT")
+	endif()
+endmacro()
+
+macro(__specific_occ_install_root install_root)
+	if(DEFINED ${install_root})
+		message(STATUS "specific occ install roots to : $${install_root}")
+		set(OCC_INSTALL_ROOT $${install_root})
+		set(OPENNURBS_INSTALL_ROOT $${install_root})
+	else()
+		message(STATUS "not specific occ install roots to : $${install_root}")
 	endif()
 endmacro()
 
