@@ -87,6 +87,10 @@ macro(__find_quazip)
 	__assert_target(quazip)
 endmacro()
 
+macro(__find_mysql)
+	__find_one_package(mysqlclient mysql.h "" lib MY_SQL_ROOT)
+endmacro()
+
 macro(__include_stb)
 	__cc_find(Stb)
 	__assert_parameter(STB_INCLUDE_DIRS)
