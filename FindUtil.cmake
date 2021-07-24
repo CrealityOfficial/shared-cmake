@@ -52,6 +52,10 @@ macro(__find_quazip)
 	__find_one_package(quazip quazip/quazip.h "" dll CX_THIRDPARTY_ROOT)
 endmacro()
 
+macro(__find_mysql)
+	__find_one_package(mysqlclient mysql.h "" lib MY_SQL_ROOT)
+endmacro()
+
 macro(__include_stb)
 	__required_find_package(stb)
 	include_directories(${stb_INCLUDE_DIRS})
