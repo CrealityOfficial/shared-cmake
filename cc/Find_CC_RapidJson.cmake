@@ -12,12 +12,15 @@ if(HEADER_INSTALL_ROOT)
 				)
 elseif(CXRAPIDJSON_INSTALL_ROOT)
 	message(STATUS "****Specified CXRAPIDJSON_INSTALL_ROOT : ${CXRAPIDJSON_INSTALL_ROOT}")
-	find_path(RAPIDJSON_INCLUDE_DIRS rapidjson/rapidjson.h
-				HINTS "${CXRAPIDJSON_INSTALL_ROOT}"
-				PATHS "/usr/local/include/eigen"
-				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
-				)
+	set(RAPIDJSON_INSTALL_ROOT ${CXRAPIDJSON_INSTALL_ROOT})
 endif()
+
+find_path(RAPIDJSON_INCLUDE_DIRS rapidjson/rapidjson.h
+			HINTS "${RAPIDJSON_INSTALL_ROOT}"
+			PATHS "/usr/local/include/" "/usr/include/"
+				"/usr/local/include/rapidjson/" "/usr/include/rapidjson/"
+			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+			)
 	
 if(RAPIDJSON_INCLUDE_DIRS)
 	set(RapidJson_FOUND 1)

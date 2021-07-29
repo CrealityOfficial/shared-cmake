@@ -17,12 +17,13 @@ function(__test_import target type)
 endfunction()
 
 function(__search_target_components target)
-	cmake_parse_arguments(search "" "" "INC;DLIB;LIB;PREFIX;" ${ARGN})
+	cmake_parse_arguments(search "" "" "INC;DLIB;LIB;" ${ARGN})
 	
 	find_path(${target}_INCLUDE_DIRS
 			NAMES ${search_INC}
 			HINTS "${${target}_INCLUDE_ROOT}"
-			PATHS "/usr/include/${search_PREFIX}" "/usr/local/include/${search_PREFIX}"
+			PATHS "/usr/include/" "/usr/include/${target}/"
+					"/usr/local/include/" "/usr/local/include/${target}/"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 
