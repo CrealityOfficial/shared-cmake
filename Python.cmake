@@ -1,4 +1,5 @@
 macro(__use_python)
+	if(WIN32)
 	find_package(Python3 COMPONENTS Interpreter Development)
 		
 	if(Python3_FOUND AND Python3_Development_FOUND)
@@ -17,6 +18,7 @@ macro(__use_python)
 		set(PYTHON_LIBRARY Python3)
 	else()
 		message(STATUS "Can't find Python3.")
+	endif()
 	endif()
 endmacro()
 

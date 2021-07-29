@@ -16,9 +16,7 @@ __build_info_header()
 
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	if(APPLE)
-		SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/)
-	elseif(WIN32)
+	if(WIN32)
 		SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../install/)
 	endif()
 endif()
