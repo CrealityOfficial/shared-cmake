@@ -20,12 +20,14 @@ __search_target_components(qhullcpp
 						   INC libqhullcpp/Qhull.h
 						   DLIB qhullcpp
 						   LIB qhullcpp
+						   PRE qhull
 						   )
 
 __search_target_components(qhullstatic_r
 						   INC libqhullcpp/Qhull.h
 						   DLIB qhullstatic_r
 						   LIB qhullstatic_r
+						   PRE qhull
 						   )
 
 __test_import(qhullcpp lib)
