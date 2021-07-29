@@ -5,18 +5,16 @@
 if(HEADER_INSTALL_ROOT)
 	message(STATUS "Eigen Specified HEADER_INSTALL_ROOT : ${HEADER_INSTALL_ROOT}")
 	set(VCG_INSTALL_ROOT ${HEADER_INSTALL_ROOT}/include/vcglib/)
-	find_path(VCG_INCLUDE_DIRS vcg/complex/complex.h
-				HINTS "${VCG_INSTALL_ROOT}"
-				PATHS "/usr/local/include/eigen"
-				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
-				)
 elseif(CXVCG_INSTALL_ROOT)
-	find_path(VCG_INCLUDE_DIRS vcg/complex/complex.h
-				HINTS "${CXVCG_INSTALL_ROOT}"
-				PATHS "/usr/local/include/eigen"
-				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
-				)
+	set(VCG_INSTALL_ROOT ${CXVCG_INSTALL_ROOT})
 endif()
+
+find_path(VCG_INCLUDE_DIRS vcg/complex/complex.h
+			HINTS "${VCG_INSTALL_ROOT}"
+			PATHS "/usr/local/include/" "/usr/include/"
+				"/usr/local/include/vcg/" "/usr/include/vcg/"
+			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+			)
 	
 if(VCG_INCLUDE_DIRS)
 	set(VCG_FOUND 1)
