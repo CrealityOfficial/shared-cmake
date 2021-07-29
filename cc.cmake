@@ -22,21 +22,21 @@ function(__search_target_components target)
 	find_path(${target}_INCLUDE_DIRS
 			NAMES ${search_INC}
 			HINTS "${${target}_INCLUDE_ROOT}"
-			PATHS "/usr/include/${search_PREFIX}"
+			PATHS "/usr/include/${search_PREFIX}" "/usr/local/include/${search_PREFIX}"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 
 	find_library(${target}_LIBRARIES_DEBUG
 				NAMES ${search_DLIB}
 				HINTS "${${target}_LIB_ROOT}/Debug"
-				PATHS "/usr/lib/Debug"
+				PATHS "/usr/lib/Debug" "/usr/local/lib/Debug"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
 				
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}/Release"
-			PATHS "/usr/lib/Release"
+			PATHS "/usr/lib/Release" "/usr/local/lib/Release"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 				
