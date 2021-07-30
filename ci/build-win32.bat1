@@ -1,0 +1,30 @@
+echo off
+
+set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (
+call %VSENV% 
+goto :build
+) else (echo "not find vs in" %VSENV%)
+
+set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (call %VSENV% ) else (exit /B)
+
+:build
+echo "build"
+
+cd ..
+rd /s /q build
+
+mkdir build
+cd build
+
+cmake ^
+    -G"Visual Studio 16 2019" ^
+    ..\\header || exit /b
+
+devenv HeaderInstall.sln /Build "Debug|x64"
+devenv HeaderInstall.sln /Build "Release|x64"
+
+devenv HeaderInstall.sln /Build "Release|x64" /Project INSTALL 
+
+cd ..\header
