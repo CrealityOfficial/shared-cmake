@@ -15,8 +15,8 @@ cd %~dp0
 
 cd ../../
 
-mkdir win32-build
-cd win32-build
+mkdir ninja-build
+cd ninja-build
 mkdir build
 cd build
 
