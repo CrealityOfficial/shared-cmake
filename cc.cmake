@@ -25,20 +25,21 @@ function(__search_target_components target)
 			PATHS "/usr/include/" "/usr/include/${target}/"
 					"/usr/local/include/" "/usr/local/include/${target}/"
 					"/usr/include/${search_PRE}" "/usr/local/include/${search_PRE}/"
+					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 
 	find_library(${target}_LIBRARIES_DEBUG
 				NAMES ${search_DLIB}
 				HINTS "${${target}_LIB_ROOT}/Debug"
-				PATHS "/usr/lib/Debug" "/usr/local/lib/Debug"
+				PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "$ENV{USR_INSTALL_ROOT}/lib/Debug/"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
 				
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}/Release"
-			PATHS "/usr/lib/Release" "/usr/local/lib/Release"
+			PATHS "/usr/lib/Release" "/usr/local/lib/Release" "$ENV{USR_INSTALL_ROOT}/lib/Release/"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 				

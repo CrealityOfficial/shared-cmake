@@ -16,6 +16,7 @@ __search_target_components(zlib
 						   INC zlib.h
 						   DLIB zlib
 						   LIB zlib
+						   PRE zlib
 						   )
 
 __test_import(zlib dll)
