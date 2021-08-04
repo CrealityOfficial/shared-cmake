@@ -4,10 +4,12 @@ macro(__enable_qt5)
 	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_AUTORCC ON)
 
-	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Concurrent OpenGL REQUIRED)
-	include(qml)
+	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Concurrent OpenGL)
 	
-	set(QT5_ENABLED 1)
+	if(TARGET Qt5::Core)
+		include(qml)
+		set(QT5_ENABLED 1)
+	endif()
 endmacro()
 
 

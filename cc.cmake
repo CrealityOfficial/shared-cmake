@@ -33,6 +33,7 @@ function(__search_target_components target)
 				NAMES ${search_DLIB}
 				HINTS "${${target}_LIB_ROOT}/Debug"
 				PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "$ENV{USR_INSTALL_ROOT}/lib/Debug/"
+					"/usr/bin/Debug" "/usr/local/bin/Debug"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
 				
@@ -40,6 +41,7 @@ function(__search_target_components target)
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}/Release"
 			PATHS "/usr/lib/Release" "/usr/local/lib/Release" "$ENV{USR_INSTALL_ROOT}/lib/Release/"
+				"/usr/bin/Release" "/usr/local/bin/Release"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 				
