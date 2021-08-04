@@ -32,6 +32,14 @@ elseif(CXCGAL_INSTALL_ROOT)
 	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
 		HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
 		PATHS "/usr/include/cgal/include")
+else()
+	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
+		HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
+		PATHS "/usr/include/" "/usr/local/include/" 
+				"/usr/include/CGAL/" "/usr/local/include/CGAL/"
+				"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/CGAL"
+		NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+		)
 endif()
 
 __cc_cgal_include(Installation)
