@@ -41,6 +41,7 @@ set(OCC_LIBS TKVCAF
 			 TKXDEIGES
 			 TKMeshVS
 			 )
+			 
 if(OCC_INSTALL_ROOT)
 	message(STATUS "Specified OCC_INSTALL_ROOT : ${OCC_INSTALL_ROOT}")
 	
@@ -56,12 +57,24 @@ if(OCC_INSTALL_ROOT)
 	
 	set(OCC_INCLUDE_DIRS ${OCC_INSTALL_ROOT}/include/occ/)
 else()
+	foreach(item ${OCC_LIBS})
+		__search_target_components(${item}
+								INC AIS.hxx
+								DLIB ${item}
+								LIB ${item}
+								PRE occ
+								)
+	endforeach()
+	
+	if(TARGET TKernel)
+		set(OCC_INCLUDE_DIRS ${TKernel_INCLUDE_DIRS})
+	endif()
 endif()
 
 foreach(item ${OCC_LIBS})
 	__test_import(${item} dll)
-	__assert_target(${item})
 endforeach()
+message(STATUS "OpenCascade directory :${OCC_INCLUDE_DIRS}")
 
 set(OCC_BASE_LIBS TKernel TKMath)
 set(OCC_IMPORT_LIBS ${OCC_BASE_LIBS} TKIGES TKXSBase)

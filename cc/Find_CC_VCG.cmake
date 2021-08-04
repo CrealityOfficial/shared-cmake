@@ -11,8 +11,9 @@ endif()
 
 find_path(VCG_INCLUDE_DIRS vcg/complex/complex.h
 			HINTS "${VCG_INSTALL_ROOT}"
-			PATHS "/usr/local/include/" "/usr/include/"
-				"/usr/local/include/vcg/" "/usr/include/vcg/"
+			PATHS "/usr/include/" "/usr/local/include/" 
+					"/usr/include/vcglib" "/usr/local/include/vcglib/"
+					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/vcglib"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 	
