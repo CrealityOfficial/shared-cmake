@@ -18,3 +18,5 @@ include(Warning)
 
 include(cc)
 include(InstallUtil)
+
+include(collect/CollectEntry)
