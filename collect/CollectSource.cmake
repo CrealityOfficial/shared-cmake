@@ -28,7 +28,7 @@ function(__collect_source_tree_from_directory SOURCE_VAR)
 		set(FINAL_FILES ${FILES_VAR})
 	endif()
 
-	message(STATUS "__collect_assign_source_group : ${FINAL_FILES}")
+	#message(STATUS "__collect_assign_source_group : ${FINAL_FILES}")
 	
 	__collect_assign_source_group(${FINAL_FILES})
 	set(${SOURCE_VAR} ${FINAL_FILES} PARENT_SCOPE)
