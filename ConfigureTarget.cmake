@@ -22,7 +22,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.4)
 endif()
 
 macro(configure_target target)
-	if(WIN32 OR APPLE)
+	if(NOT ANDROID)
 		set_target_properties(${target} PROPERTIES
 							LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
 							ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
@@ -31,16 +31,6 @@ macro(configure_target target)
 							ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
 							RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 							)
-	else()
-		#message(STATUS "${target} ----> ${BIN_OUTPUT_DIR}")
-		set_target_properties(${target} PROPERTIES
-						LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						)
 	endif()
 endmacro()
 
