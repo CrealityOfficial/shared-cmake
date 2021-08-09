@@ -27,7 +27,7 @@ macro(__find_librevenge)
 endmacro()
 
 macro(__find_trimesh2)
-	__cc_find(TriMesh2)
+	__cc_find(Trimesh2)
 	__assert_target(trimesh2)
 endmacro()
 
@@ -79,7 +79,8 @@ macro(__find_alibabacloud)
 endmacro()
 
 macro(__find_cura)
-	__find_one_package(cura Application.h cura lib CX_THIRDPARTY_ROOT)
+	__cc_find(Cura)
+	__assert_target(cura)
 endmacro()
 
 macro(__find_quazip)

@@ -13,6 +13,7 @@ find_path(EIGEN_INCLUDE_DIRS Eigen/Cholesky
 			HINTS "${EIGEN_INSTALL_ROOT}"
 			PATHS "/usr/local/include/eigen/" "/usr/include/eigen/"
 				"/usr/local/include/" "/usr/include/"
+				"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/eigen"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 	

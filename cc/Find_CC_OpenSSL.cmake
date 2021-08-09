@@ -19,12 +19,14 @@ __search_target_components(ssl
 						   INC openssl/aes.h
 						   DLIB ssl
 						   LIB ssl
+						   PRE openssl
 						   )
 							   
 __search_target_components(crypto
 						   INC openssl/aes.h
 						   DLIB crypto
 						   LIB crypto
+						   PRE openssl
 						   )
 							   
 if( WIN32 AND NOT CYGWIN )
