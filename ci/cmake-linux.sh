@@ -4,6 +4,8 @@
 # echo ${workdir}
 # cd $workdir
 # cd ../../
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
 
 mkdir linux-build
 cd linux-build

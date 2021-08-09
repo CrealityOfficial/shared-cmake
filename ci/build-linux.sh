@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+
 workdir=$(cd $(dirname $0); pwd)
 echo ${workdir}
 cd $workdir
