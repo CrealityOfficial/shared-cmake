@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_MODULE_SOURCE ${CMAKE_CURRENT_LIST_DIR})
 #config targets, separate src, lib, bin
 
 set(global_all_targets)
