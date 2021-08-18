@@ -32,6 +32,12 @@ macro(configure_target target)
 							ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
 							RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 							)
+	elseif(ANDROID AND ANDROID_CROSSING)
+		set_target_properties(${target} PROPERTIES
+						LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						)	
 	endif()
 endmacro()
 
