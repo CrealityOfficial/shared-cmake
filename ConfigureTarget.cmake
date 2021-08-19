@@ -274,13 +274,13 @@ macro(__find_one_package target inc prefix type env)
 	find_library(${target}_LIBRARIES_DEBUG
 				 NAMES ${target}
 				 HINTS "$ENV{${env}}/lib/Debug"
-				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug"
+				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/x86_64-linux-gnu"
 				 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	find_library(${target}_LIBRARIES_RELEASE
 			 NAMES ${target}
 			 HINTS "$ENV{${env}}/lib/Release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release"
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release" "/usr/lib/x86_64-linux-gnu"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
