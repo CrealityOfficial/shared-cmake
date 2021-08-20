@@ -32,6 +32,12 @@ macro(configure_target target)
 							ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
 							RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 							)
+	elseif(ANDROID AND ANDROID_CROSSING)
+		set_target_properties(${target} PROPERTIES
+						LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						)	
 	endif()
 endmacro()
 
@@ -270,13 +276,13 @@ macro(__find_one_package target inc prefix type env)
 	find_library(${target}_LIBRARIES_DEBUG
 				 NAMES ${target}
 				 HINTS "$ENV{${env}}/lib/Debug"
-				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug"
+				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/x86_64-linux-gnu"
 				 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	find_library(${target}_LIBRARIES_RELEASE
 			 NAMES ${target}
 			 HINTS "$ENV{${env}}/lib/Release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release"
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release" "/usr/lib/x86_64-linux-gnu"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")
