@@ -12,7 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_MODULE_SOURCE ${CMAKE_CURRENT_LIST_DIR})
+set(CMAKE_MODULE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
 #config targets, separate src, lib, bin
 
 set(global_all_targets)
@@ -74,6 +74,8 @@ function(__add_real_target target type)
 			list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__vld.cpp)
 		endif()
 		
+		message(STATUS "add test __add_real_target ${target}-----------------------> ${type}")
+				
 		if(${type} STREQUAL "exe")
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		elseif(${type} STREQUAL "winexe")
@@ -87,15 +89,15 @@ function(__add_real_target target type)
 		elseif(${type} STREQUAL "obj")
 			add_library(${target} OBJECT ${target_SOURCE})
 		else()
-			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
+			add_library(${target} STATIC ${target_SOURCE} ${ExtraSrc})
 		endif()
 		__add_target(${target})
-        if(APPLE)
-            set_target_properties(${target}
-            PROPERTIES
-            INSTALL_RPATH "@executable_path/../Frameworks"
-        )
-        endif()
+        #if(APPLE)
+        #    set_target_properties(${target}
+        #    PROPERTIES
+        #    INSTALL_RPATH "@executable_path/../Frameworks"
+		#	)
+        #endif()
 		#libs
 		if(target_LIB)
 			foreach(lib ${target_LIB})
