@@ -32,6 +32,14 @@ elseif(CXCGAL_INSTALL_ROOT)
 	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
 		HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
 		PATHS "/usr/include/cgal/include")
+else()
+	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
+		HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
+		PATHS "/usr/include/" "/usr/local/include/" 
+				"/usr/include/CGAL/" "/usr/local/include/CGAL/"
+				"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/CGAL"
+		NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+		)
 endif()
 
 __cc_cgal_include(Installation)
@@ -79,6 +87,7 @@ __cc_cgal_include(TDS_2)
 __cc_cgal_include(Surface_mesh)
 __cc_cgal_include(Surface_mesh_simplification)
 __cc_cgal_include(HalfedgeDS)
+__cc_cgal_include(Surface_mesh_parameterization)
 
 #enable cluster point 
 __cc_cgal_include(Point_set_processing_3)
@@ -87,3 +96,9 @@ __cc_cgal_include(Solver_interface)
 __cc_cgal_include(Triangulation_3)
 __cc_cgal_include(TDS_3)
 __cc_cgal_include(Subdivision_method_3)
+__cc_cgal_include(Convex_decomposition_3)
+__cc_cgal_include(Convex_hull_2)
+__cc_cgal_include(Convex_hull_3)
+__cc_cgal_include(Convex_hull_d)
+__cc_cgal_include(Bounding_volumes)
+__cc_cgal_include(Optimisation_basic)

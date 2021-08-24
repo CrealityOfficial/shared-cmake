@@ -5,18 +5,17 @@
 if(HEADER_INSTALL_ROOT)
 	message(STATUS "Eigen Specified HEADER_INSTALL_ROOT : ${HEADER_INSTALL_ROOT}")
 	set(EIGEN_INSTALL_ROOT ${HEADER_INSTALL_ROOT}/include/eigen/)
-	find_path(EIGEN_INCLUDE_DIRS Eigen/Cholesky
-				HINTS "${EIGEN_INSTALL_ROOT}"
-				PATHS "/usr/local/include/eigen"
-				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
-				)
 elseif(CXEIGEN_INSTALL_ROOT)
-	find_path(EIGEN_INCLUDE_DIRS Eigen/Cholesky
-				HINTS "${CXEIGEN_INSTALL_ROOT}"
-				PATHS "/usr/local/include/eigen"
-				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
-				)
+	set(EIGEN_INSTALL_ROOT ${CXEIGEN_INSTALL_ROOT})
 endif()
+
+find_path(EIGEN_INCLUDE_DIRS Eigen/Cholesky
+			HINTS "${EIGEN_INSTALL_ROOT}"
+			PATHS "/usr/local/include/eigen/" "/usr/include/eigen/"
+				"/usr/local/include/" "/usr/include/"
+				"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/eigen"
+			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+			)
 	
 if(EIGEN_INCLUDE_DIRS)
 	set(Eigen_FOUND 1)

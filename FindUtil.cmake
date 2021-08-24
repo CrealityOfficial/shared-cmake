@@ -16,8 +16,9 @@ macro(__assert_parameter param)
 endmacro()
 
 macro(__find_gtest)
-	__find_one_package(gtest gtest/gtest.h lib CX_ANALYSIS_ROOT)
-	__find_one_package(gtest_main gtest/gtest.h lib CX_ANALYSIS_ROOT)
+	__cc_find(Gtest)
+	__assert_target(gtest)
+	__assert_target(gtest_main)
 endmacro()
 
 macro(__find_librevenge)
@@ -78,12 +79,17 @@ macro(__find_alibabacloud)
 endmacro()
 
 macro(__find_cura)
-	__find_one_package(cura Application.h cura lib CX_THIRDPARTY_ROOT)
+	__cc_find(Cura)
+	__assert_target(cura)
 endmacro()
 
 macro(__find_quazip)
 	__cc_find(Quazip)
 	__assert_target(quazip)
+endmacro()
+
+macro(__find_mysql)
+	__find_one_package(mysqlclient mysql.h "mysql" lib MY_SQL_ROOT)
 endmacro()
 
 macro(__include_stb)

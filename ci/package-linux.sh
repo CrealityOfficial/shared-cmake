@@ -10,6 +10,10 @@ if [ -z $3 ]; then
 else
 	VERSION_EXTRA=$3
 fi
+
+export CC=/usr/bin/clang
+export CXX=/usr/bin/clang++
+
 TAGNAME=${1:1}
 arr=(${TAGNAME//./ })
 MAJOR=${arr[0]}

@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_MODULE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
 #config targets, separate src, lib, bin
 
 set(global_all_targets)
@@ -22,7 +23,7 @@ if(${CMAKE_VERSION} VERSION_LESS 3.4)
 endif()
 
 macro(configure_target target)
-	if(WIN32 OR APPLE)
+	if(NOT ANDROID)
 		set_target_properties(${target} PROPERTIES
 							LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
 							ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
@@ -31,16 +32,12 @@ macro(configure_target target)
 							ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
 							RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 							)
-	else()
-		#message(STATUS "${target} ----> ${BIN_OUTPUT_DIR}")
+	elseif(ANDROID AND ANDROID_CROSSING)
 		set_target_properties(${target} PROPERTIES
-						LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						)
+						LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						)	
 	endif()
 endmacro()
 
@@ -83,6 +80,8 @@ function(__add_real_target target type)
 			list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__vld.cpp)
 		endif()
 		
+		message(STATUS "add test __add_real_target ${target}-----------------------> ${type}")
+				
 		if(${type} STREQUAL "exe")
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		elseif(${type} STREQUAL "winexe")
@@ -96,15 +95,15 @@ function(__add_real_target target type)
 		elseif(${type} STREQUAL "obj")
 			add_library(${target} OBJECT ${target_SOURCE})
 		else()
-			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
+			add_library(${target} STATIC ${target_SOURCE} ${ExtraSrc})
 		endif()
 		__add_target(${target})
-        if(APPLE)
-            set_target_properties(${target}
-            PROPERTIES
-            INSTALL_RPATH "@executable_path/../Frameworks"
-        )
-        endif()
+        #if(APPLE)
+        #    set_target_properties(${target}
+        #    PROPERTIES
+        #    INSTALL_RPATH "@executable_path/../Frameworks"
+		#	)
+        #endif()
 		#libs
 		if(target_LIB)
 			foreach(lib ${target_LIB})
@@ -162,6 +161,14 @@ function(__add_real_target target type)
 		message("add target ${target} without sources")
 	endif(target_SOURCE)
 endfunction()
+
+macro(__add_real_library target)
+	if(BUILD_SHARED_LIBS)
+		__add_real_target(${target} dll ${ARGN})
+	else()
+		__add_real_target(${target} lib ${ARGN})
+	endif()
+endmacro()
 
 function(__add_exe_target target)
 	__add_real_target(${target} exe ${ARGN})
@@ -269,13 +276,13 @@ macro(__find_one_package target inc prefix type env)
 	find_library(${target}_LIBRARIES_DEBUG
 				 NAMES ${target}
 				 HINTS "$ENV{${env}}/lib/Debug"
-				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug"
+				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/x86_64-linux-gnu"
 				 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	find_library(${target}_LIBRARIES_RELEASE
 			 NAMES ${target}
 			 HINTS "$ENV{${env}}/lib/Release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release"
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release" "/usr/lib/x86_64-linux-gnu"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")

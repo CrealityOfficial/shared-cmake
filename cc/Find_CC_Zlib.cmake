@@ -7,19 +7,16 @@ if(THIRD0_INSTALL_ROOT)
 	message(STATUS "Specified THIRD0_INSTALL_ROOT : ${THIRD0_INSTALL_ROOT}")
 	set(zlib_INCLUDE_ROOT ${THIRD0_INSTALL_ROOT}/include/zlib/)
 	set(zlib_LIB_ROOT ${THIRD0_INSTALL_ROOT}/lib/)
-	__search_target_components(zlib
-							   INC zlib.h
-							   DLIB zlib
-							   LIB zlib
-							   )
 elseif(CXZLIB_INSTALL_ROOT)
 	set(zlib_INCLUDE_ROOT ${CXZLIB_INSTALL_ROOT}/include/zlib/)
 	set(zlib_LIB_ROOT ${CXZLIB_INSTALL_ROOT}/lib/)
-	__search_target_components(zlib
-							   INC zlib.h
-							   DLIB zlib
-							   LIB zlib
-							   )
 endif()
+
+__search_target_components(zlib
+						   INC zlib.h
+						   DLIB zlib
+						   LIB zlib
+						   PRE zlib
+						   )
 
 __test_import(zlib dll)

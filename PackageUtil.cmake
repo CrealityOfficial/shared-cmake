@@ -16,10 +16,12 @@ __build_info_header()
 
 
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	if(APPLE)
-		SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/)
-	elseif(WIN32)
-		SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../install/)
+endif()
+
+if(WIN32 AND CMAKE_BUILD_TYPE MATCHES "Release")
+	SET(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/../install/)
+	if(DEFINED ENV{USR_WIN32_CMAKE_INSTALL})
+		SET(CMAKE_INSTALL_PREFIX $ENV{USR_WIN32_CMAKE_INSTALL})
 	endif()
 endif()
 
@@ -74,7 +76,6 @@ macro(__simple_package)
 			else()
 				set(CPACK_SYSTEM_NAME "win32")
 			endif()
-			# 设置 WIX 打包的外部配置文件
 			set(CPACK_WIX_PATCH_FILE "${CMAKE_SOURCE_DIR}/wixConfig.wxs")
 		ELSEIF(APPLE)
 			 SET(CPACK_GENERATOR "DragNDrop")

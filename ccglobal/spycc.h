@@ -10,9 +10,9 @@
 #define ANALYSIS_TICK(x) SESSION_TICK(x)
 #define ANALYSIS_DUMP(x) SESSION_DUMP(x)
 #else
-#define ANALYSIS_START(x)
-#define ANALYSIS_TICK(x)
-#define ANALYSIS_DUMP(x)
+#define ANALYSIS_START(x) void(x);
+#define ANALYSIS_TICK(x) void(x);
+#define ANALYSIS_DUMP(x) void(x);
 #endif
 
 #endif
