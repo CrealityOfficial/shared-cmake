@@ -1,4 +1,4 @@
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/cc/")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cc/")
 
 macro(__cc_find)
 	message(STATUS "CC ****** Start Find ${ARGN}")

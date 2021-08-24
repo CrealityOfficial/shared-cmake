@@ -26,7 +26,7 @@ macro(__find_librevenge)
 endmacro()
 
 macro(__find_trimesh2)
-	__cc_find(TriMesh2)
+	__cc_find(Trimesh2)
 	__assert_target(trimesh2)
 endmacro()
 
