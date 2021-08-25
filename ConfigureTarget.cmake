@@ -22,6 +22,14 @@ if(${CMAKE_VERSION} VERSION_LESS 3.4)
 	include(CMakeParseArguments)
 endif()
 
+if(ANDROID)
+	find_library(log-lib log)
+	find_library(libandroid android)
+	
+	message(STATUS "Android find log ${log-lib}")
+	set(ANDROID_LIBS ${log-lib} ${libandroid} GLESv2)
+endif()
+
 macro(configure_target target)
 	if(NOT ANDROID)
 		set_target_properties(${target} PROPERTIES
@@ -110,6 +118,9 @@ function(__add_real_target target type)
 				target_link_libraries(${target} PRIVATE ${lib})
 				#message(STATUS ${lib}) 	
 			endforeach()
+		endif()
+		if(ANDROID)
+			target_link_libraries(${target} PRIVATE ${log-lib})
 		endif()
 		#incs
 		if(target_INC)
