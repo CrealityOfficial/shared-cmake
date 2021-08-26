@@ -27,7 +27,7 @@ if(ANDROID)
 	find_library(libandroid android)
 	
 	message(STATUS "Android find log ${log-lib}")
-	set(ANDROID_LIBS ${log-lib} ${libandroid} GLESv2)
+	set(ANDROID_LIBS ${log-lib} ${libandroid})
 endif()
 
 macro(configure_target target)
