@@ -20,3 +20,4 @@ include(cc)
 include(InstallUtil)
 
 include(collect/CollectEntry)
+include(qt/QtEntry)
