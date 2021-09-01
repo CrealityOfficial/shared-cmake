@@ -8,6 +8,21 @@ if(FMPEG_INSTALL_ROOT)
 	
 	set(avcodec_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
 	set(avcodec_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
+	
+	set(avformat_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
+	set(avformat_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
+	
+	set(avutil_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
+	set(avutil_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
+	
+	set(swscale_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
+	set(swscale_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
+	
+	set(swresample_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
+	set(swresample_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
+	
+	set(x264_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
+	set(x264_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
 							   
 else()
 
