@@ -55,7 +55,7 @@ __search_target_components_signle(swresample
 						   LIB swresample
 						   )
 __search_target_components_signle(x264
-						   INC x264.h.h
+						   INC x264.h
 						   DLIB x264
 						   LIB x264
 						   )						   
