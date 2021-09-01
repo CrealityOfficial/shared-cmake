@@ -3,19 +3,19 @@
 # FMPEG_INCLUDE_FOUND
 
 if(FMPEG_INSTALL_ROOT)
-	message(STATUS "Boost Specified FMPEG_INSTALL_ROOT : ${FMPEG_INSTALL_ROOT}")
+	message(STATUS "FMpeg Specified FMPEG_INSTALL_ROOT : ${FMPEG_INSTALL_ROOT}")
 	set(FMPEG_INCLUDE_DIRS ${FMPEG_INSTALL_ROOT}/include/)
 	
-	set(libavcodec_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
-	set(libavcodec_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
+	set(avcodec_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
+	set(avcodec_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
 							   
 else()
 
 	message("Not Set The FMPEG_INSTALL_ROOT ")
 endif()
 	
-__search_signle_target_components(avcodec
-						   INC avcodec/avcodec.h
+__search_target_components_signle(avcodec
+						   INC libavcodec/avcodec.h
 						   DLIB avcodec
 						   LIB avcodec
 						   )

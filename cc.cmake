@@ -19,7 +19,7 @@ endfunction()
 function(__test_import_signle target type)
 	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES)
 		set(${target}_FOUND 1)
-		__import_target(${target} ${type})
+		__import_target_signle(${target} ${type})
 		message(STATUS "import ${target} success.")
 	else()
 		message(STATUS "import ${target} failed.")
@@ -60,7 +60,7 @@ function(__search_target_components target)
 	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
 endfunction()
 
-function(__search_signle_target_components target)
+function(__search_target_components_signle target)
 	cmake_parse_arguments(search "" "" "INC;DLIB;LIB;PRE;" ${ARGN})
 	find_path(${target}_INCLUDE_DIRS
 			NAMES ${search_INC}

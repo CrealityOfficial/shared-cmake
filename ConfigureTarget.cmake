@@ -248,6 +248,25 @@ macro(__import_target target type)
 	endif()
 endmacro()
 
+macro(__import_target_signle target type)
+	#message("${target}...........")
+	if (NOT TARGET ${target})		
+		if(${type} STREQUAL "dll")
+			add_library(${target} SHARED IMPORTED)
+		else()
+			add_library(${target} STATIC IMPORTED)
+		endif()
+		
+		set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${${target}_INCLUDE_DIRS})
+		
+		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${${target}_LIBRARIES})
+		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_RELEASE ${${target}_LIBRARIES})
+		
+		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_DEBUG ${${target}_LIBRARIES})
+		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_RELEASE ${${target}_LIBRARIES})
+	endif()
+endmacro()
+
 macro(__find_simple_package target type)
 	if(${target}_INCLUDE_DIR)
 		set(${target}_INCLUDE_DIRS ${${target}_INCLUDE_DIR})
