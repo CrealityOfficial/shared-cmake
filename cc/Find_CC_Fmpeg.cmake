@@ -75,6 +75,7 @@ __test_import_signle(swscale dll)
 __test_import_signle(swresample dll)
 __test_import_signle(x264 dll)
 __test_import_signle(avutil dll)
+__test_import_signle(avdevice dll)
 
 if(FMPEG_INCLUDE_DIRS)
 	set(FMPEG_INCLUDE_FOUND 1)
