@@ -19,8 +19,39 @@ __search_target_components_signle(avcodec
 						   DLIB avcodec
 						   LIB avcodec
 						   )
+__search_target_components_signle(avformat
+						   INC libavformat/avformat.h
+						   DLIB avformat
+						   LIB avformat
+						   )
+__search_target_components_signle(avutil
+						   INC libavutil/avutil.h
+						   DLIB avutil
+						   LIB avutil
+						   )
+__search_target_components_signle(swscale
+						   INC libswscale/swscale.h
+						   DLIB swscale
+						   LIB swscale
+						   )	
+__search_target_components_signle(swresample
+						   INC libswresample/swresample.h
+						   DLIB swresample
+						   LIB swresample
+						   )
+__search_target_components_signle(x264
+						   INC x264.h.h
+						   DLIB x264
+						   LIB x264
+						   )						   
+						   
 
 __test_import_signle(avcodec dll)
+__test_import_signle(avformat dll)
+__test_import_signle(swscale dll)
+__test_import_signle(swresample dll)
+__test_import_signle(x264 dll)
+__test_import_signle(avutil dll)
 
 if(FMPEG_INCLUDE_DIRS)
 	set(FMPEG_INCLUDE_FOUND 1)
