@@ -21,6 +21,9 @@ if(FMPEG_INSTALL_ROOT)
 	set(swresample_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
 	set(swresample_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
 	
+	set(avdevice_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
+	set(avdevice_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
+	
 	set(x264_INCLUDE_ROOT ${FMPEG_INSTALL_ROOT}/include/)
 	set(x264_LIB_ROOT ${FMPEG_INSTALL_ROOT}/lib/)
 							   
@@ -54,6 +57,11 @@ __search_target_components_signle(swresample
 						   DLIB swresample
 						   LIB swresample
 						   )
+__search_target_components_signle(avdevice
+						   INC libavdevice/avdevice.h
+						   DLIB avdevice
+						   LIB avdevice
+						   )						 
 __search_target_components_signle(x264
 						   INC x264.h
 						   DLIB x264
