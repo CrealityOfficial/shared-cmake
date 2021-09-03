@@ -79,7 +79,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -89,7 +89,15 @@ function(__add_real_target target type)
 		endif()
 		
 		message(STATUS "add test __add_real_target ${target}-----------------------> ${type}")
-				
+		
+		if(target_SOURCE_FOLDER)
+			__collect_assign_source_group(${target_SOURCE})
+		endif()
+		if(target_QTUI AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+			qt5_wrap_ui(UI_VAR ${target_QTUI})
+			list(APPEND target_SOURCE ${UI_VAR})
+		endif()
+		
 		if(${type} STREQUAL "exe")
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		elseif(${type} STREQUAL "winexe")
@@ -113,6 +121,13 @@ function(__add_real_target target type)
 		#	)
         #endif()
 		#libs
+		if(target_AUTOQT)
+			set_target_properties(${target} PROPERTIES 
+											AUTOMOC ON
+											AUTORCC ON
+											AUTOUIC ON
+											)
+		endif()
 		if(target_LIB)
 			foreach(lib ${target_LIB})
 				target_link_libraries(${target} PRIVATE ${lib})
