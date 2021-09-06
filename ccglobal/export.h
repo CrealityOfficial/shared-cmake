@@ -2,16 +2,10 @@
 #define EXPORT_INTERFACE_1604911737496_H
 
 #ifdef WIN32
-	#ifdef SLICE_SERVICE_DLL
-		#define SLICE_SERVICE_API __declspec(dllexport)
-	#else
-		#define SLICE_SERVICE_API __declspec(dllimport)
-	#endif
+	#define CC_DECLARE_EXPORT __declspec(dllexport)
+	#define CC_DECLARE_IMPORT __declspec(dllimport)
 #else
-	#ifdef SLICE_SERVICE_DLL
-		#define SLICE_SERVICE_API __attribute__((visibility("default")))
-	#else
-		#define SLICE_SERVICE_API
-	#endif
+	#define CC_DECLARE_EXPORT __attribute__((visibility("default")))
+	#define CC_DECLARE_IMPORT
 #endif
 #endif // EXPORT_INTERFACE_1604911737496_H
