@@ -12,7 +12,7 @@ namespace ccglobal
 
 		virtual void message(const char* msg) = 0;
 		virtual void failed(const char* msg) = 0;
-		virtual void success(const char* msg) = 0;
+		virtual void success() = 0;
 	};
 }
 #endif // TRACER_1630734954343_H
