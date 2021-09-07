@@ -139,4 +139,4 @@ macro(__specific_sdk_root)
 	endif()
 endmacro()
 
-__install_inc_directory(${CMAKE_MODULE_SOURCE_DIR}/ccglobal/)
+__install_directory_specif(${CMAKE_MODULE_SOURCE_DIR}/ccglobal/ ccglobal)
