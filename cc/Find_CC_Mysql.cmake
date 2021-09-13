@@ -27,7 +27,7 @@ __search_target_components_signle(mysqlclient
 						   )
 						   
 
-__test_import(mysqlclient lib)
+__test_import(mysqlclient dll)
 
 
 if(MYSQL_INCLUDE_DIRS)
