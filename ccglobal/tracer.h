@@ -3,6 +3,13 @@
 
 namespace ccglobal
 {
+	/*
+	* 追踪过程 状态的虚基类
+	* progress 回调过程进度
+	* failed 过程出现严重错误，过程会结束，并回调这个函数，报告原因
+	* success 过程成功执行完，会回调这个函数
+	*/
+
 	class Tracer
 	{
 	public:
