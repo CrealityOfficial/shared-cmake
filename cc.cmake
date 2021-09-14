@@ -16,16 +16,6 @@ function(__test_import target type)
 	endif()
 endfunction()
 
-function(__test_import_signle target type)
-	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES)
-		set(${target}_FOUND 1)
-		__import_target_signle(${target} ${type})
-		message(STATUS "import ${target} success.")
-	else()
-		message(STATUS "import ${target} failed.")
-	endif()
-endfunction()
-
 function(__search_target_components target)
 	cmake_parse_arguments(search "" "" "INC;DLIB;LIB;PRE;" ${ARGN})
 	
@@ -71,14 +61,23 @@ function(__search_target_components_signle target)
 					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
-	find_library(${target}_LIBRARIES
-			NAMES ${search_DLIB}
+	find_library(${target}_LIBRARIES_DEBUG
+				NAMES ${search_DLIB}
+				HINTS "${${target}_LIB_ROOT}"
+				PATHS "/usr/lib" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
+					"/usr/bin/Debug" "/usr/local/bin"
+				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+				)
+				
+	find_library(${target}_LIBRARIES_RELEASE
+			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}"
-			PATHS "/usr/lib" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib"
+			PATHS "/usr/lib" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
 				"/usr/bin" "/usr/local/bin"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 
 	message("${target}_INCLUDE_DIRS  ${${target}_INCLUDE_DIRS}")
-	message("${target}_LIBRARIES  ${${target}_LIBRARIES}")
+	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
+	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
 endfunction()
