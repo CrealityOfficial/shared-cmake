@@ -17,8 +17,8 @@ namespace ccglobal
 		virtual void progress(float r) = 0;
 		virtual bool interrupt() = 0;
 
-		virtual void message(const char* msg) = 0;
-		virtual void failed(const char* msg) = 0;
+		virtual void message(const char* msg,const char* fileName=nullptr,int line=0) = 0;
+		virtual void failed(const char* msg, const char* fileName = nullptr, int line = 0) = 0;
 		virtual void success() = 0;
 	};
 }
