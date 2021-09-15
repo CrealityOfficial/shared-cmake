@@ -147,15 +147,27 @@ macro(__copy_third_party_dlls dlls)
 		__set_target_folder(__copy_thirdparty CMakePredefinedTargets)
 
 		foreach(dll ${${dlls}})
-			set(_debug_dll "$ENV{CX_THIRDPARTY_ROOT}/bin/Debug/${dll}")
-			set(_release_dll "$ENV{CX_THIRDPARTY_ROOT}/bin/Release/${dll}")
-			add_custom_command(TARGET __copy_thirdparty PRE_BUILD
-				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
-				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
-					"$<$<CONFIG:Release>:${_release_dll}>"  
-					"$<$<CONFIG:Debug>:${_debug_dll}>" 
-					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
-				)	
+			if(DEFINED ENV{CX_THIRDPARTY_ROOT})
+				set(_debug_dll "$ENV{CX_THIRDPARTY_ROOT}/bin/Debug/${dll}")
+				set(_release_dll "$ENV{CX_THIRDPARTY_ROOT}/bin/Release/${dll}")
+				add_custom_command(TARGET __copy_thirdparty PRE_BUILD
+					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+						"$<$<CONFIG:Release>:${_release_dll}>"  
+						"$<$<CONFIG:Debug>:${_debug_dll}>" 
+						"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					)
+			elseif(DEFINED ENV{USR_INSTALL_ROOT})
+				set(_debug_dll "$ENV{USR_INSTALL_ROOT}/bin/Debug/${dll}")
+				set(_release_dll "$ENV{USR_INSTALL_ROOT}/bin/Release/${dll}")
+				add_custom_command(TARGET __copy_thirdparty PRE_BUILD
+					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+						"$<$<CONFIG:Release>:${_release_dll}>"  
+						"$<$<CONFIG:Debug>:${_debug_dll}>" 
+						"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					)
+			endif()
 		endforeach()
 	endif()
 endmacro()
@@ -166,15 +178,27 @@ macro(__copy_occ_dlls dlls)
 		__set_target_folder(__copy_occ CMakePredefinedTargets)
 
 		foreach(dll ${${dlls}})
-			set(_debug_dll "$ENV{CX_OCC_ROOT}/bin/Debug/${dll}")
-			set(_release_dll "$ENV{CX_OCC_ROOT}/bin/Release/${dll}")
-			add_custom_command(TARGET __copy_occ PRE_BUILD
-				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
-				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
-					"$<$<CONFIG:Release>:${_release_dll}>"  
-					"$<$<CONFIG:Debug>:${_debug_dll}>" 
-					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
-				)	
+			if(DEFINED ENV{CX_OCC_ROOT})
+				set(_debug_dll "$ENV{CX_OCC_ROOT}/bin/Debug/${dll}")
+				set(_release_dll "$ENV{CX_OCC_ROOT}/bin/Release/${dll}")
+				add_custom_command(TARGET __copy_occ PRE_BUILD
+					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+						"$<$<CONFIG:Release>:${_release_dll}>"  
+						"$<$<CONFIG:Debug>:${_debug_dll}>" 
+						"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					)
+			elseif(DEFINED ENV{USR_INSTALL_ROOT})
+				set(_debug_dll "$ENV{USR_INSTALL_ROOT}/bin/Debug/${dll}")
+				set(_release_dll "$ENV{USR_INSTALL_ROOT}/bin/Release/${dll}")
+				add_custom_command(TARGET __copy_thirdparty PRE_BUILD
+					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+						"$<$<CONFIG:Release>:${_release_dll}>"  
+						"$<$<CONFIG:Debug>:${_debug_dll}>" 
+						"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					)
+			endif()
 		endforeach()
 	endif()
 endmacro()

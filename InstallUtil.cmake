@@ -138,3 +138,5 @@ macro(__specific_sdk_root)
 		message(STATUS "not specific Env CC_SDK_ROOT")
 	endif()
 endmacro()
+
+__install_directory_specif(${CMAKE_MODULE_SOURCE_DIR}/ccglobal/ ccglobal)

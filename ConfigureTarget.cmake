@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+set(CMAKE_MODULE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
 #config targets, separate src, lib, bin
 
 set(global_all_targets)
@@ -21,8 +22,16 @@ if(${CMAKE_VERSION} VERSION_LESS 3.4)
 	include(CMakeParseArguments)
 endif()
 
+if(ANDROID)
+	find_library(log-lib log)
+	find_library(libandroid android)
+	
+	message(STATUS "Android find log ${log-lib}")
+	set(ANDROID_LIBS ${log-lib} ${libandroid})
+endif()
+
 macro(configure_target target)
-	if(WIN32 OR APPLE)
+	if(NOT ANDROID)
 		set_target_properties(${target} PROPERTIES
 							LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
 							ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
@@ -31,16 +40,12 @@ macro(configure_target target)
 							ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
 							RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 							)
-	else()
-		#message(STATUS "${target} ----> ${BIN_OUTPUT_DIR}")
+	elseif(ANDROID AND ANDROID_CROSSING)
 		set_target_properties(${target} PROPERTIES
-						LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-						LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
-						)
+						LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}"
+						)	
 	endif()
 endmacro()
 
@@ -74,13 +79,23 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
 		set(ExtraSrc)
 		if(CXX_VLD_ENABLED STREQUAL "ON")
 			list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__vld.cpp)
+		endif()
+		
+		message(STATUS "add test __add_real_target ${target}-----------------------> ${type}")
+		
+		if(target_SOURCE_FOLDER)
+			__collect_assign_source_group(${target_SOURCE})
+		endif()
+		if(target_QTUI AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+			qt5_wrap_ui(UI_VAR ${target_QTUI})
+			list(APPEND target_SOURCE ${UI_VAR})
 		endif()
 		
 		if(${type} STREQUAL "exe")
@@ -96,21 +111,31 @@ function(__add_real_target target type)
 		elseif(${type} STREQUAL "obj")
 			add_library(${target} OBJECT ${target_SOURCE})
 		else()
-			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
+			add_library(${target} STATIC ${target_SOURCE} ${ExtraSrc})
 		endif()
 		__add_target(${target})
-        if(APPLE)
-            set_target_properties(${target}
-            PROPERTIES
-            INSTALL_RPATH "@executable_path/../Frameworks"
-        )
-        endif()
+        #if(APPLE)
+        #    set_target_properties(${target}
+        #    PROPERTIES
+        #    INSTALL_RPATH "@executable_path/../Frameworks"
+		#	)
+        #endif()
 		#libs
+		if(target_AUTOQT)
+			set_target_properties(${target} PROPERTIES 
+											AUTOMOC ON
+											AUTORCC ON
+											AUTOUIC ON
+											)
+		endif()
 		if(target_LIB)
 			foreach(lib ${target_LIB})
 				target_link_libraries(${target} PRIVATE ${lib})
 				#message(STATUS ${lib}) 	
 			endforeach()
+		endif()
+		if(ANDROID)
+			target_link_libraries(${target} PRIVATE ${log-lib})
 		endif()
 		#incs
 		if(target_INC)
@@ -238,6 +263,25 @@ macro(__import_target target type)
 	endif()
 endmacro()
 
+macro(__import_target_signle target type)
+	#message("${target}...........")
+	if (NOT TARGET ${target})		
+		if(${type} STREQUAL "dll")
+			add_library(${target} SHARED IMPORTED)
+		else()
+			add_library(${target} STATIC IMPORTED)
+		endif()
+		
+		set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${${target}_INCLUDE_DIRS})
+		
+		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${${target}_LIBRARIES})
+		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_RELEASE ${${target}_LIBRARIES})
+		
+		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_DEBUG ${${target}_LIBRARIES})
+		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_RELEASE ${${target}_LIBRARIES})
+	endif()
+endmacro()
+
 macro(__find_simple_package target type)
 	if(${target}_INCLUDE_DIR)
 		set(${target}_INCLUDE_DIRS ${${target}_INCLUDE_DIR})
@@ -277,13 +321,13 @@ macro(__find_one_package target inc prefix type env)
 	find_library(${target}_LIBRARIES_DEBUG
 				 NAMES ${target}
 				 HINTS "$ENV{${env}}/lib/Debug"
-				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug"
+				 PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/x86_64-linux-gnu"
 				 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	find_library(${target}_LIBRARIES_RELEASE
 			 NAMES ${target}
 			 HINTS "$ENV{${env}}/lib/Release"
-			 PATHS "/usr/lib/Release" "/usr/local/lib/Release"
+			 PATHS "/usr/lib/Release" "/usr/local/lib/Release" "/usr/lib/x86_64-linux-gnu"
 			 NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 				 
 	message("${target}_INCLUDE_DIR  ${${target}_INCLUDE_DIR}")

@@ -27,7 +27,7 @@ macro(__find_librevenge)
 endmacro()
 
 macro(__find_trimesh2)
-	__cc_find(TriMesh2)
+	__cc_find(Trimesh2)
 	__assert_target(trimesh2)
 endmacro()
 
@@ -89,7 +89,7 @@ macro(__find_quazip)
 endmacro()
 
 macro(__find_mysql)
-	__find_one_package(mysqlclient mysql.h "" lib MY_SQL_ROOT)
+	__cc_find(Mysql)
 endmacro()
 
 macro(__include_stb)

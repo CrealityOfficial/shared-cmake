@@ -1,4 +1,4 @@
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/cc/")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cc/")
 
 macro(__cc_find)
 	message(STATUS "CC ****** Start Find ${ARGN}")
@@ -45,6 +45,38 @@ function(__search_target_components target)
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 				
+	message("${target}_INCLUDE_DIRS  ${${target}_INCLUDE_DIRS}")
+	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
+	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
+endfunction()
+
+function(__search_target_components_signle target)
+	cmake_parse_arguments(search "" "" "INC;DLIB;LIB;PRE;" ${ARGN})
+	find_path(${target}_INCLUDE_DIRS
+			NAMES ${search_INC}
+			HINTS "${${target}_INCLUDE_ROOT}"
+			PATHS "/usr/include/" "/usr/include/${target}/"
+					"/usr/local/include/" "/usr/local/include/${target}/"
+					"/usr/include/${search_PRE}" "/usr/local/include/${search_PRE}/"
+					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}"
+			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+			)
+	find_library(${target}_LIBRARIES_DEBUG
+				NAMES ${search_DLIB}
+				HINTS "${${target}_LIB_ROOT}"
+				PATHS "/usr/lib" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
+					"/usr/bin/Debug" "/usr/local/bin"
+				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+				)
+				
+	find_library(${target}_LIBRARIES_RELEASE
+			NAMES ${search_LIB}
+			HINTS "${${target}_LIB_ROOT}"
+			PATHS "/usr/lib" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
+				"/usr/bin" "/usr/local/bin"
+			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+			)
+
 	message("${target}_INCLUDE_DIRS  ${${target}_INCLUDE_DIRS}")
 	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
 	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")

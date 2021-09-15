@@ -25,7 +25,16 @@ if(BOOST_INSTALL_ROOT)
 	set(boost_python_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)
 
 	set(boost_serialization_INCLUDE_ROOT ${BOOST_INSTALL_ROOT}/include/)
-	set(boost_serialization_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)								   
+	set(boost_serialization_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)
+
+	set(boost_nowide_INCLUDE_ROOT ${BOOST_INSTALL_ROOT}/include/)
+	set(boost_nowide_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)
+
+	set(boost_log_INCLUDE_ROOT ${BOOST_INSTALL_ROOT}/include/)
+	set(boost_log_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)
+
+	set(boost_locale_INCLUDE_ROOT ${BOOST_INSTALL_ROOT}/include/)
+	set(boost_locale_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)		
 else()
 	find_path(BOOST_INCLUDE_DIRS
 			NAMES boost/filesystem.hpp
@@ -74,6 +83,24 @@ __search_target_components(boost_thread
 						   LIB boost_thread
 						   )
 						   
+__search_target_components(boost_nowide
+						   INC boost/thread.hpp
+						   DLIB boost_nowide
+						   LIB boost_nowide
+						   )
+						   
+__search_target_components(boost_log
+						   INC boost/thread.hpp
+						   DLIB boost_log
+						   LIB boost_log
+						   )
+					
+__search_target_components(boost_locale
+						   INC boost/thread.hpp
+						   DLIB boost_locale
+						   LIB boost_locale
+						   )
+						   
 add_definitions(-DBOOST_DYN_LINK)
 add_definitions(-DBOOST_ALL_NO_LIB)
 
@@ -84,6 +111,9 @@ __test_import(boost_regex dll)
 __test_import(boost_system dll)
 __test_import(boost_python dll)
 __test_import(boost_serialization dll)
+__test_import(boost_nowide dll)
+__test_import(boost_log dll)
+__test_import(boost_locale dll)
 
 if(BOOST_INCLUDE_DIRS)
 	set(BOOST_INCLUDE_FOUND 1)
