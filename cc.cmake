@@ -16,6 +16,16 @@ function(__test_import target type)
 	endif()
 endfunction()
 
+function(__test_import_signle target type)
+	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES)
+		set(${target}_FOUND 1)
+		__import_target_signle(${target} ${type})
+		message(STATUS "import ${target} success.")
+	else()
+		message(STATUS "import ${target} failed.")
+	endif()
+endfunction()
+
 function(__search_target_components target)
 	cmake_parse_arguments(search "" "" "INC;DLIB;LIB;PRE;" ${ARGN})
 	
