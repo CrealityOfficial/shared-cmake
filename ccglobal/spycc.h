@@ -13,6 +13,9 @@
 #define ANALYSIS_START(x) void(x);
 #define ANALYSIS_TICK(x) void(x);
 #define ANALYSIS_DUMP(x) void(x);
+#define SESSION_START(x) void(x);
+#define SESSION_TICK(x) void(x);
+#define SESSION_DUMP(x) void(x);
 #endif
 
 #endif
