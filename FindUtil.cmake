@@ -89,7 +89,7 @@ macro(__find_quazip)
 endmacro()
 
 macro(__find_mysql)
-	__find_one_package(mysqlclient mysql.h "mysql" lib MY_SQL_ROOT)
+	__cc_find(Mysql)
 endmacro()
 
 macro(__include_stb)

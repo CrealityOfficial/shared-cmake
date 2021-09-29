@@ -22,11 +22,12 @@ macro(__cc_cgal_include package)
 		message(FATAL_ERROR "Please Specified CGAL_INCLUDE_DIRS")
 	endif()
 	include_directories(${CGAL_INCLUDE_DIRS}/${package})
+	include_directories(${CGAL_INCLUDE_DIRS}/${package}/include/)
 endmacro()
 
 if(CGAL_INSTALL_ROOT)
 	message(STATUS "CGAL Specified CGAL_INSTALL_ROOT : ${CGAL_INSTALL_ROOT}")
-	set(CGAL_INCLUDE_DIRS ${CGAL_INSTALL_ROOT})
+	set(CGAL_INCLUDE_DIRS ${CGAL_INSTALL_ROOT}/include/)
 elseif(CXCGAL_INSTALL_ROOT)
 	message(STATUS "CGAL Specified CXCGAL_INSTALL_ROOT : ${CXCGAL_INSTALL_ROOT}")
 	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
@@ -40,6 +41,16 @@ else()
 				"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/CGAL"
 		NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 		)
+	if(NOT CGAL_INCLUDE_DIRS)
+		find_path(CGAL_INCLUDE_DIRS Kernel_23/include/CGAL/basic_classes.h
+			HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
+			PATHS "/usr/include/" "/usr/local/include/" 
+					"/usr/include/CGAL/" "/usr/local/include/CGAL/"
+					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/CGAL/"
+			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+			)
+	endif()
+	message(STATUS "CGAL CGAL_INCLUDE_DIRS: ${CGAL_INCLUDE_DIRS}")
 endif()
 
 __cc_cgal_include(Installation)

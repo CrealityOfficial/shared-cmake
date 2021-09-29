@@ -42,7 +42,7 @@ function(__search_target_components target)
 	find_library(${target}_LIBRARIES_DEBUG
 				NAMES ${search_DLIB}
 				HINTS "${${target}_LIB_ROOT}/Debug"
-				PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "$ENV{USR_INSTALL_ROOT}/lib/Debug/"
+				PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/${search_PRE}" "$ENV{USR_INSTALL_ROOT}/lib/Debug/"
 					"/usr/bin/Debug" "/usr/local/bin/Debug"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
@@ -50,7 +50,7 @@ function(__search_target_components target)
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}/Release"
-			PATHS "/usr/lib/Release" "/usr/local/lib/Release" "$ENV{USR_INSTALL_ROOT}/lib/Release/"
+			PATHS "/usr/lib/Release" "/usr/lib/${search_PRE}" "/usr/local/lib/Release" "$ENV{USR_INSTALL_ROOT}/lib/Release/"
 				"/usr/bin/Release" "/usr/local/bin/Release"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
@@ -71,14 +71,24 @@ function(__search_target_components_signle target)
 					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
-	find_library(${target}_LIBRARIES
-			NAMES ${search_DLIB}
+	find_library(${target}_LIBRARIES_DEBUG
+				NAMES ${search_DLIB}
+				HINTS "${${target}_LIB_ROOT}"
+				PATHS "/usr/lib" "/usr/lib/x86_64-linux-gnu" "/usr/lib/${search_PRE}" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
+				    "$ENV{USR_INSTALL_ROOT}/lib/${search_PRE}"
+					"/usr/bin/Debug" "/usr/local/bin"
+				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+				)
+				
+	find_library(${target}_LIBRARIES_RELEASE
+			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}"
-			PATHS "/usr/lib" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib"
+			PATHS "/usr/lib" "/usr/lib/x86_64-linux-gnu" "/usr/lib/${search_PRE}" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
 				"/usr/bin" "/usr/local/bin"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 
 	message("${target}_INCLUDE_DIRS  ${${target}_INCLUDE_DIRS}")
-	message("${target}_LIBRARIES  ${${target}_LIBRARIES}")
+	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
+	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
 endfunction()
