@@ -24,6 +24,7 @@ __search_target_components_signle(mysqlclient
 						   INC mysql.h
 						   DLIB mysqlclient
 						   LIB mysqlclient
+						   PRE mysql
 						   )
 						   
 

@@ -5,7 +5,7 @@ macro(__source_recurse dir src)
 endmacro()
 
 macro(__files_group dir src)   #support 2 level
-	file(GLOB _src ${dir}/*.h ${dir}/*.cpp ${dir}/*.cc ${sub_dir}/*.c)
+	file(GLOB _src ${dir}/*.h ${dir}/*.cpp ${dir}/*.cc ${dir}/*.c)
 	file(GLOB children RELATIVE ${dir} ${dir}/*)
 	foreach(child ${children})
 		set(sub_dir ${dir}/${child})
