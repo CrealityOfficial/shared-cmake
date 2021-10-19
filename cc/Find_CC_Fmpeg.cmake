@@ -69,13 +69,13 @@ __search_target_components_signle(x264
 						   )						   
 						   
 
-__test_import_signle(avcodec dll)
-__test_import_signle(avformat dll)
-__test_import_signle(swscale dll)
-__test_import_signle(swresample dll)
-__test_import_signle(x264 dll)
-__test_import_signle(avutil dll)
-__test_import_signle(avdevice dll)
+__test_import(avcodec dll)
+__test_import(avformat dll)
+__test_import(swscale dll)
+__test_import(swresample dll)
+__test_import(x264 dll)
+__test_import(avutil dll)
+__test_import(avdevice dll)
 
 if(FMPEG_INCLUDE_DIRS)
 	set(FMPEG_INCLUDE_FOUND 1)
