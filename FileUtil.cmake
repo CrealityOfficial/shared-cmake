@@ -141,6 +141,44 @@ macro(__tree_add_current src)
 	__tree_add_source(${CMAKE_CURRENT_SOURCE_DIR} ${src})
 endmacro()
 
+macro(__copy_ppcs_dlls dlls)
+	if(WIN32)
+		add_custom_target(__copy_ppcs ALL COMMENT "copy ppcs dll!")
+		__set_target_folder(__copy_ppcs CMakePredefinedTargets)
+
+		foreach(dll ${${dlls}})
+			set(_debug_dll "${CMAKE_CURRENT_SOURCE_DIR}/ppcs/Lib/Windows/x64/${dll}")
+			set(_release_dll "${CMAKE_CURRENT_SOURCE_DIR}/ppcs/Lib/Windows/x64/${dll}")
+			add_custom_command(TARGET __copy_ppcs PRE_BUILD
+				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+					"$<$<CONFIG:Release>:${_release_dll}>"  
+					"$<$<CONFIG:Debug>:${_debug_dll}>" 
+					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+			)
+		endforeach()
+	endif()
+endmacro()
+
+macro(__copy_ffmpeg_dlls dlls)
+	if(WIN32)
+		add_custom_target(__copy_ffmpeg ALL COMMENT "copy ffmpeg dll!")
+		__set_target_folder(__copy_ffmpeg CMakePredefinedTargets)
+
+		foreach(dll ${${dlls}})
+			set(_debug_dll "${FMPEG_INSTALL_ROOT}/bin/${dll}")
+			set(_release_dll "${FMPEG_INSTALL_ROOT}/bin/${dll}")
+			add_custom_command(TARGET __copy_ppcs PRE_BUILD
+				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+					"$<$<CONFIG:Release>:${_release_dll}>"  
+					"$<$<CONFIG:Debug>:${_debug_dll}>" 
+					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+			)
+		endforeach()
+	endif()
+endmacro()
+
 macro(__copy_third_party_dlls dlls)
 	if(WIN32)
 		add_custom_target(__copy_thirdparty ALL COMMENT "copy third party dll!")
