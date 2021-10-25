@@ -50,6 +50,7 @@ function(__search_target_components target)
 	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
 	if(NOT ${target}_LIBRARIES_DEBUG)
 		set(${target}_LIBRARIES_DEBUG ${${target}_LIBRARIES_RELEASE})
+		message("${target} use release replace debug.")
 	endif()
 endfunction()
 
