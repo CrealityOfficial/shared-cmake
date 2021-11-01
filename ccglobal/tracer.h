@@ -37,8 +37,8 @@ namespace ccglobal
 
 		void resetProgressScope(float start = 0, float end = 1)
 		{
-			m_start = 0;
-			m_end = 1;
+			m_start = start;
+			m_end = end;
 			progress(start);
 		}
 
@@ -52,7 +52,7 @@ namespace ccglobal
 		void resetPercentScope(float percent)
 		{
 			m_start = m_realValue;
-			m_end = m_start + percent * (m_end * m_start);
+			m_end = m_start + percent * (m_end - m_start);
 		}
 
 		float start() const
