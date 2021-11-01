@@ -34,6 +34,107 @@ namespace ccglobal
 			message(buf);
 			va_end(args);
 		}
+
+		void resetProgressScope(float start = 0, float end = 1)
+		{
+			m_start = 0;
+			m_end = 1;
+			progress(start);
+		}
+
+		void resetScope(float end = -1)
+		{
+			m_start = m_realValue;
+			if(end > 0)
+				m_end = end;
+		}
+
+		void resetPercentScope(float percent)
+		{
+			m_start = m_realValue;
+			m_end = m_start + percent * (m_end * m_start);
+		}
+
+		float start() const
+		{
+			return m_start;
+		}
+
+		float end() const
+		{
+			return m_end;
+		}
+
+	protected:
+		float m_start = 0;
+		float m_end = 1;
+		float m_realValue;
 	};
+
+
+
+
+#define JUDGE_PROGRESS_MSG_BREAK(x, v, msg) \
+if(x != nullptr) { \
+	float vv = v; \
+	if(vv > 1) { \
+		vv = 1; \
+	} \
+	if(vv > 0) { \
+		x->progress(vv); \
+	} \
+	if (x->interrupt()) { \
+		if(msg != "") \
+			x->failed("user canceled"); \
+		return; \
+	} \
+}
+
+
+#define JUDGE_PROGRESS_MSG_RETURN(x, v, r, msg) \
+if(x != nullptr) { \
+	float vv = v; \
+	if(vv > 1) { \
+		vv = 1; \
+	} \
+	if(vv > 0) { \
+		x->progress(vv); \
+	} \
+	if (x->interrupt()) { \
+		if(msg != "") \
+			x->failed("user canceled"); \
+		return r; \
+	} \
+}
+
+
+
+#define SPLIT_PROGRESS_MSG_BREAK(i, seg, total, x, msg) \
+if(x != nullptr) { \
+	int check = (int)((float)(total) / (float)(seg)); \
+	if((i + 1) == check) { \
+		float per = (float)(i) / (float)(total); \
+	JUDGE_PROGRESS_MSG_BREAK(x, per, msg) \
+	} \
+}
+
+
+#define SPLIT_PROGRESS_MSG_RETURN(i, seg, total, x, r, msg) \
+if(x != nullptr) { \
+	int check = (int)((float)(total) / (float)(seg)); \
+	if((i + 1) == check) { \
+		float per = (float)(i) / (float)(total); \
+	JUDGE_PROGRESS_MSG_RETURN(x, per, r, msg) \
+	} \
+}
+
+
+#define RESET_PROGRESS_SCOPE(x, v) \
+if(x != nullptr) { x->resetScope(v); }
+
+#define RESET_PROGRESS_PERCENT(x, v) \
+if(x != nullptr) { x->resetPercentScope(v); }
+
+
 }
 #endif // TRACER_1630734954343_H
