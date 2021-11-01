@@ -136,5 +136,14 @@ if(x != nullptr) { x->resetScope(v); }
 if(x != nullptr) { x->resetPercentScope(v); }
 
 
+#define PROGRESS_BREAK_FINISH_CUR_NEXT(x, v, msg) \
+JUDGE_PROGRESS_MSG_BREAK(x, 1, msg); \
+RESET_PROGRESS_SCOPE(x, v);
+
+#define PROGRESS_RETURN_FINISH_CUR_NEXT(x, v, r, msg) \
+JUDGE_PROGRESS_MSG_RETURN(x, 1, r, msg); \
+RESET_PROGRESS_SCOPE(x, v);
+
+
 }
 #endif // TRACER_1630734954343_H
