@@ -4,7 +4,7 @@ macro(__enable_qt5)
 	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_AUTORCC ON)
 
-	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Concurrent OpenGL)
+	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Multimedia Concurrent OpenGL)
 	
 	if(TARGET Qt5::Core)
 		include(qml)
@@ -27,7 +27,7 @@ endif()
 endmacro()
 
 set(QtQmlQ3dLibs Qt5::Widgets Qt5::Quick Qt5::Qml Qt5::3DExtras Qt5::OpenGL)
-set(QtQmlLibs Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::SerialPort)
+set(QtQmlLibs Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::SerialPort Qt5::Multimedia)
 set(QtGuiLibs Qt5::Core Qt5::Gui Qt5::Widgets)
 set(qtuser qtuser_core qtuser_3d qtuser_qml)
 
@@ -42,7 +42,7 @@ endmacro()
 macro(__remap_qt_debug_2_release)
 	set(REMAP_LIBS Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Network Qt5::Xml
 		Qt5::Qml Qt5::Quick Qt5::3DCore Qt5::3DRender Qt5::3DCore Qt5::3DExtras
-		Qt5::OpenGL Qt5::3DInput Qt5::3DLogic Qt5::3DQuick Qt5::SerialPort Qt5::Concurrent Qt5::Gamepad)
+		Qt5::OpenGL Qt5::3DInput Qt5::3DLogic Qt5::3DQuick Qt5::SerialPort Qt5::Multimedia Qt5::Concurrent Qt5::Gamepad)
 	
 	__remap_target_debug_2_release(REMAP_LIBS)
 endmacro()
