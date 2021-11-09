@@ -29,7 +29,6 @@ endmacro()
 set(QtQmlQ3dLibs Qt5::Widgets Qt5::Quick Qt5::Qml Qt5::3DExtras Qt5::OpenGL)
 set(QtQmlLibs Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Qml Qt5::SerialPort Qt5::Multimedia)
 set(QtGuiLibs Qt5::Core Qt5::Gui Qt5::Widgets)
-set(qtuser qtuser_core qtuser_3d qtuser_qml)
 
 macro(__qt5_translate RES DIR)
 	file(GLOB TS_FILES ${DIR}/*.ts)

@@ -26,6 +26,11 @@ macro(__prepare_qt5)
 	__setup_qt_targets()
 endmacro()
 
+macro(__prepare_core_qt5)
+	find_package(Qt5 COMPONENTS Core Widgets Gui OpenGL)
+	__setup_qt_targets()
+endmacro()
+
 macro(__assert_qt_module)
 	foreach(module IN ITEMS ${ARGN})
 		__assert_target(Qt${QT_VERSION_MAJOR}::${module})
