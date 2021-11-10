@@ -9,6 +9,7 @@ macro(__enable_qt5)
 	if(TARGET Qt5::Core)
 		include(qml)
 		set(QT5_ENABLED 1)
+		set(QT_VERSION_MAJOR 5)
 	endif()
 endmacro()
 

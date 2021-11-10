@@ -96,6 +96,7 @@ function(__add_real_target target type)
 		if(target_QTUI AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 			qt5_wrap_ui(UI_VAR ${target_QTUI})
 			list(APPEND target_SOURCE ${UI_VAR})
+			message(STATUS "QTUI ${UI_VAR}")
 		endif()
 		
 		if(${type} STREQUAL "exe")
