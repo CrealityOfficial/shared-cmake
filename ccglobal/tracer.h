@@ -146,4 +146,7 @@ RESET_PROGRESS_SCOPE(x, v);
 
 
 }
+
+#define SAFE_TRACER(tracer, ...) \
+	if(tracer) tracer->formatMessage(__VA_ARGS__)
 #endif // TRACER_1630734954343_H
