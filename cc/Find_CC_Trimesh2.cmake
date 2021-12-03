@@ -15,6 +15,7 @@ __search_target_components(trimesh2
 						   INC trimesh2/TriMesh.h
 						   DLIB trimesh2
 						   LIB trimesh2
+						   PRE trimesh2
 						   )
 
 __test_import(trimesh2 lib)
