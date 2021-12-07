@@ -7,7 +7,12 @@
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,"NativeCC",__VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR,"NativeCC",__VA_ARGS__)
 #else
-#define LOGI(...)
-#define LOGE(...)
+
+#include <stdarg.h>
+#include <stdio.h>
+#include <iostream>
+
+#define LOGI(...) printf(__VA_ARGS__)
+#define LOGE(...) printf(__VA_ARGS__)
 #endif
 #endif
