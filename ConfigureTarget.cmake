@@ -197,6 +197,35 @@ macro(__add_real_library target)
 	endif()
 endmacro()
 
+macro(__add_platform_library target)
+	if(NOT INERTFACES)
+		set(INERTFACES ${CMAKE_CURRENT_SOURCE_DIR})
+		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/include")
+			list(APPEND INERTFACES ${CMAKE_CURRENT_SOURCE_DIR})
+		endif()
+	endif()
+	
+	if(CC_BUILD_IPHONE_PLATFORM)
+		__add_real_target(${target} lib SOURCE ${SRCS} 
+										LIB ${LIBS}
+										INC ${INCS}
+										DEF ${DEFS}
+										INTERFACE ${INERTFACES}
+										SOURCE_FOLDER
+										)
+	else()
+		string(TOUPPER ${target} UpperName)
+		list(APPEND DEFS ${UpperName}_DLL)
+		__add_real_target(${target} dll SOURCE ${SRCS} 
+										LIB ${LIBS}
+										INC ${INCS}
+										DEF ${DEFS}
+										INTERFACE ${INERTFACES}
+										SOURCE_FOLDER
+										)
+	endif()
+endmacro()
+
 function(__add_exe_target target)
 	__add_real_target(${target} exe ${ARGN})
 	if(WIN32)
