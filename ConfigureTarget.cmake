@@ -79,7 +79,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -97,6 +97,10 @@ function(__add_real_target target type)
 			qt5_wrap_ui(UI_VAR ${target_QTUI})
 			list(APPEND target_SOURCE ${UI_VAR})
 			message(STATUS "QTUI ${UI_VAR}")
+		endif()
+		if(target_QTQRC AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+			qt5_add_resources(QT_QRC ${target_QTQRC})
+			list(APPEND target_SOURCE ${QT_QRC})
 		endif()
 		
 		if(${type} STREQUAL "exe")
