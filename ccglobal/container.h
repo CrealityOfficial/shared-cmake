@@ -6,8 +6,8 @@
 #define LIST_ADD(container, x) \
 		{ \
 			auto it = std::find(container.begin(), container.end(), x); \
-			if(it != container.end() || !x) \
-				LOGE("LIST_ADD dumplicate element or empty element."); \
+			if(it != container.end() || !x) { \
+				LOGE("LIST_ADD dumplicate element or empty element."); }\
 			else \
 				container.push_front(x); \
 		}
@@ -15,8 +15,8 @@
 #define LIST_ADD_BACK(container, x) \
 		{ \
 			auto it = std::find(container.begin(), container.end(), x); \
-			if(it != container.end() || !x) \
-				LOGE("LIST_ADD dumplicate element or empty element."); \
+			if(it != container.end() || !x) { \
+				LOGE("LIST_ADD dumplicate element or empty element."); }\
 			else \
 				container.push_back(x); \
 		}
@@ -24,8 +24,8 @@
 #define LIST_REMOVE(container, x) \
 		{ \
 			auto it = std::find(container.begin(), container.end(), x); \
-			if(it == container.end() || !x) \
-				LOGE("LIST_REMOVE try remove no exist element."); \
+			if(it == container.end() || !x) {\
+				LOGE("LIST_REMOVE try remove no exist element."); }\
 			else \
 				container.erase(it); \
 		}

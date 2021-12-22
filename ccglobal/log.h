@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <iostream>
 
-#define LOGI(...) printf(__VA_ARGS__)
-#define LOGE(...) printf(__VA_ARGS__)
+#define LOGI(...) printf(__VA_ARGS__);printf("\n")
+#define LOGE(...) printf(__VA_ARGS__);printf("\n")
 #endif
 #endif
