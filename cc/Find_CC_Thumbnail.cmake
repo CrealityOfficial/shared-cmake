@@ -2,7 +2,7 @@
 # thumbnail target
 
 __search_target_components(thumbnail
-						   INC stl_thumbnail.h
+						   INC thumbnail/stl_thumbnail.h
 						   DLIB thumbnail
 						   LIB thumbnail
 						   PRE thumbnail
