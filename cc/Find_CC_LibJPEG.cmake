@@ -2,7 +2,7 @@
 # LibJPEG target
 
 __search_target_components(LibJPEG
-						   INC jpeglib.h
+						   INC LibJPEG/jpeglib.h
 						   DLIB LibJPEG
 						   LIB LibJPEG
 						   PRE LibJPEG
