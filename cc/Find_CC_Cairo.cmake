@@ -2,7 +2,7 @@
 # cairo target
 
 __search_target_components(cairo
-						   INC SRC/cairo.h
+						   INC cairo.h
 						   DLIB cairo
 						   LIB cairo
 						   PRE cairo
