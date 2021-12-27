@@ -216,6 +216,7 @@ macro(__copy_third_party_dlls dlls)
 
 		foreach(dll ${${dlls}})
 			if(DEFINED ENV{USR_INSTALL_ROOT})
+			    message("############copy third party usr dll #################")
 				set(_debug_dll "$ENV{USR_INSTALL_ROOT}/bin/Debug/${dll}")
 				set(_release_dll "$ENV{USR_INSTALL_ROOT}/bin/Release/${dll}")
 				add_custom_command(TARGET __copy_thirdparty PRE_BUILD
@@ -226,6 +227,7 @@ macro(__copy_third_party_dlls dlls)
 						"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 					)
 			elseif(DEFINED ENV{CX_THIRDPARTY_ROOT})
+			message("------------copy third party dll -------------")
 				set(_debug_dll "$ENV{CX_THIRDPARTY_ROOT}/bin/Debug/${dll}")
 				set(_release_dll "$ENV{CX_THIRDPARTY_ROOT}/bin/Release/${dll}")
 				add_custom_command(TARGET __copy_thirdparty PRE_BUILD
