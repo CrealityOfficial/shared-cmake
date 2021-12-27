@@ -14,6 +14,7 @@ __search_target_components(clipper
 						   INC clipper/clipper.hpp
 						   DLIB clipper
 						   LIB clipper
+						   PRE clipper
 						   )
 
 __test_import(clipper lib)
