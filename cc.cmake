@@ -27,17 +27,17 @@ function(__search_target_components target)
 	find_path(${target}_INCLUDE_DIRS
 			NAMES ${search_INC}
 			HINTS "${${target}_INCLUDE_ROOT}"
-			PATHS "/usr/include/" "/usr/include/${target}/"
+			PATHS "$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}"
+			        "/usr/include/" "/usr/include/${target}/"
 					"/usr/local/include/" "/usr/local/include/${target}/"
 					"/usr/include/${search_PRE}" "/usr/local/include/${search_PRE}/"
-					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 
 	find_library(${target}_LIBRARIES_DEBUG
 				NAMES ${search_DLIB}
 				HINTS "${${target}_LIB_ROOT}/Debug"
-				PATHS "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/${search_PRE}" "$ENV{USR_INSTALL_ROOT}/lib/Debug/"
+				PATHS "$ENV{USR_INSTALL_ROOT}/lib/Debug/" "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/${search_PRE}"
 					"/usr/bin/Debug" "/usr/local/bin/Debug"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
@@ -45,7 +45,7 @@ function(__search_target_components target)
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}/Release"
-			PATHS "/usr/lib/Release" "/usr/lib/${search_PRE}" "/usr/local/lib/Release" "$ENV{USR_INSTALL_ROOT}/lib/Release/"
+			PATHS "$ENV{USR_INSTALL_ROOT}/lib/Release/" "/usr/lib/Release" "/usr/lib/${search_PRE}" "/usr/local/lib/Release"
 				"/usr/bin/Release" "/usr/local/bin/Release"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
@@ -60,10 +60,10 @@ function(__search_target_components_signle target)
 	find_path(${target}_INCLUDE_DIRS
 			NAMES ${search_INC}
 			HINTS "${${target}_INCLUDE_ROOT}"
-			PATHS "/usr/include/" "/usr/include/${target}/"
+			PATHS "$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}" 
+			        "/usr/include/" "/usr/include/${target}/"
 					"/usr/local/include/" "/usr/local/include/${target}/"
 					"/usr/include/${search_PRE}" "/usr/local/include/${search_PRE}/"
-					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/${search_PRE}"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 	find_library(${target}_LIBRARIES_DEBUG
@@ -78,7 +78,7 @@ function(__search_target_components_signle target)
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}"
-			PATHS "/usr/lib" "/usr/lib/x86_64-linux-gnu" "/usr/lib/${search_PRE}" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
+			PATHS  "$ENV{USR_INSTALL_ROOT}/lib/" "/usr/lib" "/usr/lib/x86_64-linux-gnu" "/usr/lib/${search_PRE}" "/usr/local/lib"
 				"/usr/bin" "/usr/local/bin"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
