@@ -183,7 +183,7 @@ macro(__copy_ffmpeg_dlls dlls)
 		foreach(dll ${${dlls}})
 			set(_debug_dll "${FMPEG_INSTALL_ROOT}/bin/${dll}")
 			set(_release_dll "${FMPEG_INSTALL_ROOT}/bin/${dll}")
-			add_custom_command(TARGET __copy_ppcs PRE_BUILD
+			add_custom_command(TARGET __copy_ffmpeg PRE_BUILD
 				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
 					"$<$<CONFIG:Release>:${_release_dll}>"  
@@ -198,7 +198,7 @@ macro(__copy_ffmpeg_dlls dlls)
 		foreach(dll ${${dlls}})
 			set(_debug_dll "${FMPEG_INSTALL_ROOT}/bin_osX/${dll}")
 			set(_release_dll "${FMPEG_INSTALL_ROOT}/bin_osX/${dll}")
-			add_custom_command(TARGET __copy_ppcs PRE_BUILD
+			add_custom_command(TARGET __copy_ffmpeg PRE_BUILD
 				COMMAND ${CMAKE_COMMAND} -E make_directory "${LIB_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
 					"$<$<CONFIG:Release>:${_release_dll}>"  
