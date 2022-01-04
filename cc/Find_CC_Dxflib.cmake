@@ -16,6 +16,7 @@ __search_target_components(dxflib
 						   INC dxf/dl_attributes.h
 						   DLIB dxflib
 						   LIB dxflib
+						   PRE dxf
 						   )
 
 __test_import(dxflib dll)

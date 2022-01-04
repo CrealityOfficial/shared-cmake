@@ -15,6 +15,7 @@ __search_target_components(tinyxml
 						   INC tinyxml/tinyxml.h
 						   DLIB tinyxml
 						   LIB tinyxml
+						   PRE tinyxml
 						   )
 
 __test_import(tinyxml lib)
