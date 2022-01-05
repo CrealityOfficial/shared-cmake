@@ -195,18 +195,22 @@ function(__add_real_target target type)
 		endif()
 		configure_target(${target})
 		
-		if(WIN32)
-			INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
-		elseif(APPLE)
-		    INSTALL(TARGETS ${target}
-				BUNDLE DESTINATION . COMPONENT Runtime
-				RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
-				FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
-				ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
-				LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
-            )
-        elseif(UNIX)
-			INSTALL(TARGETS ${target} RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
+		set(UNAME "${target}")
+		string(TOUPPER ${UNAME} UUNAME)
+		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT CC_INSTALL_${UUNAME}))
+			if(WIN32)
+				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+			elseif(APPLE)
+				INSTALL(TARGETS ${target}
+					BUNDLE DESTINATION . COMPONENT Runtime
+					RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
+					FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
+					ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
+					LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
+				)
+			elseif(UNIX)
+				INSTALL(TARGETS ${target} RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
+			endif()
 		endif()
 	else(target_SOURCE)
 		message("add target ${target} without sources")
@@ -330,7 +334,9 @@ macro(__import_target target type)
 		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_DEBUG ${IMPORT_LOC_DEBUG})
 		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_RELEASE ${IMPORT_LOC_RELEASE})
 		
-		if(${type} STREQUAL "dll")
+		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
+		message(STATUS "GLOBAL_NOT_INSTALL_IMPORT ---->[${NOT_INSTALL_IMPORT}]")
+		if((${type} STREQUAL "dll") AND NOT NOT_INSTALL_IMPORT)
 			__copy_find_targets(${target})
 		endif()
 	endif()

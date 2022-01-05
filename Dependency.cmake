@@ -34,3 +34,6 @@ function(__add_target_dependency target)
 		endforeach()
 	endif()
 endfunction()
+
+
+#########################Global Parameter

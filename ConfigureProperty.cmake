@@ -15,3 +15,13 @@ macro(__append_global_property property value)
 	get_property(TVALUES GLOBAL PROPERTY ${property})
 	set_property(GLOBAL PROPERTY ${property} ${TVALUES} ${value}) 
 endmacro()
+
+
+
+#########################Global Property
+# GLOBAL_NOT_INSTALL_IMPORT   不安装导入target
+#
+
+macro(__set_not_install_import)
+	set_property(GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT 1) 
+endmacro()
