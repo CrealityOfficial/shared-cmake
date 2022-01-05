@@ -18,6 +18,12 @@ set(CMAKE_MODULE_SOURCE_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(global_all_targets)
 set(global_all_targets "" CACHE STRING INTERNAL FORCE)
 
+set(MACOS_PREFIX "${PROJECT_NAME}.app/Contents")
+set(MACOS_INSTALL_RUNTIME_DIR "${MACOS_PREFIX}/MacOS")
+set(MACOS_INSTALL_CMAKE_DIR "${MACOS_PREFIX}/Resources")
+set(MACOS_INSTALL_PLUGIN_DIR "${MACOS_PREFIX}/PlugIns")
+set(MACOS_INSTALL_LIB_DIR "${MACOS_PREFIX}/Frameworks")
+		
 if(${CMAKE_VERSION} VERSION_LESS 3.4)
 	include(CMakeParseArguments)
 endif()
@@ -188,6 +194,20 @@ function(__add_real_target target type)
 			target_link_libraries(${target} PRIVATE ${SPYCC_LIB})
 		endif()
 		configure_target(${target})
+		
+		if(WIN32)
+			INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+		elseif(APPLE)
+		    INSTALL(TARGETS ${target}
+				BUNDLE DESTINATION . COMPONENT Runtime
+				RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
+				FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
+				ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
+				LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
+            )
+        elseif(UNIX)
+			INSTALL(TARGETS ${target} RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
+		endif()
 	else(target_SOURCE)
 		message("add target ${target} without sources")
 	endif(target_SOURCE)
@@ -301,7 +321,7 @@ macro(__import_target target type)
 				set(IMPORT_LOC_DEBUG ${${target}_LOC_DEBUG})
 			endif()
 			if(${target}_LOC_RELEASE)
-				set(IMPORT_LOC_DEBUG ${${target}_LOC_RELEASE})
+				set(IMPORT_LOC_RELEASE ${${target}_LOC_RELEASE})
 			endif()
 		endif()
 		

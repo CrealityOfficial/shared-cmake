@@ -19,4 +19,4 @@ __search_target_components(AliyunOss
 						   PRE oss
 						   )
 
-__test_import(AliyunOss lib)
+__test_import(AliyunOss dll)

@@ -23,105 +23,88 @@ else()
 	message("Not Set The FMPEG_INSTALL_ROOT ")
 endif()
 	
-#__search_target_components_signle(avcodec
-#						   INC libavcodec/avcodec.h
-#						   DLIB avcodec
-#						   LIB avcodec
-#						   )
-#__search_target_components_signle(avformat
-#						   INC libavformat/avformat.h
-#						   DLIB avformat
-#						   LIB avformat
-#						   )
-#__search_target_components_signle(avutil
-#						   INC libavutil/avutil.h
-#						   DLIB avutil
-#						   LIB avutil
-#						   )
-#__search_target_components_signle(swscale
-#						   INC libswscale/swscale.h
-#						   DLIB swscale
-#						   LIB swscale
-#						   )	
-#__search_target_components_signle(swresample
-#						   INC libswresample/swresample.h
-#						   DLIB swresample
-#						   LIB swresample
-#						   )
-#__search_target_components_signle(avdevice
-#						   INC libavdevice/avdevice.h
-#						   DLIB avdevice
-#						   LIB avdevice
-#						   )						 
-#__search_target_components_signle(x264
-#						   INC x264.h
-#						   DLIB x264
-#						   LIB x264
-#						   )	
-#
+macro(__fmpeg_win32_add target dll)
+	find_library(${target}_LIBRARIES_DEBUG
+				NAMES ${target}
+				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	find_library(${target}_LIBRARIES_RELEASE
+				NAMES ${target}
+				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
+	#message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
+	set(${target}_LOC_DEBUG "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/bin/${dll}.dll")
+	set(${target}_LOC_RELEASE "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/bin/${dll}.dll")	
+endmacro()
 if(WIN32)
-	find_library(avcodec_LIBRARIES_DEBUG
-				NAMES avcodec
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
-	find_library(avcodec_LIBRARIES_RELEASE
-				NAMES avcodec
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
-	message("avcodec_LIBRARIES_DEBUG  ${avcodec_LIBRARIES_DEBUG}")
-	message("avcodec_LIBRARIES_RELEASE  ${avcodec_LIBRARIES_RELEASE}")
-				
-	find_library(avformat_LIBRARIES_DEBUG
-				NAMES avformat
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
-	find_library(avformat_LIBRARIES_RELEASE
-				NAMES avformat
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
-	message("avformat_LIBRARIES_DEBUG  ${avcodec_LIBRARIES_DEBUG}")
-	message("avformat_LIBRARIES_RELEASE  ${avformat_LIBRARIES_RELEASE}")
-				
-	find_library(avutil_LIBRARIES_DEBUG
-				NAMES avutil
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
-	find_library(avutil_LIBRARIES_RELEASE
-				NAMES avutil
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
-	message("avutil_LIBRARIES_DEBUG  ${avutil_LIBRARIES_DEBUG}")
-	message("avutil_LIBRARIES_RELEASE  ${avutil_LIBRARIES_RELEASE}")
-				
-	find_library(swscale_LIBRARIES_DEBUG
-				NAMES swscale
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
-	find_library(swscale_LIBRARIES_RELEASE
-				NAMES swscale
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
-	message("swscale_LIBRARIES_DEBUG  ${swscale_LIBRARIES_DEBUG}")
-	message("swscale_LIBRARIES_RELEASE  ${swscale_LIBRARIES_RELEASE}")
-				
-	find_library(swresample_LIBRARIES_DEBUG
-				NAMES swresample
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
-	find_library(swresample_LIBRARIES_RELEASE
-				NAMES swresample
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
-	message("swresample_LIBRARIES_DEBUG  ${swresample_LIBRARIES_DEBUG}")
-	message("swresample_LIBRARIES_RELEASE  ${swresample_LIBRARIES_RELEASE}")
-				
-	find_library(avdevice_LIBRARIES_DEBUG
-				NAMES avdevice
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
-	find_library(avdevice_LIBRARIES_RELEASE
-				NAMES avdevice
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
-	message("avdevice_LIBRARIES_DEBUG  ${avdevice_LIBRARIES_DEBUG}")
-	message("avdevice_LIBRARIES_RELEASE  ${avdevice_LIBRARIES_RELEASE}")
-				
-	find_library(x264_LIBRARIES_DEBUG
-				NAMES x264
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
-	find_library(x264_LIBRARIES_RELEASE
-				NAMES x264
-				PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
-	message("x264_LIBRARIES_DEBUG  ${x264_LIBRARIES_DEBUG}")
-	message("x264_LIBRARIES_RELEASE  ${x264_LIBRARIES_RELEASE}")
+	__fmpeg_win32_add(avcodec avcodec-58)
+	__fmpeg_win32_add(avformat avformat-58)
+	__fmpeg_win32_add(avutil avutil-56)
+	__fmpeg_win32_add(swscale swscale-5)
+	__fmpeg_win32_add(swresample swresample-3)
+	__fmpeg_win32_add(avdevice avdevice-58)
+	__fmpeg_win32_add(x264 x264-58)
+	#find_library(avcodec_LIBRARIES_DEBUG
+	#			NAMES avcodec
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	#find_library(avcodec_LIBRARIES_RELEASE
+	#			NAMES avcodec
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("avcodec_LIBRARIES_DEBUG  ${avcodec_LIBRARIES_DEBUG}")
+	#message("avcodec_LIBRARIES_RELEASE  ${avcodec_LIBRARIES_RELEASE}")			
+	#			
+	#find_library(avformat_LIBRARIES_DEBUG
+	#			NAMES avformat
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	#find_library(avformat_LIBRARIES_RELEASE
+	#			NAMES avformat
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("avformat_LIBRARIES_DEBUG  ${avcodec_LIBRARIES_DEBUG}")
+	#message("avformat_LIBRARIES_RELEASE  ${avformat_LIBRARIES_RELEASE}")
+	#			
+	#find_library(avutil_LIBRARIES_DEBUG
+	#			NAMES avutil
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	#find_library(avutil_LIBRARIES_RELEASE
+	#			NAMES avutil
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("avutil_LIBRARIES_DEBUG  ${avutil_LIBRARIES_DEBUG}")
+	#message("avutil_LIBRARIES_RELEASE  ${avutil_LIBRARIES_RELEASE}")
+	#			
+	#find_library(swscale_LIBRARIES_DEBUG
+	#			NAMES swscale
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	#find_library(swscale_LIBRARIES_RELEASE
+	#			NAMES swscale
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("swscale_LIBRARIES_DEBUG  ${swscale_LIBRARIES_DEBUG}")
+	#message("swscale_LIBRARIES_RELEASE  ${swscale_LIBRARIES_RELEASE}")
+	#			
+	#find_library(swresample_LIBRARIES_DEBUG
+	#			NAMES swresample
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	#find_library(swresample_LIBRARIES_RELEASE
+	#			NAMES swresample
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("swresample_LIBRARIES_DEBUG  ${swresample_LIBRARIES_DEBUG}")
+	#message("swresample_LIBRARIES_RELEASE  ${swresample_LIBRARIES_RELEASE}")
+	#			
+	#find_library(avdevice_LIBRARIES_DEBUG
+	#			NAMES avdevice
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	#find_library(avdevice_LIBRARIES_RELEASE
+	#			NAMES avdevice
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("avdevice_LIBRARIES_DEBUG  ${avdevice_LIBRARIES_DEBUG}")
+	#message("avdevice_LIBRARIES_RELEASE  ${avdevice_LIBRARIES_RELEASE}")
+	#			
+	#find_library(x264_LIBRARIES_DEBUG
+	#			NAMES x264
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")		
+	#find_library(x264_LIBRARIES_RELEASE
+	#			NAMES x264
+	#			PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ffmpeglib/lib/")
+	#message("x264_LIBRARIES_DEBUG  ${x264_LIBRARIES_DEBUG}")
+	#message("x264_LIBRARIES_RELEASE  ${x264_LIBRARIES_RELEASE}")
 else()
 	message("find cc fmpeg macOS")
 	find_library(avcodec_LIBRARIES_DEBUG

@@ -360,9 +360,17 @@ macro(__copy_find_targets targets)
 				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
 					"$<$<CONFIG:Release>:${IMPORT_LOC_RELEASE}>"  
-					"$<$<CONFIG:Debug>:${IMPORT_LOC_RELEASE}>" 
+					"$<$<CONFIG:Debug>:${IMPORT_LOC_DEBUG}>" 
 					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 		)
+		endif()
+		
+		if(IMPORT_LOC_RELEASE AND EXISTS ${IMPORT_LOC_RELEASE})
+			if(WIN32)
+				INSTALL(FILES ${IMPORT_LOC_RELEASE} DESTINATION .)
+			else(APPLE)
+				INSTALL(FILES  ${IMPORT_LOC_RELEASE} DESTINATION "${MACOS_INSTALL_LIB_DIR}")
+			endif()
 		endif()
 	endforeach()
 endmacro()
