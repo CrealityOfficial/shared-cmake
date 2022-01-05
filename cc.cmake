@@ -49,7 +49,6 @@ function(__search_target_components target)
 				"/usr/bin/Release" "/usr/local/bin/Release"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
-				
 	message("${target}_INCLUDE_DIRS  ${${target}_INCLUDE_DIRS}")
 	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
 	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
@@ -82,7 +81,12 @@ function(__search_target_components_signle target)
 				"/usr/bin" "/usr/local/bin"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
-
+			
+	if(WIN32)
+		set(${target}_LOC_DEBUG "$ENV{USR_INSTALL_ROOT}/bin/Debug/${target}.dll")
+		set(${target}_LOC_RELEASE "$ENV{USR_INSTALL_ROOT}/bin/Release/${target}.dll")
+	endif()
+	
 	message("${target}_INCLUDE_DIRS  ${${target}_INCLUDE_DIRS}")
 	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
 	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
