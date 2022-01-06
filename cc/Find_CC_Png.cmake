@@ -8,4 +8,4 @@ __search_target_components(png
 						   PRE png
 						   )
 
-__test_import(png dll)
+__test_import(png lib)
