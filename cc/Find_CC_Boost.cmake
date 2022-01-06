@@ -39,9 +39,9 @@ else()
 	find_path(BOOST_INCLUDE_DIRS
 			NAMES boost/filesystem.hpp
 			HINTS "${BOOST_INSTALL_ROOT}"
-			PATHS "/usr/include/" "/usr/include/boost/"
-					"/usr/local/include/" "/usr/local/include/boost/"
-					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/boost"
+			PATHS "$ENV{USR_INSTALL_ROOT}/include/boost" "$ENV{USR_INSTALL_ROOT}/include/"
+			      "/usr/include/" "/usr/include/boost/"
+				  "/usr/local/include/" "/usr/local/include/boost/"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 endif()
