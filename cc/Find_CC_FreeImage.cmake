@@ -11,7 +11,8 @@
  __search_target_components(freeImage
 							    INC FreeImage.h
 							    DLIB freeImage
-							    LIB freeImage 
+							    LIB freeImage
+								PRE freeImage
 							    )
  __test_import(freeImage dll)
 
