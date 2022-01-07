@@ -17,9 +17,9 @@ endif()
 
 find_path(RAPIDJSON_INCLUDE_DIRS rapidjson/rapidjson.h
 			HINTS "${RAPIDJSON_INSTALL_ROOT}"
-			PATHS "/usr/include/" "/usr/local/include/" 
+			PATHS "$ENV{USR_INSTALL_ROOT}/include/rapidjson" "$ENV{USR_INSTALL_ROOT}/include/" 
+			"/usr/include/" "/usr/local/include/" 
 					"/usr/include/rapidjson" "/usr/local/include/rapidjson/"
-					"$ENV{USR_INSTALL_ROOT}/include/" "$ENV{USR_INSTALL_ROOT}/include/rapidjson"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
 	
