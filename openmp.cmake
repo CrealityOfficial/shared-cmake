@@ -12,7 +12,9 @@ macro(__add_openmp_lib arg1)
              NAMES omp
              PATHS "/usr/local/lib")
     message(STATUS ${OPENOMP_LIBRARIES})
-    target_link_libraries(${arg1} PRIVATE ${OPENOMP_LIBRARIES})
+	if(OPENOMP_LIBRARIES)
+		target_link_libraries(${arg1} PRIVATE ${OPENOMP_LIBRARIES})
+	endif()
 endmacro()
 
 macro(__disable_openmp)
