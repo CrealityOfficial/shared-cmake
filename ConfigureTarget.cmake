@@ -209,7 +209,7 @@ function(__add_real_target target type)
 					LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
 				)
 			elseif(UNIX)
-				INSTALL(TARGETS ${target} RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
+				#INSTALL(TARGETS ${target} RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
 			endif()
 		endif()
 	else(target_SOURCE)
