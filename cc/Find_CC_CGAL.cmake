@@ -16,6 +16,7 @@ include_directories(${BOOST_INCLUDE_DIRS})
 include_directories(${EIGEN_INCLUDE_DIRS})
 add_definitions(-DCGAL_NO_GMP=1)
 add_definitions(-DCGAL_NO_MPFR=1)
+add_definitions(-DCGAL_HEADER_ONLY=1)
 
 macro(__cc_cgal_include package)
 	if(NOT CGAL_INCLUDE_DIRS)
@@ -99,6 +100,8 @@ __cc_cgal_include(Surface_mesh)
 __cc_cgal_include(Surface_mesh_simplification)
 __cc_cgal_include(HalfedgeDS)
 __cc_cgal_include(Surface_mesh_parameterization)
+__cc_cgal_include(Surface_mesh_segmentation)
+__cc_cgal_include(Partition_2)
 
 #enable cluster point 
 __cc_cgal_include(Point_set_processing_3)
