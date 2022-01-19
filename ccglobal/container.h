@@ -2,6 +2,7 @@
 #define _CONTAINER_1638848103128_H
 #include "ccglobal/log.h"
 #include <list>
+#include <assert.h>
 
 #define LIST_ADD(container, x) \
 		{ \
@@ -29,6 +30,47 @@
 			else \
 				container.erase(it); \
 		}
+
+template<class T>
+void container_delete_all(T& t)
+{
+	for (auto it = t.begin(); it != t.end(); ++it)
+	{
+		if(*it)
+			delete *it;
+	}
+	t.clear();
+}
+
+template<class T>
+typename T::value_type container_find_from_id(T& t, int id)   // just for pointer 
+{
+	typename T::value_type value = nullptr;
+	for (auto it = t.begin(); it != t.end(); ++it)
+	{
+		if (*it && (*it)->ID() == id)
+		{
+			value = (*it);
+			break;
+		}
+	}
+	return value;
+}
+
+template<class T>
+bool container_test_in(T& t, typename T::value_type v)   // just for pointer 
+{
+	bool in = false;
+	for (auto it = t.begin(); it != t.end(); ++it)
+	{
+		if (*it == v)
+		{
+			in = true;
+			break;
+		}
+	}
+	return in;
+}
 
 template<class T>
 class LContainer
