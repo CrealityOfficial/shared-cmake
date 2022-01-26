@@ -55,7 +55,7 @@ macro(__emcc_wasm WSAM_NAME SOURCE WSAM_ARGS)
 endmacro()
 
 function(__add_emcc_target target)
-	cmake_parse_arguments(target "" "IDLS;IDLINCS" "CSOURCE;LIBRARIES;WSAM_ARGS;" ${ARGN})
+	cmake_parse_arguments(target "DEBUG" "IDLS;IDLINCS" "CSOURCE;LIBRARIES;WSAM_ARGS;" ${ARGN})
 	set(LIBRARIES)
 	if(target_LIBRARIES)
 		#message(STATUS "__add_emcc_target LIBRARIES : ${target_LIBRARIES}")
@@ -81,6 +81,10 @@ function(__add_emcc_target target)
 	message(STATUS "__add_emcc_target LIBRARIES : ${LIBRARIES}")
 	
 	set(EXTRA_ARGS -s EXPORT_NAME="${target}")
+	if(target_DEBUG)
+		list(APPEND EXTRA_ARGS -gseparate-dwarf=${target}.debug.wasm)
+	endif()
+	
 	if(target_IDLS)
 		message(STATUS "__add_emcc_target IDLS : ${target_IDLS}")
 		
@@ -127,7 +131,6 @@ function(__add_emcc_target target)
 	endif()
 	
 	set(WARGS  #default args
-		--source-map-base http://localhost:8081/
 		-s MODULARIZE=1
 		-s ALLOW_MEMORY_GROWTH=1
 		-s ALLOW_TABLE_GROWTH=1
@@ -139,7 +142,7 @@ function(__add_emcc_target target)
 		
 	if(target_WSAM_ARGS)
 		#message(STATUS "__add_emcc_target WSAM_ARGS : ${target_WSAM_ARGS}")
-		set(WARGS ${target_WSAM_ARGS})
+		set(WARGS ${WARGS} ${target_WSAM_ARGS})
 	endif()
 	
 	add_custom_command(
