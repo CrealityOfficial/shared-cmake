@@ -4,7 +4,7 @@ cd %~dp0
 
 echo %~dp0
 
-emcmake cmake -S ../../ -B ../../emcc-build/build
+call emcmake cmake -S ../../ -B ../../emcc-build/build -G Ninja
 
 echo .............. after emcmake
 cd ..

@@ -9,10 +9,10 @@ cd emcc-build
 mkdir build
 cd build
 
-emcmake cmake ../../ 
+call emcmake cmake ../../ -G Ninja
 
 rem Build and install the application
 
-emmake ninja || exit /b
+call emmake ninja || exit /b
 
 cd ..\..\
