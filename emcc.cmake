@@ -53,3 +53,8 @@ macro(__emcc_wasm WSAM_NAME SOURCE WSAM_ARGS)
 		ALL 
 		DEPENDS ${WSAM_NAME}.js ${WSAM_NAME}.wasm)
 endmacro()
+
+function(__add_emcc_target target)
+	cmake_parse_arguments(target "" "" "CSOURCE;IDL;IDLINCS;LIBRARIES;" ${ARGN})
+	if(target_SOURCE)
+endfunction()
