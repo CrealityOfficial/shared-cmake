@@ -559,17 +559,26 @@ function(__add_emcc_target target)
 		
 		list(APPEND LIBRARIES ${target_IDLS}.o)
 		set(EXTRA_ARGS --post-js ${target_IDLS}.js ${EXTRA_ARGS})
+		message(STATUS ${EXTRA_ARGS})
 	endif()
 	
 	set(WARGS  #default args
+	    -Wl,--shared-memory,--no-check-features
 		-s MODULARIZE=1
 		-s ALLOW_MEMORY_GROWTH=1
+		-s TOTAL_MEMORY=512MB
 		-s ALLOW_TABLE_GROWTH=1
 		-s EXPORTED_RUNTIME_METHODS=["addFunction"]
 		-s DISABLE_EXCEPTION_CATCHING=1
+		-s EXCEPTION_DEBUG=1
+		-s USE_PTHREADS=1
+		-s PTHREAD_POOL_SIZE_STRICT=0
+		-s SUPPORT_LONGJMP=1
+		-s ASSERTIONS=1
+		-s SAFE_HEAP=1
 		-s USE_SDL=0
-		-s ENVIRONMENT=web
-		-s NO_FILESYSTEM=1)
+		-s ENVIRONMENT=web,worker
+		-s NO_FILESYSTEM=0)
 		
 	if(target_WSAM_ARGS)
 		#message(STATUS "__add_emcc_target WSAM_ARGS : ${target_WSAM_ARGS}")
@@ -594,8 +603,8 @@ function(__add_emcc_target target)
 				${BIN_OUTPUT_DIR}/Release/${target}.js
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.wasm
 				${BIN_OUTPUT_DIR}/Release/${target}.wasm
-			#COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.wasm.map
-			#	${CMAKE_CURRENT_LIST_DIR}/${target}.wasm.map	    
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.debug.wasm
+				${BIN_OUTPUT_DIR}/Release/${target}.debug.wasm	    
 			)
 	endif()
 endfunction()
