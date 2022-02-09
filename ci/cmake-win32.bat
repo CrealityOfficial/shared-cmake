@@ -16,5 +16,5 @@ echo "build"
 
 cd %~dp0
 
-cmake -S ../../ -B ../../win32-build/build
+cmake -S ../../ -B ../../win32-build/build -DCC_BUILD_TEST=ON
 cd ../../
