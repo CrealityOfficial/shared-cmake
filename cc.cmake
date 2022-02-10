@@ -91,3 +91,7 @@ function(__search_target_components_signle target)
 	message("${target}_LIBRARIES_DEBUG  ${${target}_LIBRARIES_DEBUG}")
 	message("${target}_LIBRARIES_RELEASE  ${${target}_LIBRARIES_RELEASE}")
 endfunction()
+
+if(CC_BUILD_TEST)
+	message(STATUS "CC_BUILD_TEST Enabled.")
+endif()
