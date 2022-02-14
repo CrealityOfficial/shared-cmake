@@ -38,8 +38,8 @@ if(NOT WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fPIC")
 	
-	include_directories("/usr/local/include/")
-	link_directories("/usr/local/lib/")
+    #include_directories("/usr/local/include/")
+    #	link_directories("/usr/local/lib/")
 endif()
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
