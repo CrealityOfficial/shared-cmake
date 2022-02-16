@@ -1,3 +1,5 @@
+include(CCBuildSystem)
+
 include(ConfigureTarget)
 
 include(ConfigureQt)
@@ -23,9 +25,6 @@ include(collect/CollectEntry)
 include(qt/QtEntry)
 include(render/RenderEntry)
 
-message(STATUS "CMAKE_SYSTEM_NAME ---> ${CMAKE_SYSTEM_NAME}")
-if(CMAKE_SYSTEM_NAME)
-	if(${CMAKE_SYSTEM_NAME} STREQUAL "Emscripten")
-		include(emcc)
-	endif()
+if(CC_BC_EMCC)
+	include(emcc)
 endif()
