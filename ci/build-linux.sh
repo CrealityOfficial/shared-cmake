@@ -11,6 +11,16 @@ cd ../../
 mkdir linux-build
 cd linux-build
 mkdir build
+mkdir lib
+
+cd lib
+mkdir Release
+cd ..
+mkdir bin
+cd bin
+mkdir Release
+cd ..
+
 cd build
 
 # cmake ../../ -DCMAKE_BUILD_TYPE=Debug
