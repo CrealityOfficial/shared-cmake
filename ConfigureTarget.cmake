@@ -311,10 +311,12 @@ macro(__import_target target type)
 		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Debug")
 		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Release")
 		
-		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${${target}_LIBRARIES_DEBUG})
-		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_RELEASE ${${target}_LIBRARIES_RELEASE})
+		if(NOT CC_BC_LINUX)
+			set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${${target}_LIBRARIES_DEBUG})
+			set(IMPORT_LOC_DEBUG ${${target}_LIBRARIES_DEBUG})
+		endif()
 		
-		set(IMPORT_LOC_DEBUG ${${target}_LIBRARIES_DEBUG})
+		set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_RELEASE ${${target}_LIBRARIES_RELEASE})
 		set(IMPORT_LOC_RELEASE ${${target}_LIBRARIES_RELEASE})
 
 		if(WIN32 AND ${type} STREQUAL "dll")
@@ -328,9 +330,12 @@ macro(__import_target target type)
 			endif()
 		endif()
 		
-		message(STATUS "${target} IMPORTED_LOCATION_DEBUG -> [${IMPORT_LOC_DEBUG}]")
+		if(NOT CC_BC_LINUX)
+			message(STATUS "${target} IMPORTED_LOCATION_DEBUG -> [${IMPORT_LOC_DEBUG}]")
+			set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_DEBUG ${IMPORT_LOC_DEBUG})
+		endif()
+		
 		message(STATUS "${target} IMPORTED_LOCATION_RELEASE -> [${IMPORT_LOC_RELEASE}]")
-		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_DEBUG ${IMPORT_LOC_DEBUG})
 		set_target_properties(${target} PROPERTIES IMPORTED_LOCATION_RELEASE ${IMPORT_LOC_RELEASE})
 		
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
