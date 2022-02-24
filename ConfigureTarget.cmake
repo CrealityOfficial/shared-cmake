@@ -567,7 +567,7 @@ function(__add_emcc_target target)
 	endif()
 	
 	set(WARGS  #default args
-	    -Wl,--shared-memory,--no-check-features
+	    #-Wl,--shared-memory,--no-check-features
 		-s MODULARIZE=1
 		-s ALLOW_MEMORY_GROWTH=1
 		-s TOTAL_MEMORY=512MB
@@ -575,13 +575,13 @@ function(__add_emcc_target target)
 		-s EXPORTED_RUNTIME_METHODS=["addFunction"]
 		-s DISABLE_EXCEPTION_CATCHING=1
 		-s EXCEPTION_DEBUG=1
-		-s USE_PTHREADS=1
-		-s PTHREAD_POOL_SIZE_STRICT=0
+		#-s USE_PTHREADS=0
+		#-s PTHREAD_POOL_SIZE_STRICT=0
 		-s SUPPORT_LONGJMP=1
 		-s ASSERTIONS=1
 		-s SAFE_HEAP=1
 		-s USE_SDL=0
-		-s ENVIRONMENT=web,worker
+		-s ENVIRONMENT=web
 		-s NO_FILESYSTEM=0)
 		
 	if(target_WSAM_ARGS)
