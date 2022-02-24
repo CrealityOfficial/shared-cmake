@@ -3,6 +3,7 @@
 #include "ccglobal/log.h"
 #include <list>
 #include <assert.h>
+#include<algorithm>
 
 #define LIST_ADD(container, x) \
 		{ \
