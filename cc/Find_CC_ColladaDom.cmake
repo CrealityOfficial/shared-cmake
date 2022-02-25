@@ -2,7 +2,7 @@
 # collada-dom target
 
 __search_target_components(collada-dom
-						   INC dom/domAccessor.h
+						   INC dom/domAny.h
 						   DLIB collada-dom
 						   LIB collada-dom
 						   PRE collada-dom
