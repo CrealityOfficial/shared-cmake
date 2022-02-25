@@ -17,10 +17,10 @@ macro(__opencv_add target dll)
   elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_library(${target}_LIBRARIES_DEBUG
 				NAMES "${dll}d"
-				PATHS "${OPENCV_INSTALL_ROOT}/install/x64/vc16/lib/")
+				PATHS "${OPENCV_INSTALL_ROOT}/install/linux/lib/")
 	find_library(${target}_LIBRARIES_RELEASE
 				NAMES ${dll}
-				PATHS "${OPENCV_INSTALL_ROOT}/install/x64/vc16/lib/")
+				PATHS "${OPENCV_INSTALL_ROOT}/install/linux/lib/")
   elseif()
   
   endif()
