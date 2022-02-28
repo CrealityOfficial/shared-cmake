@@ -12,8 +12,8 @@ macro(__opencv_add target dll)
 	find_library(${target}_LIBRARIES_RELEASE
 				NAMES ${dll}
 				PATHS "${OPENCV_INSTALL_ROOT}/install/x64/vc16/lib/")
-	set(${target}_LOC_DEBUG "${OPENCV_INSTALL_ROOT}/x64/vc16/bin/${dll}d.dll")
-	set(${target}_LOC_RELEASE "${OPENCV_INSTALL_ROOT}/x64/vc16/bin/${dll}.dll")	
+	set(${target}_LOC_DEBUG "${OPENCV_INSTALL_ROOT}/install/x64/vc16/bin/${dll}d.dll")
+	set(${target}_LOC_RELEASE "${OPENCV_INSTALL_ROOT}/install/x64/vc16/bin/${dll}.dll")	
   elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
     find_library(${target}_LIBRARIES_DEBUG
 				NAMES "${dll}d"
