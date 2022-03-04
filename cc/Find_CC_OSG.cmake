@@ -11,14 +11,14 @@ set(OSG_LIBS OpenThreads
 			 )
 			 
 foreach(item ${OSG_LIBS})
-	__search_target_components(${item}
-							INC osg/Array
-							DLIB ${item}
-							LIB ${item}
-							PRE OpenSceneGraph
-							)
-endforeach()
-
-foreach(item ${OSG_LIBS})
-	__test_import(${item} dll)
+	if(NOT TARGET ${item})
+		__search_target_components(${item}
+								INC osg/Array
+								DLIB ${item}
+								LIB ${item}
+								PRE OpenSceneGraph
+								)
+								
+		__test_import(${item} dll)
+	endif()
 endforeach()

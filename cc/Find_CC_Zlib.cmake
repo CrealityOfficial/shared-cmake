@@ -12,11 +12,13 @@ elseif(CXZLIB_INSTALL_ROOT)
 	set(zlib_LIB_ROOT ${CXZLIB_INSTALL_ROOT}/lib/)
 endif()
 
-__search_target_components(zlib
-						   INC zlib.h
-						   DLIB zlib
-						   LIB zlib
-						   PRE zlib
-						   )
-
-__test_import(zlib dll)
+if(NOT TARGET zlib)
+	__search_target_components(zlib
+							INC zlib.h
+							DLIB zlib
+							LIB zlib
+							PRE zlib
+							)
+	
+	__test_import(zlib dll)
+endif()

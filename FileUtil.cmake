@@ -339,24 +339,22 @@ macro(__add_cdirectory_prefix_test prefix)
 	endforeach()
 endmacro()
 
-macro(__copy_find_targets targets)
-	if(NOT TARGET __auto_copy)
-		add_custom_target(__auto_copy ALL COMMENT "copy installed library.")
-		__set_target_folder(__auto_copy CMakePredefinedTargets)
-	endif()
-	
+macro(__copy_find_targets targets)	
 	set(RTARGETS ${targets})
 	if(${${targets}})
 		set(RTARGETS ${${targets}})
 	endif()
 	message(STATUS "__copy_find_targets ${RTARGETS}")
 	foreach(target ${RTARGETS})
+		add_custom_target(__auto_copy_${target} ALL COMMENT "copy installed library.")
+		__set_target_folder(__auto_copy_${target} CMakePredefinedTargets)
+	
 		get_target_property(IMPORT_LOC_DEBUG ${target} IMPORTED_LOCATION_DEBUG)
 		get_target_property(IMPORT_LOC_RELEASE ${target} IMPORTED_LOCATION_RELEASE)
 
 		if(IMPORT_LOC_DEBUG AND IMPORT_LOC_RELEASE 
 				AND EXISTS ${IMPORT_LOC_RELEASE} AND EXISTS ${IMPORT_LOC_DEBUG})
-			add_custom_command(TARGET __auto_copy PRE_BUILD
+			add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
 				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
 					"$<$<CONFIG:Release>:${IMPORT_LOC_RELEASE}>"  
