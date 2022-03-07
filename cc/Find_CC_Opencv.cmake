@@ -21,7 +21,13 @@ macro(__opencv_add target dll)
 	find_library(${target}_LIBRARIES_RELEASE
 				NAMES ${dll}
 				PATHS "${OPENCV_INSTALL_ROOT}/install/linux/lib/")
-  elseif()
+  else()
+	find_library(${target}_LIBRARIES_DEBUG
+				NAMES "${dll}d"
+				PATHS "${OPENCV_INSTALL_ROOT}/install/mac/lib/")
+	find_library(${target}_LIBRARIES_RELEASE
+				NAMES ${dll}
+				PATHS "${OPENCV_INSTALL_ROOT}/install/mac/lib/")
   
   endif()
 endmacro()
@@ -68,6 +74,20 @@ elseif(${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	__opencv_add(opencv_photo opencv_photo)
 	__opencv_add(opencv_shape opencv_shape)
 	__opencv_add(opencv_video opencv_video)	
+else()
+	__opencv_add(opencv_core opencv_core.3.4.13)
+	__opencv_add(opencv_calib3d opencv_calib3d.3.4.13)
+	__opencv_add(opencv_dnn opencv_dnn.3.4.13)
+	__opencv_add(opencv_features2d opencv_features2d.3.4.13)
+	__opencv_add(opencv_flann opencv_flann.3.4.13)
+	__opencv_add(opencv_highgui opencv_highgui.3.4.13)
+	__opencv_add(opencv_imgcodecs opencv_imgcodecs.3.4.13)
+	__opencv_add(opencv_imgproc opencv_imgproc.3.4.13)
+	__opencv_add(opencv_ml opencv_ml.3.4.13)
+	__opencv_add(opencv_objdetect opencv_objdetect.3.4.13)
+	__opencv_add(opencv_photo opencv_photo.3.4.13)
+	__opencv_add(opencv_shape opencv_shape.3.4.13)
+	__opencv_add(opencv_video opencv_videoio.3.4.13)	
 
 endif()
 __test_import(opencv_core dll)
