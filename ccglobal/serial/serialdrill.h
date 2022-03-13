@@ -2,18 +2,20 @@
 #define CCGLOBAL_SERIAL_DRILL_H
 #include "ccglobal/serial/serialtrimesh.h"
 
-void cc_load_drill(const std::string& file, trimesh::fxform& xf)
+void cc_load_drill(const std::string& file, trimesh::fxform& xf, trimesh::TriMesh& mesh)
 {
-	auto f = [&xf](std::fstream& in) {
+	auto f = [&xf, &mesh](std::fstream& in) {
 		loadFXform(in, xf);
+		loadTrimesh(in, mesh);
 	};
 	serialLoad(file, f);
 }
 
-void cc_save_drill(const std::string& file, trimesh::fxform& xf)
+void cc_save_drill(const std::string& file, trimesh::fxform& xf, trimesh::TriMesh& mesh)
 {
-	auto f = [&xf](std::fstream& out) {
+	auto f = [&xf, &mesh](std::fstream& out) {
 		saveFXform(out, xf);
+		saveTrimesh(out, mesh);
 	};
 	serialSave(file, f);
 }
