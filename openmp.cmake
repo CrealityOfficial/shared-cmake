@@ -1,3 +1,5 @@
+#target OpenMP::OpenMP_CXX
+
 macro(__enable_openmp)
 	find_package(OpenMP)
 	if(OPENMP_FOUND)
