@@ -225,10 +225,10 @@ macro(__add_real_library target)
 endmacro()
 
 macro(__add_platform_library target)
-	if(NOT INERTFACES)
-		set(INERTFACES ${CMAKE_CURRENT_SOURCE_DIR})
+	if(NOT INTERFACES)
+		set(INTERFACES ${CMAKE_CURRENT_SOURCE_DIR})
 		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/include")
-			list(APPEND INERTFACES ${CMAKE_CURRENT_SOURCE_DIR})
+			list(APPEND INTERFACES ${CMAKE_CURRENT_SOURCE_DIR})
 		endif()
 	endif()
 	
@@ -237,7 +237,7 @@ macro(__add_platform_library target)
 										LIB ${LIBS}
 										INC ${INCS}
 										DEF ${DEFS}
-										INTERFACE ${INERTFACES}
+										INTERFACE ${INTERFACES}
 										SOURCE_FOLDER
 										)
 	else()
@@ -247,7 +247,7 @@ macro(__add_platform_library target)
 										LIB ${LIBS}
 										INC ${INCS}
 										DEF ${DEFS}
-										INTERFACE ${INERTFACES}
+										INTERFACE ${INTERFACES}
 										SOURCE_FOLDER
 										)
 	endif()
