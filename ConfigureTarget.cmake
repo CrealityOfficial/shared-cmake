@@ -576,7 +576,7 @@ function(__add_emcc_target target)
 	    #-Wl,--shared-memory,--no-check-features
 		-s MODULARIZE=1
 		-s ALLOW_MEMORY_GROWTH=1
-		-s TOTAL_MEMORY=512MB
+		#-s TOTAL_MEMORY=512MB
 		-s ALLOW_TABLE_GROWTH=1
 		-s EXPORTED_RUNTIME_METHODS=["addFunction"]
 		-s DISABLE_EXCEPTION_CATCHING=1
@@ -587,7 +587,7 @@ function(__add_emcc_target target)
 		-s ASSERTIONS=1
 		-s SAFE_HEAP=1
 		-s USE_SDL=0
-		-s ENVIRONMENT=web
+		-s ENVIRONMENT=worker
 		-s NO_FILESYSTEM=0)
 		
 	if(target_WSAM_ARGS)
