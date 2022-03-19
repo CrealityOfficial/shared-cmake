@@ -82,7 +82,7 @@ macro(__find_spdlog)
 endmacro()
 
 macro(__find_alibabacloud)
-	__cc_find(AliyunOss)
+	#__cc_find(AliyunOss)
 	__assert_target(AliyunOss)
 endmacro()
 
