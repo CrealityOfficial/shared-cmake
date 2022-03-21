@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <functional>
 
 typedef std::function<void(std::fstream& stream)> serialFunc;
 void serialLoad(const std::string& file, serialFunc func)
