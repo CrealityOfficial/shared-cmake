@@ -27,7 +27,7 @@ macro(__prepare_qt5)
 endmacro()
 
 macro(__prepare_core_qt5)
-	find_package(Qt5 COMPONENTS Core Widgets Gui OpenGL)
+	find_package(Qt5 COMPONENTS Core Widgets Gui OpenGL Network)
 	__setup_qt_targets()
 endmacro()
 
