@@ -578,7 +578,7 @@ function(__add_emcc_target target)
 		-s ALLOW_MEMORY_GROWTH=1
 		#-s TOTAL_MEMORY=512MB
 		-s ALLOW_TABLE_GROWTH=1
-		-s EXPORTED_RUNTIME_METHODS=["addFunction"]
+		-s EXPORTED_RUNTIME_METHODS=["addFunction","UTF8ToString"]
 		-s DISABLE_EXCEPTION_CATCHING=1
 		-s EXCEPTION_DEBUG=1
 		#-s USE_PTHREADS=0
