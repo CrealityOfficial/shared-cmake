@@ -51,64 +51,64 @@ else()
 	message("find cc fmpeg macOS")
 	find_library(avcodec_LIBRARIES_DEBUG
 				NAMES avcodec.58
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")		
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")		
 	find_library(avcodec_LIBRARIES_RELEASE
 				NAMES avcodec.58
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")
 	message("avcodec_LIBRARIES_DEBUG  ${avcodec_LIBRARIES_DEBUG}")
 	message("avcodec_LIBRARIES_RELEASE  ${avcodec_LIBRARIES_RELEASE}")
 				
 	find_library(avformat_LIBRARIES_DEBUG
 				NAMES avformat.58
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")		
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")		
 	find_library(avformat_LIBRARIES_RELEASE
 				NAMES avformat.58
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")
 	message("avformat_LIBRARIES_DEBUG  ${avformat_LIBRARIES_DEBUG}")
 	message("avformat_LIBRARIES_RELEASE  ${avformat_LIBRARIES_RELEASE}")
 				
 	find_library(avutil_LIBRARIES_DEBUG
 				NAMES avutil.56
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")		
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")		
 	find_library(avutil_LIBRARIES_RELEASE
 				NAMES avutil.56
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")
 	message("avutil_LIBRARIES_DEBUG  ${avutil_LIBRARIES_DEBUG}")
 	message("avutil_LIBRARIES_RELEASE  ${avutil_LIBRARIES_RELEASE}")
 				
 	find_library(swscale_LIBRARIES_DEBUG
 				NAMES swscale.5
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")		
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")		
 	find_library(swscale_LIBRARIES_RELEASE
 				NAMES swscale.5
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")
 	message("swscale_LIBRARIES_DEBUG  ${swscale_LIBRARIES_DEBUG}")
 	message("swscale_LIBRARIES_RELEASE  ${swscale_LIBRARIES_RELEASE}")
 				
 	find_library(swresample_LIBRARIES_DEBUG
 				NAMES swresample.3
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")		
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")		
 	find_library(swresample_LIBRARIES_RELEASE
 				NAMES swresample.3
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")
 	message("swresample_LIBRARIES_DEBUG  ${swresample_LIBRARIES_DEBUG}")
 	message("swresample_LIBRARIES_RELEASE  ${swresample_LIBRARIES_RELEASE}")
 				
 	find_library(avdevice_LIBRARIES_DEBUG
 				NAMES avdevice.58
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")		
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")		
 	find_library(avdevice_LIBRARIES_RELEASE
 				NAMES avdevice.58
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")
 	message("avdevice_LIBRARIES_DEBUG  ${avdevice_LIBRARIES_DEBUG}")
 	message("avdevice_LIBRARIES_RELEASE  ${avdevice_LIBRARIES_RELEASE}")
 				
 	find_library(x264_LIBRARIES_DEBUG
 				NAMES x264
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")		
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")		
 	find_library(x264_LIBRARIES_RELEASE
 				NAMES x264
-				PATHS "${FMPEG_INSTALL_ROOT}/ffmpeglib/bin_osX/")
+				PATHS "${FMPEG_INSTALL_ROOT}/bin_osX/")
 	message("x264_LIBRARIES_DEBUG  ${x264_LIBRARIES_DEBUG}")
 	message("x264_LIBRARIES_RELEASE  ${x264_LIBRARIES_RELEASE}")
 endif()						   
