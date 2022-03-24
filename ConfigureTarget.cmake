@@ -228,7 +228,7 @@ macro(__add_platform_library target)
 	if(NOT INTERFACES)
 		set(INTERFACES ${CMAKE_CURRENT_SOURCE_DIR})
 		if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/include")
-			list(APPEND INTERFACES ${CMAKE_CURRENT_SOURCE_DIR})
+			list(APPEND INTERFACES ${CMAKE_CURRENT_SOURCE_DIR}/include)
 		endif()
 	endif()
 	
@@ -578,7 +578,7 @@ function(__add_emcc_target target)
 		-s ALLOW_MEMORY_GROWTH=1
 		#-s TOTAL_MEMORY=512MB
 		-s ALLOW_TABLE_GROWTH=1
-		-s EXPORTED_RUNTIME_METHODS=["addFunction","UTF8ToString"]
+		-s EXPORTED_RUNTIME_METHODS=["addFunction","UTF8ToString","FS"]
 		-s DISABLE_EXCEPTION_CATCHING=1
 		-s EXCEPTION_DEBUG=1
 		#-s USE_PTHREADS=0
