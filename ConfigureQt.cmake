@@ -47,3 +47,13 @@ macro(__remap_qt_debug_2_release)
 	__remap_target_debug_2_release(REMAP_LIBS)
 endmacro()
 
+macro(__deploy_target_qt target)
+	include(DeployQt)
+	if(WIN32)
+		__windeployqt(${target})
+	endif()
+	if(APPLE)
+		macdeployqt(${target})
+	endif()
+endmacro()
+

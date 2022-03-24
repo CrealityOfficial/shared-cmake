@@ -78,6 +78,56 @@ function(windeployqt target)
     endforeach()
 endfunction()
 
+macro(__windeployqt target)
+	set(QMLDIR)
+	if(QML_ENTRY_DIR)
+		set(QMLDIR --qmldir ${QML_ENTRY_DIR})
+	endif()
+	set(QDIR --dir $<$<CONFIG:Release>:${BIN_OUTPUT_DIR}/Release/>$<$<CONFIG:Debug>:${BIN_OUTPUT_DIR}/Debug/>)
+    # Run windeployqt immediately after build
+    add_custom_command(TARGET ${target} POST_BUILD
+		#COMMAND ${CMAKE_COMMAND} -E remove_directory "${BIN_OUTPUT_DIR}/windeployqt"
+        COMMAND "${CMAKE_COMMAND}" -E
+            env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
+                --verbose 0
+                --no-compiler-runtime
+                --no-angle
+                --no-opengl-sw
+				${QMLDIR}
+				${QDIR}
+                \"$<TARGET_FILE:${target}>\"
+        COMMENT "Deploying Qt..."
+    )
+	
+	if(CMAKE_BUILD_TYPE MATCHES "Release")
+		add_custom_command(TARGET ${target} POST_BUILD
+			#COMMAND ${CMAKE_COMMAND} -E remove_directory "${BIN_OUTPUT_DIR}/windeployqt"
+			COMMAND "${CMAKE_COMMAND}" -E
+				env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
+					--verbose 0
+					--no-compiler-runtime
+					--no-angle
+					--no-opengl-sw
+					${QMLDIR}
+					--dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
+					\"$<TARGET_FILE:${target}>\"
+			COMMENT "Deploying Qt..."
+		)
+		INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/windeployqt/ DESTINATION .)
+	endif()
+
+    # windeployqt doesn't work correctly with the system runtime libraries,
+    # so we fall back to one of CMake's own modules for copying them over
+
+    # Doing this with MSVC 2015 requires CMake 3.6+
+    if((MSVC_VERSION VERSION_EQUAL 1900 OR MSVC_VERSION VERSION_GREATER 1900)
+            AND CMAKE_VERSION VERSION_LESS "3.6")
+        message(WARNING "Deploying with MSVC 2015+ requires CMake 3.6+")
+    endif()
+
+    set(CMAKE_INSTALL_UCRT_LIBRARIES FALSE)
+endmacro()
+
 # Add commands that copy the required Qt files to the application bundle
 # represented by the target.
 function(macdeployqt target)

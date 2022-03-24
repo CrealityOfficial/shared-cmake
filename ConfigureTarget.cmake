@@ -85,7 +85,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -195,6 +195,10 @@ function(__add_real_target target type)
 			endif()
 		endif()
 		
+		if(target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+			__deploy_target_qt(${target})
+		endif()
+		
 		if(ENABLE_CXX_PCH)
 			target_precompile_headers(${target} PUBLIC ${CMAKE_SOURCE_DIR}/cmake/source/leak.h)
 			target_compile_definitions(${target} PRIVATE ${target}_USE_PCH)
@@ -211,7 +215,7 @@ function(__add_real_target target type)
 		configure_target(${target})
 		
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
-		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT))
+		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT) AND (NOT ${type} STREQUAL "lib"))
 			if(WIN32)
 				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
 			elseif(APPLE)

@@ -3,7 +3,7 @@ if [%1] == [] (
 	echo "build Usage:"
 	echo "Only build: build.bat v0.1.0.1"
 	echo "Build and package:build.bat v0.1.0.1 package alpha"
-	exit /b 0
+	rem exit /b 0
 )
 if [%3] == [] (
 	set VERSION_EXTRA="test"
@@ -48,52 +48,15 @@ call "%VSDir%\VC\Auxiliary\Build\vcvars64.bat"
 REM 从注册表查询 win10 SDK 安装目录，主要用于判断注册表查询是否被禁，如果被禁 vcvars64.bat 将无法正常配置环境，需要手动配置环境依赖
 call "%~dp0\check-vcvars64.bat"
 
-rem Configure the application in the current directory
-rem set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-rem if exist %VSENV% (
-rem call %VSENV% 
-rem goto :build
-rem ) else (echo "not find vs in" %VSENV%)
-rem 
-rem 
-rem 
-rem set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"
-rem if exist %VSENV% (
-rem call %VSENV% 
-rem goto :build
-rem ) else (echo "not find vs in" %VSENV%)
-rem 
-rem 
-rem 
-rem set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-rem if exist %VSENV% (
-rem call %VSENV% 
-rem goto :build
-rem ) else (echo "not find vs in" %VSENV%)
-rem 
-rem set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
-rem if exist %VSENV% (call %VSENV% ) else (exit /B)
 
 :build
 echo "build"
 
 rd /s /q out
-mkdir out
-cd out
-
-echo "Debug"
-cmake ^
-    -G"Ninja" ^
-    -DCMAKE_BUILD_TYPE=Debug ^
-    -DCMAKE_INSTALL_PREFIX=out ^
-	-DPROJECT_VERSION_MAJOR=%MAJOR% ^
-	-DPROJECT_VERSION_MINOR=%MINOR% ^
-	-DPROJECT_VERSION_PATCH=%PATCH% ^
-	-DPROJECT_BUILD_ID=0 ^
-	-DPROJECT_VERSION_EXTRA=%VERSION_EXTRA% ^
-    ..\ || exit /b
-	
-ninja || exit /b
+mkdir install
+cd install
+mkdir build
+cd build
 
 echo "Release"	
 cmake ^
@@ -105,15 +68,13 @@ cmake ^
 	-DPROJECT_VERSION_PATCH=%PATCH% ^
 	-DPROJECT_BUILD_ID=%BUILD% ^
 	-DPROJECT_VERSION_EXTRA=%VERSION_EXTRA% ^
-    ..\ || exit /b
+    ..\..\ || exit /b
 
 rem Build and install the application
 
 ninja || exit /b
 
-if "%2"=="package" (
 ninja install || exit /b
 ninja package || exit /b
-)
 
-cd ..\
+cd ..\..\
