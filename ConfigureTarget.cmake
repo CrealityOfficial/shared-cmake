@@ -85,7 +85,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;GUI_IDENTIFIER;" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -117,6 +117,14 @@ function(__add_real_target target type)
 			endif()
 		endif()
 		
+		if(CC_BC_MAC)
+			if(target_MAC_ICON)
+				set_source_files_properties(${target_MAC_ICON} PROPERTIES
+					MACOSX_PACKAGE_LOCATION "Resources")
+				list(APPEND ExtraSrc ${target_MAC_ICON})
+			endif()
+		endif()
+			
 		if(${type} STREQUAL "exe")
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		elseif(${type} STREQUAL "winexe")
@@ -133,12 +141,22 @@ function(__add_real_target target type)
 			add_library(${target} STATIC ${target_SOURCE} ${ExtraSrc})
 		endif()
 		__add_target(${target})
-        #if(APPLE)
-        #    set_target_properties(${target}
-        #    PROPERTIES
-        #    INSTALL_RPATH "@executable_path/../Frameworks"
-		#	)
-        #endif()
+        if(CC_BC_MAC)
+		    set_target_properties(${target} PROPERTIES
+				MACOSX_BUNDLE TRUE
+				MACOSX_BUNDLE_GUI_IDENTIFIER com.creality.creativedlp
+			)
+			if(target_MAC_OUTPUTNAME)
+				set_target_properties(${target} PROPERTIES
+							OUTPUT_NAME ${target_MAC_OUTPUTNAME}
+							)
+			endif()
+			if(target_MAC_GUI_IDENTIFIER)
+				set_target_properties(${target} PROPERTIES
+							OUTPUT_NAME ${target_MAC_GUI_IDENTIFIER}
+							)
+			endif()
+        endif()
 		#libs
 		if(target_AUTOQT)
 			set_target_properties(${target} PROPERTIES 
