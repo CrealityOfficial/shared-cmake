@@ -144,7 +144,6 @@ function(__add_real_target target type)
         if(CC_BC_MAC)
 		    set_target_properties(${target} PROPERTIES
 				MACOSX_BUNDLE TRUE
-				MACOSX_BUNDLE_GUI_IDENTIFIER com.creality.creativedlp
 			)
 			if(target_MAC_OUTPUTNAME)
 				set_target_properties(${target} PROPERTIES
