@@ -160,10 +160,10 @@ function(__add_real_target target type)
 		endif()
 		__add_target(${target})
 		
-		message(STATUS "${target} set mac properties MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}")
-		if(target_MAC_DEPLOYQT)
-			message(STATUS "${target} target_MAC_DEPLOYQT")
-		endif()
+		#message(STATUS "${target} set mac properties MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}")
+		#if(target_MAC_DEPLOYQT)
+		#	message(STATUS "${target} target_MAC_DEPLOYQT")
+		#endif()
         if(CC_BC_MAC)			
 		    set_target_properties(${target} PROPERTIES
 				MACOSX_BUNDLE TRUE
