@@ -605,17 +605,27 @@ function(__add_emcc_target target)
 		add_custom_target(${target} 
 			ALL 
 			DEPENDS ${target}.js ${target}.wasm)
-		
+		if(target_DEBUG)
+			add_custom_command(
+				TARGET ${target}
+				POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.js
+					${BIN_OUTPUT_DIR}/Debug/${target}.js
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.wasm
+					${BIN_OUTPUT_DIR}/Debug/${target}.wasm
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.debug.wasm
+					${BIN_OUTPUT_DIR}/Debug/${target}.debug.wasm	    
+				)
+		else()
 		add_custom_command(
 			TARGET ${target}
 			POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.js
 				${BIN_OUTPUT_DIR}/Release/${target}.js
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.wasm
-				${BIN_OUTPUT_DIR}/Release/${target}.wasm
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.debug.wasm
-				${BIN_OUTPUT_DIR}/Release/${target}.debug.wasm	    
+				${BIN_OUTPUT_DIR}/Release/${target}.wasm    
 			)
+		endif()
 	endif()
 endfunction()
 
