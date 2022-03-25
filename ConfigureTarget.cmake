@@ -160,19 +160,17 @@ function(__add_real_target target type)
 		endif()
 		__add_target(${target})
         if(CC_BC_MAC)
-		    set_target_properties(${target} PROPERTIES
-				MACOSX_BUNDLE TRUE
-			)
+			set(MAC_PROPERTIES)
 			if(target_MAC_OUTPUTNAME)
-				set_target_properties(${target} PROPERTIES
-							OUTPUT_NAME ${target_MAC_OUTPUTNAME}
-							)
+				set(MAC_PROPERTIES ${MAC_PROPERTIES} OUTPUT_NAME ${target_MAC_OUTPUTNAME})
 			endif()
 			if(target_MAC_GUI_IDENTIFIER)
-				set_target_properties(${target} PROPERTIES
-							MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}
-							)
+				set(MAC_PROPERTIES ${MAC_PROPERTIES} MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER})
 			endif()
+		    set_target_properties(${target} PROPERTIES
+				MACOSX_BUNDLE TRUE
+				${MAC_PROPERTIES}
+			)
 			if(target_MAC_DEPOLYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 				if(${type} STREQUAL "exe")
 					__mac_deploy_target_qt(${target})
