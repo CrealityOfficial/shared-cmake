@@ -21,9 +21,10 @@ endif()
 
 message(STATUS "CMAKE INSTALL PREFIX ${CMAKE_INSTALL_PREFIX}")
 
-if(CC_BC_MAC)
-	set(CMAKE_OSX_DEPLOYMENT_TARGET "10.12" CACHE STRING "Minimum OS X deployment version" FORCE)
-	message(STATUS "CMAKE_OSX_DEPLOYMENT_TARGET -> 10.12")
+if(CC_BC_WIN)
+	include(package/win_package)
+elseif(CC_BC_MAC)
+	include(package/macx_package)
 endif()
 
 macro(__package_project)
