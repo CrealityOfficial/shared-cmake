@@ -167,6 +167,8 @@ function(__add_real_target target type)
 			if(target_MAC_GUI_IDENTIFIER)
 				set(MAC_PROPERTIES ${MAC_PROPERTIES} MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER})
 			endif()
+			
+			message(STATUS "${target} set mac properties ${MAC_PROPERTIES}")
 		    set_target_properties(${target} PROPERTIES
 				MACOSX_BUNDLE TRUE
 				${MAC_PROPERTIES}
