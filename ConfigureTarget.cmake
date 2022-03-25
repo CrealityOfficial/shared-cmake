@@ -103,7 +103,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPOLYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -159,6 +159,11 @@ function(__add_real_target target type)
 			add_library(${target} STATIC ${target_SOURCE} ${ExtraSrc})
 		endif()
 		__add_target(${target})
+		
+		message(STATUS "${target} set mac properties MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}")
+		if(target_MAC_DEPLOYQT)
+			message(STATUS "${target} target_MAC_DEPLOYQT")
+		endif()
         if(CC_BC_MAC)			
 		    set_target_properties(${target} PROPERTIES
 				MACOSX_BUNDLE TRUE
@@ -175,7 +180,7 @@ function(__add_real_target target type)
 					MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}
 				)
 			endif()
-			if(target_MAC_DEPOLYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+			if(target_MAC_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 				if(${type} STREQUAL "exe")
 					message(STATUS "Mac ${target} deploy qt.")
 					__mac_deploy_target_qt(${target})
