@@ -142,28 +142,29 @@ endfunction()
 function(__macdeployqt target)
 	set(QMLDIR)
 	if(QML_ENTRY_DIR)
-		set(QMLDIR --qmldir ${QML_ENTRY_DIR})
+		set(QMLDIR -qmldir=${QML_ENTRY_DIR})
 	endif()
 	set(QDIR --dir $<$<CONFIG:Release>:${BIN_OUTPUT_DIR}/Release/>$<$<CONFIG:Debug>:${BIN_OUTPUT_DIR}/Debug/>)
+	#message(STATUS "mac deploy bundle $<TARGET_FILE_DIR:${target}>/../..")
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+		\"$<TARGET_FILE_DIR:${target}>/../..\"
             -always-overwrite
 			${QMLDIR}
-			\"$<TARGET_FILE:${target}>\"
-        COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}"
+        COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}, bundle $<TARGET_FILE_DIR:${target}>/../..}"
     )
 	
-	if(CMAKE_BUILD_TYPE MATCHES "Release")
-		add_custom_command(TARGET ${target} POST_BUILD
-			COMMAND "${MACDEPLOYQT_EXECUTABLE}"
-					-always-overwrite
-					${QMLDIR}
-					--dir "${CMAKE_CURRENT_BINARY_DIR}/macdeployqt"
-					\"$<TARGET_FILE:${target}>\"
-			COMMENT "Deploying Qt..."
-		)
-		INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/macdeployqt/ DESTINATION .)
-	endif()
+	#if(CMAKE_BUILD_TYPE MATCHES "Release")
+	#	add_custom_command(TARGET ${target} POST_BUILD
+	#		COMMAND "${MACDEPLOYQT_EXECUTABLE}"
+	#				-always-overwrite
+	#				${QMLDIR}
+	#				--dir "${CMAKE_CURRENT_BINARY_DIR}/macdeployqt"
+	#				\"$<TARGET_FILE:${target}>\"
+	#		COMMENT "Deploying Qt..."
+	#	)
+	#	INSTALL(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/macdeployqt/ DESTINATION .)
+	#endif()
 endfunction()
 
 mark_as_advanced(WINDEPLOYQT_EXECUTABLE MACDEPLOYQT_EXECUTABLE)
