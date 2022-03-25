@@ -15,16 +15,16 @@ endmacro()
 
 
 macro(__target_copyqt_plugins target)
-if(Qt5Core_DIR)
-	set(COPY_SOURCE_DLL_DIR "${Qt5Core_DIR}/../../../plugins/platforms/")
-	add_custom_command(TARGET ${target} POST_BUILD
-				COMMAND ${CMAKE_COMMAND} -E copy_directory
-				${COPY_SOURCE_DLL_DIR}
-				"$<TARGET_FILE_DIR:${target}>/platforms/"
-				)
-else()
-	message("Qt5Core_DIR not exits.  __enable_qt5 first")
-endif()
+	if(Qt5Core_DIR)
+		set(COPY_SOURCE_DLL_DIR "${Qt5Core_DIR}/../../../plugins/platforms/")
+		add_custom_command(TARGET ${target} POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory
+					${COPY_SOURCE_DLL_DIR}
+					"$<TARGET_FILE_DIR:${target}>/platforms/"
+					)
+	else()
+		message("Qt5Core_DIR not exits.  __enable_qt5 first")
+	endif()
 endmacro()
 
 set(QtQmlQ3dLibs Qt5::Widgets Qt5::Quick Qt5::Qml Qt5::3DExtras Qt5::OpenGL)
@@ -53,7 +53,7 @@ macro(__deploy_target_qt target)
 		__windeployqt(${target})
 	endif()
 	if(APPLE)
-		macdeployqt(${target})
+		__macdeployqt(${target})
 	endif()
 endmacro()
 
