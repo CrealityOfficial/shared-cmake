@@ -22,12 +22,15 @@ BUILD=${arr[3]}
 workdir=$(cd $(dirname $0); pwd)
 cd $workdir
 cd ..
-mkdir out
-cd out
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DPROJECT_VERSION_MAJOR=${MAJOR} -DPROJECT_VERSION_MINOR=${MINOR}  -DPROJECT_VERSION_PATCH=${PATCH} -DPROJECT_BUILD_ID=${BUILD} -DPROJECT_VERSION_EXTRA=${VERSION_EXTRA}
+cd ..
+
+mkdir install
+cd install
+mkdir build
+cd build
+
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=out -DPROJECT_VERSION_MAJOR=${MAJOR} -DPROJECT_VERSION_MINOR=${MINOR}  -DPROJECT_VERSION_PATCH=${PATCH} -DPROJECT_BUILD_ID=${BUILD} -DPROJECT_VERSION_EXTRA=${VERSION_EXTRA}
 make -j8
 sudo make install
 
-if [ "$2" = "package" ]; then
-    make package
-fi
+sudo make package
