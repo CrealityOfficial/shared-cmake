@@ -164,19 +164,20 @@ function(__add_real_target target type)
 				MACOSX_BUNDLE TRUE
 			)
 			if(target_MAC_OUTPUTNAME)
-				message(STATUS "${target} set mac properties OUTPUT_NAME {target_MAC_OUTPUTNAME}")
+				message(STATUS "${target} set mac properties OUTPUT_NAME ${target_MAC_OUTPUTNAME}")
 				set_target_properties(${target} PROPERTIES
 						OUTPUT_NAME ${target_MAC_OUTPUTNAME}
 				)
 			endif()
 			if(target_MAC_GUI_IDENTIFIER)
-				message(STATUS "${target} set mac properties MACOSX_BUNDLE_GUI_IDENTIFIER {target_MAC_GUI_IDENTIFIER}")
+				message(STATUS "${target} set mac properties MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}")
 				set_target_properties(${target} PROPERTIES
 					MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}
 				)
 			endif()
 			if(target_MAC_DEPOLYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 				if(${type} STREQUAL "exe")
+					message(STATUS "Mac ${target} deploy qt.")
 					__mac_deploy_target_qt(${target})
 				else()
 					message(STATUS "Mac not support depoly qt except bundle.")
