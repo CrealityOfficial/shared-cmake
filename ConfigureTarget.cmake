@@ -160,16 +160,17 @@ function(__add_real_target target type)
 		endif()
 		__add_target(${target})
         if(CC_BC_MAC)			
-			message(STATUS "${target} set mac properties ${MAC_PROPERTIES}")
 		    set_target_properties(${target} PROPERTIES
 				MACOSX_BUNDLE TRUE
 			)
 			if(target_MAC_OUTPUTNAME)
+				message(STATUS "${target} set mac properties OUTPUT_NAME {target_MAC_OUTPUTNAME}")
 				set_target_properties(${target} PROPERTIES
 						OUTPUT_NAME ${target_MAC_OUTPUTNAME}
 				)
 			endif()
 			if(target_MAC_GUI_IDENTIFIER)
+				message(STATUS "${target} set mac properties MACOSX_BUNDLE_GUI_IDENTIFIER {target_MAC_GUI_IDENTIFIER}")
 				set_target_properties(${target} PROPERTIES
 					MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}
 				)
