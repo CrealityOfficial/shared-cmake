@@ -103,7 +103,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;GUI_IDENTIFIER;" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPOLYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER;" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -173,6 +173,13 @@ function(__add_real_target target type)
 							OUTPUT_NAME ${target_MAC_GUI_IDENTIFIER}
 							)
 			endif()
+			if(target_MAC_DEPOLYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+				if(${type} STREQUAL "exe")
+					__mac_deploy_target_qt(${target})
+				else()
+					message(STATUS "Mac not support depoly qt except bundle.")
+				endif()
+			endif()
         endif()
 		#libs
 		if(target_AUTOQT)
@@ -230,7 +237,7 @@ function(__add_real_target target type)
 			endif()
 		endif()
 		
-		if(target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+		if(NOT CC_BC_MAC AND target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 			__deploy_target_qt(${target})
 		endif()
 		
