@@ -170,7 +170,7 @@ function(__add_real_target target type)
 			endif()
 			if(target_MAC_GUI_IDENTIFIER)
 				set_target_properties(${target} PROPERTIES
-							OUTPUT_NAME ${target_MAC_GUI_IDENTIFIER}
+							MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}
 							)
 			endif()
 			if(target_MAC_DEPOLYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
