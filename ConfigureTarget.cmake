@@ -266,9 +266,9 @@ function(__add_real_target target type)
 		
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
 		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT) AND (NOT ${type} STREQUAL "lib"))
-			if(WIN32)
+			if(CC_BC_WIN)
 				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
-			elseif(APPLE)
+			elseif(CC_BC_MAC)
 				INSTALL(TARGETS ${target}
 					BUNDLE DESTINATION . COMPONENT Runtime
 					RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
@@ -276,8 +276,8 @@ function(__add_real_target target type)
 					ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
 					LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
 				)
-			elseif(UNIX)
-				#INSTALL(TARGETS ${target} RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
+			elseif(CC_BC_LINUX)
+				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
 			endif()
 		endif()
 	else(target_SOURCE)
