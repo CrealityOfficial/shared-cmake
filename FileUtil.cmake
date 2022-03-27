@@ -354,12 +354,20 @@ macro(__copy_find_targets targets)
 
 		if(IMPORT_LOC_DEBUG AND IMPORT_LOC_RELEASE 
 				AND EXISTS ${IMPORT_LOC_RELEASE} AND EXISTS ${IMPORT_LOC_DEBUG})
-			add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
-				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
-				COMMAND ${CMAKE_COMMAND} -E copy_if_different  
-					"$<$<CONFIG:Release>:${IMPORT_LOC_RELEASE}>"  
-					"$<$<CONFIG:Debug>:${IMPORT_LOC_DEBUG}>" 
-					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>")
+			if(CC_BC_WIN32 OR CC_BC_MAC)
+				add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
+					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+						"$<$<CONFIG:Release>:${IMPORT_LOC_RELEASE}>"  
+						"$<$<CONFIG:Debug>:${IMPORT_LOC_DEBUG}>" 
+						"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>")
+			elseif(CC_BC_LINUX)
+				add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
+					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/Release/"
+					COMMAND ${CMAKE_COMMAND} -E copy_if_different  
+						"${IMPORT_LOC_RELEASE}"  
+						"${BIN_OUTPUT_DIR}/Release/")
+			endif()
 		endif()
 		
 		if(CMAKE_BUILD_TYPE MATCHES "Release")
