@@ -182,6 +182,7 @@ function(__linuxdeployqt target)
 		\"$<TARGET_FILE:${target}>\"
             -always-overwrite
 			-appimage
+			-unsupported-allow-new-glibc
 			${QMLDIR}
         COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}, bundle ${target}>}"
     )
