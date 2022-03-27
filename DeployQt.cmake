@@ -181,8 +181,9 @@ function(__linuxdeployqt target)
         COMMAND "${LINUXDEPLOYQT_EXECUTABLE}"
 		\"$<TARGET_FILE:${target}>\"
             -always-overwrite
+			-appimage
 			${QMLDIR}
-        COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}, bundle $<TARGET_FILE_DIR:${target}>}"
+        COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}, bundle ${target}>}"
     )
 endfunction()
 
