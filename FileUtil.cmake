@@ -352,10 +352,9 @@ macro(__copy_find_targets targets)
 		get_target_property(IMPORT_LOC_DEBUG ${target} IMPORTED_LOCATION_DEBUG)
 		get_target_property(IMPORT_LOC_RELEASE ${target} IMPORTED_LOCATION_RELEASE)
 
-		if(IMPORT_LOC_DEBUG AND IMPORT_LOC_RELEASE 
-				AND EXISTS ${IMPORT_LOC_RELEASE} AND EXISTS ${IMPORT_LOC_DEBUG})
-			message(STATUS "copy imported target ${target}")
-			if(CC_BC_WIN OR CC_BC_MAC)
+		if(CC_BC_WIN OR CC_BC_MAC)
+			if(IMPORT_LOC_DEBUG AND IMPORT_LOC_RELEASE 
+					AND EXISTS ${IMPORT_LOC_RELEASE} AND EXISTS ${IMPORT_LOC_DEBUG})
 				message(STATUS "copy imported target ${target}")
 				add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
 					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
@@ -364,7 +363,9 @@ macro(__copy_find_targets targets)
 						"$<$<CONFIG:Debug>:${IMPORT_LOC_DEBUG}>" 
 						"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 					)
-			elseif(CC_BC_LINUX)
+			endif()
+		elseif(CC_BC_LINUX)
+			if(IMPORT_LOC_RELEASE  AND EXISTS ${IMPORT_LOC_RELEASE})
 				message(STATUS "copy imported target ${target}")
 				add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
 					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/Release/"
