@@ -368,11 +368,11 @@ macro(__copy_find_targets targets)
 			if(IMPORT_LOC_RELEASE  AND EXISTS ${IMPORT_LOC_RELEASE})
 				message(STATUS "copy imported target ${target}")
 				add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
-					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/Release/"
+					COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/Release/lib/"
 					COMMAND ${CMAKE_COMMAND} -E copy_if_different  
 						"${IMPORT_LOC_RELEASE}"  
-						"${BIN_OUTPUT_DIR}/Release/"
-					COMMENT "auto copy ${target} [${IMPORT_LOC_RELEASE}] -> [${BIN_OUTPUT_DIR}/Release/]")
+						"${BIN_OUTPUT_DIR}/Release/lib/"
+					COMMENT "auto copy ${target} [${IMPORT_LOC_RELEASE}] -> [${BIN_OUTPUT_DIR}/Release/lib/]")
 			endif()
 		endif()
 		
