@@ -354,6 +354,7 @@ macro(__copy_find_targets targets)
 
 		if(IMPORT_LOC_DEBUG AND IMPORT_LOC_RELEASE 
 				AND EXISTS ${IMPORT_LOC_RELEASE} AND EXISTS ${IMPORT_LOC_DEBUG})
+			message(STATUS "copy imported target ${target}")
 			if(CC_BC_WIN OR CC_BC_MAC)
 				message(STATUS "copy imported target ${target}")
 				add_custom_command(TARGET __auto_copy_${target} PRE_BUILD
