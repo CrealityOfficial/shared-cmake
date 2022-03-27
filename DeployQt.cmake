@@ -179,10 +179,10 @@ function(__linuxdeployqt target)
 	set(QDIR --dir $<$<CONFIG:Release>:${BIN_OUTPUT_DIR}/Release/>$<$<CONFIG:Debug>:${BIN_OUTPUT_DIR}/Debug/>)
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND "${LINUXDEPLOYQT_EXECUTABLE}"
-		\"$<TARGET_FILE_DIR:${target}>/../..\"
+		\"$<TARGET_FILE:${target}>\"
             -always-overwrite
 			${QMLDIR}
-        COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}, bundle $<TARGET_FILE_DIR:${target}>/../..}"
+        COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}, bundle $<TARGET_FILE_DIR:${target}>}"
     )
 endfunction()
 
