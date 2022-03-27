@@ -56,3 +56,8 @@ macro(__mac_deploy_target_qt target)
 	include(DeployQt)
 	__macdeployqt(${target})
 endmacro()
+
+macro(__linux_deploy_target_qt target)
+	include(DeployQt)
+	__linuxdeployqt(${target})
+endmacro()

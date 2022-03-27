@@ -33,15 +33,19 @@ if(WIN32 AND NOT WINDEPLOYQT_EXECUTABLE)
 endif()
 
 message(STATUS "deploy ${WINDEPLOYQT_EXECUTABLE}")
+
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
 if(APPLE AND NOT MACDEPLOYQT_EXECUTABLE)
     message(FATAL_ERROR "macdeployqt not found")
 endif()
 
+find_program(LINUXDEPLOYQT_EXECUTABLE linuxdeployqt HINTS "${_qt_bin_dir}")
+if(CC_BC_LINUX AND NOT LINUXDEPLOYQT_EXECUTABLE)
+    message(FATAL_ERROR "linuxdeployqt not found")
+endif()
 # Add commands that copy the required Qt files to the same directory as the
 # target after being built as well as including them in final installation
 function(windeployqt target)
-
     # Run windeployqt immediately after build
     add_custom_command(TARGET ${target} POST_BUILD
 		#COMMAND ${CMAKE_COMMAND} -E remove_directory "${BIN_OUTPUT_DIR}/windeployqt"
@@ -167,4 +171,19 @@ function(__macdeployqt target)
 	#endif()
 endfunction()
 
-mark_as_advanced(WINDEPLOYQT_EXECUTABLE MACDEPLOYQT_EXECUTABLE)
+function(__linuxdeployqt target)
+	set(QMLDIR)
+	if(QML_ENTRY_DIR)
+		set(QMLDIR -qmldir=${QML_ENTRY_DIR})
+	endif()
+	set(QDIR --dir $<$<CONFIG:Release>:${BIN_OUTPUT_DIR}/Release/>$<$<CONFIG:Debug>:${BIN_OUTPUT_DIR}/Debug/>)
+    add_custom_command(TARGET ${target} POST_BUILD
+        COMMAND "${LINUXDEPLOYQT_EXECUTABLE}"
+		\"$<TARGET_FILE_DIR:${target}>/../..\"
+            -always-overwrite
+			${QMLDIR}
+        COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}, bundle $<TARGET_FILE_DIR:${target}>/../..}"
+    )
+endfunction()
+
+mark_as_advanced(WINDEPLOYQT_EXECUTABLE MACDEPLOYQT_EXECUTABLE LINUXDEPLOYQT_EXECUTABLE)
