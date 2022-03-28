@@ -63,10 +63,10 @@ macro(configure_target target)
 						)
 	elseif(CC_BC_LINUX)
 		set_target_properties(${target} PROPERTIES
-					LIBRARY_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
+					LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/lib/"
 					ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
 					RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
-					LIBRARY_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
+					LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/lib/"
 					ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
 					RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
 					)
@@ -180,7 +180,7 @@ function(__add_real_target target type)
 					MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}
 				)
 			endif()
-			if(target_MAC_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+			if(target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 				if(${type} STREQUAL "exe")
 					message(STATUS "Mac ${target} deploy qt.")
 					__mac_deploy_target_qt(${target})
@@ -189,6 +189,26 @@ function(__add_real_target target type)
 				endif()
 			endif()
         endif()
+		if(CC_BC_LINUX)
+			if(target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+				if(${type} STREQUAL "exe")
+					message(STATUS "Linux ${target} deploy qt.")
+					__linux_deploy_target_qt(${target})
+				else()
+					message(STATUS "Linux not support depoly qt except bundle.")
+				endif()
+			endif()			
+		endif()
+		if(CC_BC_WIN)
+			if(target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
+				if(${type} STREQUAL "exe")
+					message(STATUS "win ${target} deploy qt.")
+					__deploy_target_qt(${target})
+				else()
+					message(STATUS "win not support depoly qt except bundle.")
+				endif()
+			endif()
+		endif()
 		#libs
 		if(target_AUTOQT)
 			set_target_properties(${target} PROPERTIES 
@@ -244,11 +264,7 @@ function(__add_real_target target type)
 				target_link_libraries(${target} PRIVATE OpenMP::OpenMP_CXX)
 			endif()
 		endif()
-		
-		if(NOT CC_BC_MAC AND target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
-			__deploy_target_qt(${target})
-		endif()
-		
+				
 		if(ENABLE_CXX_PCH)
 			target_precompile_headers(${target} PUBLIC ${CMAKE_SOURCE_DIR}/cmake/source/leak.h)
 			target_compile_definitions(${target} PRIVATE ${target}_USE_PCH)
@@ -266,9 +282,9 @@ function(__add_real_target target type)
 		
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
 		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT) AND (NOT ${type} STREQUAL "lib"))
-			if(WIN32)
+			if(CC_BC_WIN)
 				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
-			elseif(APPLE)
+			elseif(CC_BC_MAC)
 				INSTALL(TARGETS ${target}
 					BUNDLE DESTINATION . COMPONENT Runtime
 					RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
@@ -276,8 +292,8 @@ function(__add_real_target target type)
 					ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
 					LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
 				)
-			elseif(UNIX)
-				#INSTALL(TARGETS ${target} RUNTIME DESTINATION bin LIBRARY DESTINATION lib)
+			elseif(CC_BC_LINUX)
+				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
 			endif()
 		endif()
 	else(target_SOURCE)
@@ -683,17 +699,27 @@ function(__add_emcc_target target)
 		add_custom_target(${target} 
 			ALL 
 			DEPENDS ${target}.js ${target}.wasm)
-		
+		if(target_DEBUG)
+			add_custom_command(
+				TARGET ${target}
+				POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.js
+					${BIN_OUTPUT_DIR}/Debug/${target}.js
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.wasm
+					${BIN_OUTPUT_DIR}/Debug/${target}.wasm
+				COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.debug.wasm
+					${BIN_OUTPUT_DIR}/Debug/${target}.debug.wasm	    
+				)
+		else()
 		add_custom_command(
 			TARGET ${target}
 			POST_BUILD
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.js
 				${BIN_OUTPUT_DIR}/Release/${target}.js
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.wasm
-				${BIN_OUTPUT_DIR}/Release/${target}.wasm
-			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_CURRENT_BINARY_DIR}/${target}.debug.wasm
-				${BIN_OUTPUT_DIR}/Release/${target}.debug.wasm	    
+				${BIN_OUTPUT_DIR}/Release/${target}.wasm    
 			)
+		endif()
 	endif()
 endfunction()
 

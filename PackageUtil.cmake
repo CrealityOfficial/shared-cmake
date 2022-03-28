@@ -21,6 +21,13 @@ endif()
 
 message(STATUS "CMAKE INSTALL PREFIX ${CMAKE_INSTALL_PREFIX}")
 
+macro(__set_install_project)
+	SET(CMAKE_INSTALL_PREFIX $ENV{USR_INSTALL_ROOT})
+	__set_not_install_import()
+	
+	message("__set_install_project -> prefix : ${CMAKE_INSTALL_PREFIX}")
+endmacro()
+
 if(CC_BC_WIN)
 	include(package/win_package)
 elseif(CC_BC_MAC)
