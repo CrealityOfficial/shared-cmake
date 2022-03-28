@@ -43,7 +43,7 @@ function(__search_target_components target)
 	find_library(${target}_LIBRARIES_DEBUG
 				NAMES ${search_DLIB}
 				HINTS "${${target}_LIB_ROOT}/Debug"
-				PATHS "$ENV{USR_INSTALL_ROOT}/lib/Debug/" "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/${search_PRE}"
+				PATHS "$ENV{USR_INSTALL_ROOT}/lib/Debug/" "$ENV{USR_INSTALL_ROOT}/bin/Debug" "/usr/lib/Debug" "/usr/local/lib/Debug" "/usr/lib/${search_PRE}"
 					"/usr/bin/Debug" "/usr/local/bin/Debug"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
@@ -51,7 +51,7 @@ function(__search_target_components target)
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}/Release"
-			PATHS "$ENV{USR_INSTALL_ROOT}/lib/Release/" "/usr/lib/Release" "/usr/lib/${search_PRE}" "/usr/local/lib/Release"
+			PATHS "$ENV{USR_INSTALL_ROOT}/lib/Release/" "$ENV{USR_INSTALL_ROOT}/bin/Release/" "/usr/lib/Release" "/usr/lib/${search_PRE}" "/usr/local/lib/Release"
 				"/usr/bin/Release" "/usr/local/bin/Release"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
@@ -77,7 +77,7 @@ function(__search_target_components_signle target)
 				NAMES ${search_DLIB}
 				HINTS "${${target}_LIB_ROOT}"
 				PATHS "/usr/lib" "/usr/lib/x86_64-linux-gnu" "/usr/lib/${search_PRE}" "/usr/local/lib" "$ENV{USR_INSTALL_ROOT}/lib/"
-				    "$ENV{USR_INSTALL_ROOT}/lib/${search_PRE}"
+				    "$ENV{USR_INSTALL_ROOT}/bin/" "$ENV{USR_INSTALL_ROOT}/lib/${search_PRE}"
 					"/usr/bin/Debug" "/usr/local/bin"
 				NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 				)
@@ -85,7 +85,7 @@ function(__search_target_components_signle target)
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}"
-			PATHS  "$ENV{USR_INSTALL_ROOT}/lib/" "/usr/lib" "/usr/lib/x86_64-linux-gnu" "/usr/lib/${search_PRE}" "/usr/local/lib"
+			PATHS  "$ENV{USR_INSTALL_ROOT}/lib/" "$ENV{USR_INSTALL_ROOT}/bin/" "/usr/lib" "/usr/lib/x86_64-linux-gnu" "/usr/lib/${search_PRE}" "/usr/local/lib"
 				"/usr/bin" "/usr/local/bin"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
