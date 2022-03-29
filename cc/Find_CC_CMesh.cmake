@@ -2,7 +2,7 @@
 # cmesh target
 
 __search_target_components(cmesh
-						   INC cmesh/mesh/roof.h
+						   INC cmesh/poly/roof.h
 						   DLIB cmesh
 						   LIB cmesh
 						   PRE cmesh
