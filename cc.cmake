@@ -51,7 +51,7 @@ function(__search_target_components target)
 	find_library(${target}_LIBRARIES_RELEASE
 			NAMES ${search_LIB}
 			HINTS "${${target}_LIB_ROOT}/Release"
-			PATHS "$ENV{USR_INSTALL_ROOT}/lib/Release/" "$ENV{USR_INSTALL_ROOT}/bin/Release/" "/usr/lib/Release" "/usr/lib/${search_PRE}" "/usr/local/lib/Release"
+			PATHS "$ENV{USR_INSTALL_ROOT}/lib/Release/" "$ENV{USR_INSTALL_ROOT}/bin/Release/" "$ENV{USR_INSTALL_ROOT}/bin/Release/lib/" "/usr/lib/Release" "/usr/lib/${search_PRE}" "/usr/local/lib/Release"
 				"/usr/bin/Release" "/usr/local/bin/Release"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
