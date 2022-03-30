@@ -28,3 +28,5 @@ include(render/RenderEntry)
 if(CC_BC_EMCC)
 	include(emcc)
 endif()
+
+include(git)
