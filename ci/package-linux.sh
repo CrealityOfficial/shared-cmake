@@ -24,13 +24,10 @@ cd $workdir
 cd ..
 cd ..
 
-mkdir install
-cd install
+mkdir linux-build
+cd linux-build
 mkdir build
 cd build
 
 cmake ../../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=out -DPROJECT_VERSION_MAJOR=${MAJOR} -DPROJECT_VERSION_MINOR=${MINOR}  -DPROJECT_VERSION_PATCH=${PATCH} -DPROJECT_BUILD_ID=${BUILD} -DPROJECT_VERSION_EXTRA=${VERSION_EXTRA}
 make -j8
-sudo make install
-
-sudo make package
