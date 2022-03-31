@@ -201,7 +201,7 @@ function(__add_real_target target type)
 		endif()
 		if(CC_BC_WIN)
 			if(target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
-				if(${type} STREQUAL "exe")
+				if(${type} STREQUAL "exe" OR ${type} STREQUAL "winexe")
 					message(STATUS "win ${target} deploy qt.")
 					__deploy_target_qt(${target})
 				else()
@@ -227,8 +227,9 @@ function(__add_real_target target type)
 						add_custom_command(TARGET ${target} POST_BUILD
 								COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}/"
 								COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}"
-								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" 					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}"
+								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}"
 								)
+						install(DIRECTORY "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}" DESTINATION .)
 					elseif(CC_BC_MAC)
 						add_custom_command(TARGET ${target} POST_BUILD
 								COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
@@ -305,19 +306,21 @@ function(__add_real_target target type)
 		configure_target(${target})
 		
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
-		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT) AND (NOT ${type} STREQUAL "lib"))
-			if(CC_BC_WIN)
-				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
-			elseif(CC_BC_MAC)
-				INSTALL(TARGETS ${target}
-					BUNDLE DESTINATION . COMPONENT Runtime
-					RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
-					FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
-					ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
-					LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
-				)
-			elseif(CC_BC_LINUX)
-				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT))
+			if(${type} STREQUAL "exe" OR ${type} STREQUAL "winexe" OR ${type} STREQUAL "dll" OR ${type} STREQUAL "bundle")
+				if(CC_BC_WIN)
+					INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+				elseif(CC_BC_MAC)
+					INSTALL(TARGETS ${target}
+						BUNDLE DESTINATION . COMPONENT Runtime
+						RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
+						FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
+						ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
+						LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
+					)
+				elseif(CC_BC_LINUX)
+					INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+				endif()
 			endif()
 		endif()
 	else(target_SOURCE)

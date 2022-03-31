@@ -2,13 +2,26 @@
 if [%1] == [] (
 	echo "build Usage:"
 	echo "Only build: build.bat v0.1.0.1"
-	echo "Build and package:build.bat v0.1.0.1 package alpha"
-	rem exit /b 0
+	echo "Build and package:build.bat v0.1.0.1 package Alpha 0"
+	exit /b 0
 )
 if [%3] == [] (
 	set VERSION_EXTRA="test"
+	
 ) else (
 	set VERSION_EXTRA=%3%
+	set SIGN_PACKAGE="ON"
+)
+if "%VERSION_EXTRA%" == "test" (
+	set SIGN_PACKAGE="OFF"
+)
+set FACTORY_TYPE=%4
+if [%4] == [] (
+	set FACTORY_TYPE=0
+)
+set APPNAME=%5
+if [%5] == [] (
+	set APPNAME="Piocreat Box"
 )
 set APP_VER=%1
 set APP_VER=%APP_VER:~1%
@@ -37,28 +50,34 @@ echo %MINOR%
 echo %PATCH%
 echo %BUILD%
 echo %VERSION_EXTRA%
+echo %FACTORY_TYPE%
+rem Configure the application in the current directory
 
-@echo off
+set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (
+call %VSENV% 
+goto :build
+) else (echo "not find vs in" %VSENV%)
 
-call "%~dp0\find-msvcinfo.bat"
-if not %errorlevel%==0 (exit /b 1)
-		
-call "%VSDir%\VC\Auxiliary\Build\vcvars64.bat"
+set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (
+call %VSENV% 
+goto :build
+) else (echo "not find vs in" %VSENV%)
 
-REM 从注册表查询 win10 SDK 安装目录，主要用于判断注册表查询是否被禁，如果被禁 vcvars64.bat 将无法正常配置环境，需要手动配置环境依赖
-call "%~dp0\check-vcvars64.bat"
+set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (call %VSENV% ) else (exit /B)
 
 
 :build
 echo "build"
 
 rd /s /q out
-mkdir install
-cd install
+mkdir ninja-build
+cd ninja-build
 mkdir build
 cd build
 
-echo "Release"	
 cmake ^
     -G"Ninja" ^
     -DCMAKE_BUILD_TYPE=Release ^
@@ -68,13 +87,17 @@ cmake ^
 	-DPROJECT_VERSION_PATCH=%PATCH% ^
 	-DPROJECT_BUILD_ID=%BUILD% ^
 	-DPROJECT_VERSION_EXTRA=%VERSION_EXTRA% ^
-    ..\..\ || exit /b
+	-DFACTORY_TYPE=%FACTORY_TYPE% ^
+	-DAPPNAME=%APPNAME% ^
+	-DSIGN_PACKAGE=%SIGN_PACKAGE% ^
+    ..\..\ || exit /b 2
 
 rem Build and install the application
 
-ninja || exit /b
-
-ninja install || exit /b
-ninja package || exit /b
+ninja || exit /b 2
+if "%2"=="package" (
+ninja install || exit /b 2
+ninja package || exit /b 2
+)
 
 cd ..\..\

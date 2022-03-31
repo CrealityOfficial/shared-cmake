@@ -88,20 +88,6 @@ macro(__windeployqt target)
 		set(QMLDIR --qmldir ${QML_ENTRY_DIR})
 	endif()
 	set(QDIR --dir $<$<CONFIG:Release>:${BIN_OUTPUT_DIR}/Release/>$<$<CONFIG:Debug>:${BIN_OUTPUT_DIR}/Debug/>)
-    # Run windeployqt immediately after build
-    #add_custom_command(TARGET ${target} POST_BUILD
-	#	#COMMAND ${CMAKE_COMMAND} -E remove_directory "${BIN_OUTPUT_DIR}/windeployqt"
-    #    COMMAND "${CMAKE_COMMAND}" -E
-    #        env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
-    #            --verbose 0
-    #            --no-compiler-runtime
-    #            --no-angle
-    #            --no-opengl-sw
-	#			${QMLDIR}
-	#			${QDIR}
-    #            \"$<TARGET_FILE:${target}>\"
-    #    COMMENT "Deploying Qt..."
-    #)
 	
 	if(CMAKE_BUILD_TYPE MATCHES "Release")
 		add_custom_command(TARGET ${target} POST_BUILD
