@@ -103,7 +103,7 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER;QML_PLUGINS" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -216,6 +216,30 @@ function(__add_real_target target type)
 											AUTORCC ON
 											AUTOUIC ON
 											)
+		endif()
+		if(target_QML_PLUGINS)
+			foreach(plugin ${target_QML_PLUGINS})
+				set(targetName ${CMAKE_SHARED_LIBRARY_PREFIX}${plugin}${CMAKE_SHARED_LIBRARY_SUFFIX})
+				get_target_property(DIR_NAME ${plugin} QML_PLUGIN_DIR_NAME)
+				message(STATUS "qml plugin ${plugin} : ${DIR_NAME}")
+				if(EXISTS ${DIR_NAME})
+					if(CC_BC_WIN)
+						add_custom_command(TARGET ${target} POST_BUILD
+								COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}/"
+								COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}"
+								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" 					"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}"
+								)
+					elseif(CC_BC_MAC)
+						add_custom_command(TARGET ${target} POST_BUILD
+								COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
+								COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
+								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
+								)
+					endif()
+				else()
+					message(STATUS "QML target ${plugin} not exist.")
+				endif()
+			endforeach()
 		endif()
 		if(target_LIB)
 			foreach(lib ${target_LIB})
