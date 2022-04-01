@@ -236,6 +236,13 @@ function(__add_real_target target type)
 								COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
 								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
 								)
+					elseif(CC_BC_LINUX)
+					        add_custom_command(TARGET ${target} POST_BUILD
+                                                                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
+                                                                COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
+                                                                COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
+                                                                )
+
 					endif()
 				else()
 					message(STATUS "QML target ${plugin} not exist.")
