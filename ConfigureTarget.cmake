@@ -319,7 +319,8 @@ function(__add_real_target target type)
 				)
 			elseif(CC_BC_LINUX)
 				INSTALL(TARGETS ${target} RUNTIME DESTINATION .
-										  LIBRARY DESTINATION ./lib/)
+										  LIBRARY DESTINATION ./lib/
+										  ARCHIVE DESTINATION ./bin/)
 			endif()
 		endif()
 	else(target_SOURCE)
