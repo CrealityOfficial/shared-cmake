@@ -232,10 +232,13 @@ function(__add_real_target target type)
 						install(DIRECTORY "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${plugin}" DESTINATION .)
 					elseif(CC_BC_MAC)
 						add_custom_command(TARGET ${target} POST_BUILD
-								COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
-								COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
-								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/../Frameworks/${plugin}/"
+								COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/../Resources/qml/${plugin}/"
+								COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>/../Resources/qml/${plugin}/"
+								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/../Resources/qml/${plugin}/"
 								)
+						if(CMAKE_BUILD_TYPE MATCHES "Release")
+	                       	install(CODE "execute_process(COMMAND codesign --force --options=runtime -s \"${OSX_CODESIGN_IDENTITY}\"  	\"\${CMAKE_INSTALL_PREFIX}/${target}.app/Contents/#Resources/qml/${plugin}/${targetName}\")")
+						endif()
 					elseif(CC_BC_LINUX)
 					        add_custom_command(TARGET ${target} POST_BUILD
                                                                 COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
