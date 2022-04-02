@@ -40,6 +40,10 @@ if(UNIX AND NOT APPLE AND NOT CC_CROSS_COMPILE)
 	set(CC_BC_LINUX 1)
 endif()
 
+if(CC_BUILD_IPHONE_PLATFORM AND CC_CROSS_COMPILE)
+	set(CC_BC_IOS 1)
+endif()
+
 if(CC_BC_WIN)
 	message(STATUS "CC Build Case [ WIN ]")
 endif()
