@@ -32,14 +32,16 @@ if(WIN32 AND NOT WINDEPLOYQT_EXECUTABLE)
     message(FATAL_ERROR "windeployqt not found")
 endif()
 
-message(STATUS "deploy ${WINDEPLOYQT_EXECUTABLE}")
+message(STATUS "win deploy tool -> [${WINDEPLOYQT_EXECUTABLE}]")
 
 find_program(MACDEPLOYQT_EXECUTABLE macdeployqt HINTS "${_qt_bin_dir}")
+message(STATUS "mac deploy tool -> [${MACDEPLOYQT_EXECUTABLE}]")
 if(APPLE AND NOT MACDEPLOYQT_EXECUTABLE)
     message(FATAL_ERROR "macdeployqt not found")
 endif()
 
 find_program(LINUXDEPLOYQT_EXECUTABLE linuxdeployqt HINTS "${_qt_bin_dir}")
+message(STATUS "linux deploy tool -> [${LINUXDEPLOYQT_EXECUTABLE}]")
 if(CC_BC_LINUX AND NOT LINUXDEPLOYQT_EXECUTABLE)
     message(FATAL_ERROR "linuxdeployqt not found")
 endif()

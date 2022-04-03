@@ -169,6 +169,10 @@ function(__add_real_target target type)
 		endif()
 		__add_target(${target})
 		
+		if(CC_BC_WIN AND ${type} STREQUAL "exe")
+			set_target_properties(${target} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+			set_target_properties(${target} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE /ENTRY:mainCRTStartup")
+		endif()
 		#message(STATUS "${target} set mac properties MACOSX_BUNDLE_GUI_IDENTIFIER ${target_MAC_GUI_IDENTIFIER}")
 		#if(target_MAC_DEPLOYQT)
 		#	message(STATUS "${target} target_MAC_DEPLOYQT")
@@ -201,8 +205,8 @@ function(__add_real_target target type)
 		if(CC_BC_LINUX)
 			if(target_DEPLOYQT AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 				if(${type} STREQUAL "exe")
-					message(STATUS "Linux ${target} deploy qt.")
-					__linux_deploy_target_qt(${target})
+					#message(STATUS "Linux ${target} deploy qt.")
+					#__linux_deploy_target_qt(${target})
 				else()
 					message(STATUS "Linux not support depoly qt except bundle.")
 				endif()
@@ -327,20 +331,59 @@ function(__add_real_target target type)
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
 		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT) AND (NOT ${type} STREQUAL "lib"))
 			if(CC_BC_WIN)
-				INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe" OR ${type} STREQUAL "winexe")
+					INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+				endif()
 			elseif(CC_BC_MAC)
-				INSTALL(TARGETS ${target}
-					BUNDLE DESTINATION . COMPONENT Runtime
-					RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
-					FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
-					ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
-					LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
-				)
+				if(${type} STREQUAL "dll" OR ${type} STREQUAL "bundle" OR ${type} STREQUAL "exe")
+					INSTALL(TARGETS ${target}
+						BUNDLE DESTINATION . COMPONENT Runtime
+						RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
+						FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
+						ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
+						LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
+					)
+				endif()
 			elseif(CC_BC_LINUX)
-				INSTALL(TARGETS ${target} RUNTIME DESTINATION .
-										  LIBRARY DESTINATION ./lib/
-										  ARCHIVE DESTINATION ./bin/)
-			endif()
+				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe")
+					INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+								  LIBRARY DESTINATION ./lib/
+								  ARCHIVE DESTINATION .)
+				endif()
+				if(${type} STREQUAL "dll")
+					set_target_properties(${target} PROPERTIES INSTALL_RPATH ".")
+				elseif(${type} STREQUAL "exe")
+					set_target_properties(${target} PROPERTIES INSTALL_RPATH "\\\${ORIGIN}/lib")
+					if(target_DEPLOYQT)
+						include(DeployQt)
+						install(CODE "
+								MESSAGE(STATUS \"linuxdeploy install.\")
+								MESSAGE(STATUS \"target: ${CMAKE_INSTALL_PREFIX}/${target} \")
+								MESSAGE(STATUS \"qml entry : [${QML_ENTRY_DIR}]\")
+								#set(QMLDIR)
+								#if(EXISTS ${QML_ENTRY_DIR})
+								#	set(QMLDIR -qmldir=${QML_ENTRY_DIR})
+								#	message(STATUS \"qml import ${QMLDIR}\")
+								#endif()
+								execute_process(COMMAND ${LINUXDEPLOYQT_EXECUTABLE} ${CMAKE_INSTALL_PREFIX}/${target}
+            														-always-overwrite
+															-appimage
+															-unsupported-allow-new-glibc
+															-qmldir=${QML_ENTRY_DIR}
+															RESULT_VARIABLE CODE_RESULT
+										)
+								
+								message(STATUS \"end linuxdeploy ${CODE_RESULT}\")
+								#if(CODE_RESULT AND ${CODE_RESULT} EQUAL 0)
+								#	message(STATUS \"linuxdeploy success.\")
+								#else()
+								#	message(FATAL_ERROR \"linuxdeploy failed.\")
+								#endif()
+							     "
+							     )
+					endif()
+				endif()
+		        endif()
 		endif()
 	else(target_SOURCE)
 		message("add target ${target} without sources")
@@ -395,10 +438,6 @@ endmacro()
 
 function(__add_exe_target target)
 	__add_real_target(${target} exe ${ARGN})
-	if(WIN32)
-		set_target_properties(${target} PROPERTIES LINK_FLAGS_RELEASE "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
-		set_target_properties(${target} PROPERTIES LINK_FLAGS_DEBUG "/SUBSYSTEM:CONSOLE /ENTRY:mainCRTStartup")
-	endif()
 endfunction()
 
 function(build_inner target)
