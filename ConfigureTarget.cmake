@@ -82,6 +82,37 @@ macro(configure_target target)
 	endif()
 endmacro()
 
+macro(__configure_qml_plugin_target target)
+	if(CC_BC_WIN)
+		set(targetName ${CMAKE_SHARED_LIBRARY_PREFIX}${target}${CMAKE_SHARED_LIBRARY_SUFFIX})
+		get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
+		add_custom_command(TARGET ${target} POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target}/"
+				COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target}"
+				COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${target}>/${targetName}" "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target}"
+				)
+	elseif(CC_BC_LINUX)
+		get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
+		set_target_properties(${target} PROPERTIES
+					LIBRARY_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/lib/${target}/"
+					ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${LIB_OUTPUT_DIR}/Debug/"
+					RUNTIME_OUTPUT_DIRECTORY_DEBUG "${BIN_OUTPUT_DIR}/Debug/"
+					LIBRARY_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/lib/${target}"
+					ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${LIB_OUTPUT_DIR}/Release/"
+					RUNTIME_OUTPUT_DIRECTORY_RELEASE "${BIN_OUTPUT_DIR}/Release/"
+					)
+		add_custom_command(TARGET ${target} POST_BUILD
+				COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>"
+				)
+		INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+					   LIBRARY DESTINATION ./lib/${target}/
+					   ARCHIVE DESTINATION .)
+		if(EXISTS ${DIR_NAME})
+			INSTALL(FILES ${DIR_NAME} DESTINATION ./lib/${target}/)
+		endif()
+	endif()
+endmacro()
+
 macro(add_top_target target)
 	list(APPEND global_all_targets ${target})
 	list(REMOVE_DUPLICATES global_all_targets)
@@ -253,11 +284,11 @@ function(__add_real_target target type)
 	                       	install(CODE "execute_process(COMMAND codesign --force --options=runtime -s \"${OSX_CODESIGN_IDENTITY}\"  	\"\${CMAKE_INSTALL_PREFIX}/${target}.app/Contents/Resources/qml/${plugin}/${targetName}\")")
 						endif()
 					elseif(CC_BC_LINUX)
-					        add_custom_command(TARGET ${target} POST_BUILD
-                                                                COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
-                                                                COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
-                                                                COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
-                                                                )
+					        #add_custom_command(TARGET ${target} POST_BUILD
+                                               #                  COMMAND ${CMAKE_COMMAND} -E make_directory "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
+                                               #                  COMMAND ${CMAKE_COMMAND} -E copy ${DIR_NAME} "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
+                                               #                 COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/lib/${plugin}/"
+                                               #                 )
 
 					endif()
 				else()
@@ -346,12 +377,15 @@ function(__add_real_target target type)
 				endif()
 			elseif(CC_BC_LINUX)
 				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe")
-					INSTALL(TARGETS ${target} RUNTIME DESTINATION .
-								  LIBRARY DESTINATION ./lib/
-								  ARCHIVE DESTINATION .)
+					get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
+					if(NOT DIR_NAME)
+						INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+									  LIBRARY DESTINATION ./lib/
+									  ARCHIVE DESTINATION .)
+					endif()
 				endif()
 				if(${type} STREQUAL "dll")
-					set_target_properties(${target} PROPERTIES INSTALL_RPATH ".")
+					set_target_properties(${target} PROPERTIES INSTALL_RPATH "\\\${ORIGIN}")
 				elseif(${type} STREQUAL "exe")
 					set_target_properties(${target} PROPERTIES INSTALL_RPATH "\\\${ORIGIN}/lib")
 					if(target_DEPLOYQT)
