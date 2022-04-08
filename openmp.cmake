@@ -37,10 +37,10 @@ macro(__enable_openmp)
 		
 		set(openmp_RELEASE ${openmp_LIBRARIES_RELEASE})
 	
-		message("OpenMP::OpenMP_CXX_INCLUDE_DIRS  ${OpenMP::OpenMP_CXX_INCLUDE_DIRS}")
+		message("OpenMP::OpenMP_CXX_INCLUDE_DIRS  ${openmp_INCLUDE_DIRS}")
 	
-		message("OpenMP::OpenMP_CXX_LIBRARIES_DEBUG  ${OpenMP::OpenMP_CXX_LIBRARIES_DEBUG}")
-		message("OpenMP::OpenMP_CXX_LIBRARIES_RELEASE  ${OpenMP::OpenMP_CXX_LIBRARIES_RELEASE}")
+		message("OpenMP::OpenMP_CXX_LIBRARIES_DEBUG  ${openmp_LIBRARIES_DEBUG}")
+		message("OpenMP::OpenMP_CXX_LIBRARIES_RELEASE  ${openmp_LIBRARIES_RELEASE}")
 	
 		if(openmp_INCLUDE_DIRS AND openmp_LIBRARIES_DEBUG AND openmp_LIBRARIES_RELEASE)
 
