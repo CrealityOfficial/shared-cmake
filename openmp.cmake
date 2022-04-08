@@ -24,19 +24,20 @@ macro(__enable_openmp)
 		endif()
 		set(openmp_INCLUDE_DIRS ${OPENMP_ROOT}/include/openmp)
 	
-		find_library(openmp_LIBRARIES_DEBUG
-					NAMES omp
-					PATHS "${OPENMP_ROOT}/lib/")
+		#find_library(openmp_LIBRARIES_DEBUG
+		#			NAMES omp
+		#			PATHS "${OPENMP_ROOT}/lib/")
 					
-		find_library(openmp_LIBRARIES_RELEASE
-				NAMES omp
-				PATHS "${OPENMP_ROOT}/lib/")
+		#find_library(openmp_LIBRARIES_RELEASE
+		#		NAMES omp
+		#		PATHS "${OPENMP_ROOT}/lib/")
+		set(openmp_LIBRARIES_DEBUG ${OPENMP_ROOT}/lib/libomp.so.5)
+		set(openmp_LIBRARIES_RELEASE ${OPENMP_ROOT}/lib/libomp.so.5)
+		
 		set(openmp_LOC_DEBUG ${openmp_LIBRARIES_DEBUG})
-		
-		set(openmp_INCLUDE_DIRS ${OPENMP_ROOT}/include/openmp)
-		
-		set(openmp_RELEASE ${openmp_LIBRARIES_RELEASE})
+		set(openmp_LOC_RELEASE ${openmp_LIBRARIES_RELEASE})
 	
+		set(openmp_INCLUDE_DIRS ${OPENMP_ROOT}/include/openmp)
 		message("OpenMP::OpenMP_CXX_INCLUDE_DIRS  ${openmp_INCLUDE_DIRS}")
 	
 		message("OpenMP::OpenMP_CXX_LIBRARIES_DEBUG  ${openmp_LIBRARIES_DEBUG}")
