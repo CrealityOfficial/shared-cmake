@@ -30,3 +30,4 @@ if(CC_BC_EMCC)
 endif()
 
 include(git)
+include(unitTesting)

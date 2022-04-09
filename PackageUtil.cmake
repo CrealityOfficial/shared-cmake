@@ -23,8 +23,11 @@ message(STATUS "CMAKE INSTALL PREFIX ${CMAKE_INSTALL_PREFIX}")
 
 macro(__set_install_project)
 	SET(CMAKE_INSTALL_PREFIX $ENV{USR_INSTALL_ROOT})
-	__set_not_install_import()
-	
+	if(CC_UNIT_TESTING)
+		message(STATUS "CC_UNIT_TESTING enabled. install import")
+	else()
+		__set_not_install_import()
+	endif()
 	message("__set_install_project -> prefix : ${CMAKE_INSTALL_PREFIX}")
 endmacro()
 

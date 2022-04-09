@@ -2,41 +2,24 @@
 # gtest target
 # gtest main
 
-if(ANALYSIS_INSTALL_ROOT)
-	message(STATUS "Specified ANALYSIS_INSTALL_ROOT : ${ANALYSIS_INSTALL_ROOT}")
-	set(gtest_INCLUDE_ROOT ${ANALYSIS_INSTALL_ROOT}/include/)
-	set(gtest_LIB_ROOT ${ANALYSIS_INSTALL_ROOT}/lib/)
+if(NOT TARGET gtest)
 	__search_target_components(gtest
 							   INC gtest/gtest.h
 							   DLIB gtest
 							   LIB gtest
+							   PRE gtest
 							   )
-							   
-	set(gtest_main_INCLUDE_ROOT ${ANALYSIS_INSTALL_ROOT}/include/)
-	set(gtest_main_LIB_ROOT ${ANALYSIS_INSTALL_ROOT}/lib/)
-	__search_target_components(gtest_main
-							   INC gtest/gtest.h
-							   DLIB gtest_main
-							   LIB gtest_main
-							   )
-else(CXGTEST_INSTALL_ROOT)
-	message(STATUS "Specified CXGTEST_INSTALL_ROOT : ${CXGTEST_INSTALL_ROOT}")
-	set(gtest_INCLUDE_ROOT ${CXGTEST_INSTALL_ROOT}/include/)
-	set(gtest_LIB_ROOT ${CXGTEST_INSTALL_ROOT}/lib/)
-	__search_target_components(gtest
-							   INC gtest/gtest.h
-							   DLIB gtest
-							   LIB gtest
-							   )
-							   
-	set(gtest_main_INCLUDE_ROOT ${CXGTEST_INSTALL_ROOT}/include/)
-	set(gtest_main_LIB_ROOT ${CXGTEST_INSTALL_ROOT}/lib/)
-	__search_target_components(gtest_main
-							   INC gtest/gtest.h
-							   DLIB gtest_main
-							   LIB gtest_main
-							   )
+	
+	__test_import(gtest lib)
 endif()
 
-__test_import(gtest lib)
-__test_import(gtest_main lib)
+if(NOT TARGET gtest_main)
+	__search_target_components(gtest_main
+							   INC gtest/gtest.h
+							   DLIB gtest_main
+							   LIB gtest_main
+							   PRE gtest
+							   )
+	
+	__test_import(gtest_main lib)
+endif()
