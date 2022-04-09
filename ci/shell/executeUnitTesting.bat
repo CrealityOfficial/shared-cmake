@@ -12,3 +12,7 @@ rem dir /a-d/b/s "%1"\*.exe
 for /f "delims=" %%a in ('dir /a-d/b/s "%1"\*.exe') do %%a
 
 echo "end executeUnitTesting"
+
+if %errorlevel% == -1 (
+	exit /b -1
+)
