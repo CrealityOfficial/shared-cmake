@@ -57,7 +57,8 @@ cmake ^
     ..\..\ || exit /b
 
 rem Build and install the application
-if "%1" == "Ninja" (
+if "%1" == "Ninja" ^
+(
 ninja || exit /b
 )
 
