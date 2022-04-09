@@ -54,8 +54,12 @@ public:
 	void message(const char* msg) override {
 		LOGI("	%s", msg);
 	}
-	void failed(const char* msg) override {}
-	void success() override {}
+	void failed(const char* msg) override {
+        LOGI("load failed for %s", msg);
+    }
+	void success() override {
+        LOGI("load success.");
+    }
 };
 
 
