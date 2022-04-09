@@ -59,7 +59,7 @@ cmake ^
 rem Build and install the application
 if "%1" == "Ninja" ^
 (
-ninja || exit /b
+ninja || exit /b -1
 )
 
 cd ../../
