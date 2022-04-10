@@ -171,6 +171,7 @@ function(__linuxdeployqt target)
 		set(QMLDIR -qmldir=${QML_ENTRY_DIR})
 	endif()
 	set(QDIR --dir $<$<CONFIG:Release>:${BIN_OUTPUT_DIR}/Release/>$<$<CONFIG:Debug>:${BIN_OUTPUT_DIR}/Debug/>)
+	message("QDIR =${QDIR}  TARGET = $<TARGET_FILE:${target}>")
     add_custom_command(TARGET ${target} POST_BUILD
         COMMAND "${LINUXDEPLOYQT_EXECUTABLE}"
 		\"$<TARGET_FILE:${target}>\"
