@@ -5,7 +5,7 @@ __check_target_return(sensors_analytics_sdk)
 
 if(NOT TARGET sensors_analytics_sdk)
 	__search_target_components(sensors_analytics_sdk
-							INC sasdk/sensors_analytics_sdk.h
+							INC sensors_analytics_sdk.h
 							DLIB sensors_analytics_sdk
 							LIB sensors_analytics_sdk
 							PRE sensors_analytics_sdk
