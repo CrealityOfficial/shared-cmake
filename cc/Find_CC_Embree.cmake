@@ -11,6 +11,14 @@ if(EMBREE_INSTALL_ROOT)
 							   LIB embree
 							   )
 else()
+	if(NOT TARGET embree)
+		__search_target_components(embree3
+								INC embree3/rtcore.h
+								DLIB embree3
+								LIB embree3
+								PRE embree
+								)
+		
+		__test_import(embree3 dll)
+	endif()
 endif()
-
-__test_import(embree dll)
