@@ -31,6 +31,10 @@ macro(__set_install_project)
 	message("__set_install_project -> prefix : ${CMAKE_INSTALL_PREFIX}")
 endmacro()
 
+macro(__set_cloud_project)
+	set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/)
+endmacro()
+
 if(CC_BC_WIN)
 	include(package/win_package)
 elseif(CC_BC_MAC)
