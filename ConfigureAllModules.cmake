@@ -1,3 +1,4 @@
+include(Global)
 include(CCBuildSystem)
 
 include(ConfigureTarget)
