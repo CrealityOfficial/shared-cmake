@@ -474,7 +474,7 @@ macro(__add_platform_library target)
 		endif()
 	endif()
 	
-	if(CC_BUILD_IPHONE_PLATFORM OR CC_PLATFORM_STATIC_BUILD)
+	if(CC_BUILD_IPHONE_PLATFORM OR CC_PLATFORM_STATIC_BUILD OR CC_GLOBAL_FORCE_STATIC)
 		__add_real_target(${target} lib SOURCE ${SRCS} 
 										LIB ${LIBS}
 										INC ${INCS}
