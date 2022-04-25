@@ -1,6 +1,7 @@
 include(Global)
 include(CCBuildSystem)
 
+include(lib)
 include(ConfigureTarget)
 
 include(ConfigureQt)

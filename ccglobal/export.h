@@ -2,19 +2,26 @@
 #define EXPORT_INTERFACE_1604911737496_H
 
 #ifdef WIN32
-	#if CC_FORCE_EXPORT_STATIC
-		#define CC_DECLARE_EXPORT 
-		#define CC_DECLARE_IMPORT
-	#elif CC_FORCE_IMPORT_STATIC
-		#define CC_DECLARE_EXPORT __declspec(dllexport) 
-		#define CC_DECLARE_IMPORT
-	#else
-		#define CC_DECLARE_EXPORT __declspec(dllexport)
-		#define CC_DECLARE_IMPORT __declspec(dllimport)
-	#endif
+	#define CC_DECLARE_EXPORT __declspec(dllexport)
+	#define CC_DECLARE_IMPORT __declspec(dllimport)
+	#define CC_DECLARE_STATIC 
 #else
 	#define CC_DECLARE_EXPORT __attribute__((visibility("default")))
 	#define CC_DECLARE_IMPORT
+	#define CC_DECLARE_STATIC
 #endif
 
+//  example for dll/lib declare
+// 
+//	#if USE_DLLA_DLL
+//		#define DLLA_API CC_DECLARE_IMPORT
+//	#elif USE_DLLA_STATIC
+//		#define DLLA_API CC_DECLARE_STATIC
+//	#else
+//		#if DLLA_DLL
+//			#define DLLA_API CC_DECLARE_EXPORT
+//		#else
+//			#define DLLA_API CC_DECLARE_STATIC
+//		#endif
+//	#endif
 #endif // EXPORT_INTERFACE_1604911737496_H
