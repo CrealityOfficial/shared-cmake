@@ -26,6 +26,7 @@ macro(__add_common_library target)
 										INC ${INCS}
 										DEF ${DEFS}
 										INTERFACE ${INTERFACES}
+										SOURCE_FOLDER
 										${ARGN}
 										)
 		set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS USE_${UpperName}_STATIC)
@@ -36,6 +37,7 @@ macro(__add_common_library target)
 										INC ${INCS}
 										DEF ${DEFS}
 										INTERFACE ${INTERFACES}
+										SOURCE_FOLDER
 										${ARGN}
 										)
 		set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS USE_${UpperName}_DLL)

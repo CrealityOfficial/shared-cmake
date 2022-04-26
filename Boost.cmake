@@ -1,9 +1,13 @@
 macro(__add_boost_target module)
-	__source_recurse(${CMAKE_CURRENT_SOURCE_DIR} SRC)
-	__source_recurse(${boost_includes}boost/${module}/ HEADER)
-	
 	set(btarget boost_${module})
 	string(TOUPPER ${btarget} UpperName)
+	
+	if(${UpperName}_SOURCE)
+		set(SRC ${${UpperName}_SOURCE})
+	else()
+		__source_recurse(${CMAKE_CURRENT_SOURCE_DIR} SRC)
+	endif()
+	__source_recurse(${boost_includes}boost/${module}/ HEADER)
 			
 	set(INCS ${CMAKE_CURRENT_SOURCE_DIR}/../../)
 	set(INTERFACES ${CMAKE_CURRENT_SOURCE_DIR}/../../)
