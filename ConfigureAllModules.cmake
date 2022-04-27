@@ -1,4 +1,6 @@
 include(Global)
+include(log)
+
 include(CCBuildSystem)
 
 include(lib)
