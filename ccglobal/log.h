@@ -48,6 +48,10 @@
 		#define LOGC(...) printf(__VA_ARGS__);printf("\n")
 		#define LOGM(...) printf(__VA_ARGS__);printf("\n")
 	#endif
+
+	#define LOGDIR(x) (void)0 
+	#define LOGLEVEL(x) (void)0
+	#define LOGEND() (void)0
 #endif
 
 #endif // __CC_GLOBAL_LOG__
