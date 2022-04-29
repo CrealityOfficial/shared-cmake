@@ -8,5 +8,8 @@
 #elif CC_SYSTEM_ANDROID
 #include <unistd.h>
 #define _cc_access access
+#elif CC_SYSTEM_LINUX
+#include <unistd.h>
+#define _cc_access access
 #endif
 #endif // __CCGLOBAL_PLATFORM_H
