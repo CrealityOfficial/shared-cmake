@@ -69,6 +69,8 @@ macro(__build_info_header)
 	set(BUILD_INFO_HEAD "${PROJECT_NAME}_${BUILD_TIME}")
 	set(DEBUG_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Debug/resources/")
 	set(RELEASE_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Release/resources/")
+	
+	__get_main_git_hash(MAIN_GIT_HASH)
 	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.prebuild
                ${CMAKE_BINARY_DIR}/buildinfo.h)
 endmacro()

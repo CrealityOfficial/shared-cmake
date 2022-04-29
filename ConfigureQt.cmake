@@ -13,6 +13,18 @@ macro(__enable_qt5)
 	endif()
 endmacro()
 
+macro(__enable_qt5_quick)
+	set(CMAKE_AUTOMOC ON)
+	set(CMAKE_AUTORCC ON)
+
+	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml SerialPort Multimedia Concurrent OpenGL)
+	
+	if(TARGET Qt5::Core)
+		include(qml)
+		set(QT5_ENABLED 1)
+		set(QT_VERSION_MAJOR 5)
+	endif()
+endmacro()
 
 macro(__target_copyqt_plugins target)
 	if(Qt5Core_DIR)

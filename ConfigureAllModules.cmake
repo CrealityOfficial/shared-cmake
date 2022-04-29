@@ -4,6 +4,8 @@ include(log)
 include(CCBuildSystem)
 
 include(lib)
+include(git)
+
 include(ConfigureTarget)
 
 include(ConfigureQt)
@@ -33,5 +35,5 @@ if(CC_BC_EMCC)
 	include(emcc)
 endif()
 
-include(git)
 include(unitTesting)
+
