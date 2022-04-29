@@ -14,20 +14,20 @@
 #include "spdlog/cxlog_macro.h"
 
 	#define LOGV(...) CXLogVerbose(__VA_ARGS__)
-	#define LOGV(logSortId,...) CXLogVerbose(logSortId,__VA_ARGS__)
+	#define LOGV(logSortId,...) CXLogVerbose(logSortId,##__VA_ARGS__)
 	#define LOGD(...) CXLogDebug(__VA_ARGS__)
-	#define LOGD(logSortId,...) CXLogDebug(logSortId,__VA_ARGS__)
+	#define LOGD(logSortId,...) CXLogDebug(logSortId,##__VA_ARGS__)
 	#define LOGI(...) CXLogInfo(__VA_ARGS__)
-	#define LOGI(logSortId,...) CXLogInfo(logSortId,__VA_ARGS__)
+	#define LOGI(logSortId,...) CXLogInfo(logSortId,##__VA_ARGS__)
 	#define LOGW(...) CXLogWarn(__VA_ARGS__)
-    #define LOGW(logSortId,...) CXLogWarn(logSortId,__VA_ARGS__)
+    #define LOGW(logSortId,...) CXLogWarn(logSortId,##__VA_ARGS__)
 	#define LOGE(...) CXLogError(__VA_ARGS__)
-    #define LOGE(logSortId,...) CXLogError(logSortId,__VA_ARGS__)
+    #define LOGE(logSortId,...) CXLogError(logSortId,##__VA_ARGS__)
 
 	#define LOGC(...) CXLogCritical(__VA_ARGS__)
-	#define LOGC(logSortId,...) CXLogCritical(logSortId,__VA_ARGS__)
+	#define LOGC(logSortId,...) CXLogCritical(logSortId,##__VA_ARGS__)
 	#define LOGM(...) CXLogMain(__VA_ARGS__)
-	#define LOGM(logSortId,...) CXLogMain(logSortId,__VA_ARGS__)
+#define LOGM(logSortId,...) CXLogMain(logSortId,##__VA_ARGS__)
 	
 	#define LOGDIR(x) cxlog::CXLog::Instance().setDirectory(x)
 	#define LOGLEVEL(x) cxlog::CXLog::Instance().SetLevel(x)
