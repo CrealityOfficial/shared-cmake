@@ -11,5 +11,11 @@
 #elif CC_SYSTEM_LINUX
 #include <unistd.h>
 #define _cc_access access
+#elif CC_SYSTEM_MAC
+#include <unistd.h>
+#define _cc_access access
+#else
+#include <unistd.h>
+#define _cc_access access
 #endif
 #endif // __CCGLOBAL_PLATFORM_H
