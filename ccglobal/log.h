@@ -14,20 +14,19 @@
 #include "spdlog/cxlog_macro.h"
 
 	#define LOGV(...) CXLogVerbose(__VA_ARGS__)
-	#define LOGV(logSortId,...) CXLogVerbose(logSortId,##__VA_ARGS__)
+	#define LOGVID(logSortId,...) CXLogVerboseID(logSortId,##__VA_ARGS__)
 	#define LOGD(...) CXLogDebug(__VA_ARGS__)
-	#define LOGD(logSortId,...) CXLogDebug(logSortId,##__VA_ARGS__)
+	#define LOGDID(logSortId,...) CXLogDebugID(logSortId,##__VA_ARGS__)
 	#define LOGI(...) CXLogInfo(__VA_ARGS__)
-	#define LOGI(logSortId,...) CXLogInfo(logSortId,##__VA_ARGS__)
+	#define LOGIID(logSortId,...) CXLogInfoID(logSortId,##__VA_ARGS__)
 	#define LOGW(...) CXLogWarn(__VA_ARGS__)
-    #define LOGW(logSortId,...) CXLogWarn(logSortId,##__VA_ARGS__)
+    #define LOGWID(logSortId,...) CXLogWarnID(logSortId,##__VA_ARGS__)
 	#define LOGE(...) CXLogError(__VA_ARGS__)
-    #define LOGE(logSortId,...) CXLogError(logSortId,##__VA_ARGS__)
-
+    #define LOGEID(logSortId,...) CXLogErrorID(logSortId,##__VA_ARGS__)
 	#define LOGC(...) CXLogCritical(__VA_ARGS__)
-	#define LOGC(logSortId,...) CXLogCritical(logSortId,##__VA_ARGS__)
+	#define LOGCID(logSortId,...) CXLogCriticalID(logSortId,##__VA_ARGS__)
 	#define LOGM(...) CXLogMain(__VA_ARGS__)
-#define LOGM(logSortId,...) CXLogMain(logSortId,##__VA_ARGS__)
+	#define LOGMID(logSortId,...) CXLogMainID(logSortId,##__VA_ARGS__)
 	
 	#define LOGDIR(x) cxlog::CXLog::Instance().setDirectory(x)
 	#define LOGLEVEL(x) cxlog::CXLog::Instance().SetLevel(x)
@@ -50,15 +49,20 @@
 		
 		#define LOGV(...) printf(__VA_ARGS__);printf("\n")
 		#define LOGD(...) printf(__VA_ARGS__);printf("\n")
-		#define LOGD(logSortId,...) 
 		#define LOGI(...) printf(##__VA_ARGS__);printf("\n")
 		#define LOGW(...) printf(##__VA_ARGS__);printf("\n")
-		#define LOGW(logSortId,...)
 		#define LOGE(...) printf(##__VA_ARGS__);printf("\n")
-		#define LOGE(logSortId,...) 
 		#define LOGC(...) printf(__VA_ARGS__);printf("\n")
 		#define LOGM(...) printf(__VA_ARGS__);printf("\n")
 	#endif
+
+	#define LOGVID(logSortId,...) (void)0
+	#define LOGDID(logSortId,...) (void)0
+	#define LOGIID(logSortId,...) (void)0
+	#define LOGWID(logSortId,...) (void)0
+	#define LOGEID(logSortId,...) (void)0
+	#define LOGCID(logSortId,...) (void)0
+	#define LOGMID(logSortId,...) (void)0
 
 	#define LOGDIR(x) (void)0 
 	#define LOGLEVEL(x) (void)0
