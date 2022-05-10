@@ -9,19 +9,24 @@
 
 #elif CC_SYSTEM_ANDROID
 #include <unistd.h>
+#include <cmath>
 #define _cc_access access
 
 #elif CC_SYSTEM_LINUX
 #include <unistd.h>
+#include <cmath>
 #define _cc_access access
 
 #elif CC_SYSTEM_MAC || CC_SYSTEM_IOS
 #include <unistd.h>
+#include <cmath>
 #define _cc_access access
 
 #else
 #include <unistd.h>
+#include <cmath>
 #define _cc_access access
+
 #endif
 
 #endif // __CCGLOBAL_PLATFORM_H
