@@ -13,12 +13,10 @@
 
 #if CC_SYSTEM_WIN
 	#define _cc_ftelli64 _ftelli64
+#elif (CC_SYSTEM_ANDROID | CC_SYSTEM_IOS)
+	#define _cc_ftelli64 ftell
 #else
-	#ifdef __USE_FILE_OFFSET64
-		#define _cc_ftelli64 ftello64
-	#else
-		#define _cc_ftelli64 ftell
-	#endif
+	#define _cc_ftelli64 ftell
 #endif
 
 #endif // __CCGLOBAL_PLATFORM_H
