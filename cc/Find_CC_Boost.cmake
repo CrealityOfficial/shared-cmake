@@ -35,6 +35,9 @@ if(BOOST_INSTALL_ROOT)
 
 	set(boost_locale_INCLUDE_ROOT ${BOOST_INSTALL_ROOT}/include/)
 	set(boost_locale_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)		
+	
+	set(boost_iostreams_INCLUDE_ROOT ${BOOST_INSTALL_ROOT}/include/)
+	set(boost_iostreams_LIB_ROOT ${BOOST_INSTALL_ROOT}/lib/)
 else()
 	find_path(BOOST_INCLUDE_DIRS
 			NAMES boost/filesystem.hpp
@@ -44,6 +47,16 @@ else()
 				  "/usr/local/include/" "/usr/local/include/boost/"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 			)
+endif()
+
+if(NOT TARGET boost_iostreams)	
+	__search_target_components(boost_iostreams
+							INC boost/io_fwd.hpp
+							DLIB boost_iostreams
+							LIB boost_iostreams
+							PRE boost
+							)
+	__test_import(boost_iostreams dll)
 endif()
 
 if(NOT TARGET boost_file_system)	
