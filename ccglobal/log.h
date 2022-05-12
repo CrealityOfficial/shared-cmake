@@ -1,4 +1,4 @@
-#ifndef __CC_GLOBAL_LOG__
+﻿#ifndef __CC_GLOBAL_LOG__
 #define __CC_GLOBAL_LOG__
 
 // log level
@@ -31,6 +31,7 @@
 	#define LOGDIR(x) cxlog::CXLog::Instance().setDirectory(x)
 	#define LOGLEVEL(x) cxlog::CXLog::Instance().SetLevel(x)
 	#define LOGEND()  cxlog::CXLog::Instance().EndLog()
+    #define LOGCONSOLE() cxlog::CXLog::Instance().setColorConsole()
 #else
 	#if __ANDROID__
 		#include <android/log.h>
@@ -67,6 +68,7 @@
 	#define LOGDIR(x) (void)0 
 	#define LOGLEVEL(x) (void)0
 	#define LOGEND() (void)0
+    #define LOGCONSOLE() (void)0
 #endif
 
 #endif // __CC_GLOBAL_LOG__
