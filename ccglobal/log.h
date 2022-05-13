@@ -32,6 +32,7 @@
 	#define LOGLEVEL(x) cxlog::CXLog::Instance().SetLevel(x)
 	#define LOGEND()  cxlog::CXLog::Instance().EndLog()
     #define LOGCONSOLE() cxlog::CXLog::Instance().setColorConsole()
+	#define LOGNAMEFUNC(x) cxlog::CXLog::Instance().setNameFunc(x)
 #else
 	#if __ANDROID__
 		#include <android/log.h>
@@ -69,6 +70,7 @@
 	#define LOGLEVEL(x) (void)0
 	#define LOGEND() (void)0
     #define LOGCONSOLE() (void)0
+	#define LOGNAMEFUNC(x) (void)0
 #endif
 
 #endif // __CC_GLOBAL_LOG__
