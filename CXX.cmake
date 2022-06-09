@@ -56,6 +56,8 @@ if(WIN32)
 		set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
 			$<$<CONFIG:Debug>:DEBUG>)
 	endif()
+	
+	add_definitions(-DUNICODE -D_UNICODE)
 endif()
 
 macro(__enable_vld)
