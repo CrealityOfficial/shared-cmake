@@ -371,7 +371,7 @@ function(__add_real_target target type)
 		endif()
 
 		configure_target(${target})
-		if(CC_BC_LINUX)
+		if(CC_BC_LINUX AND(CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT ${type} STREQUAL "lib"))
 			if(${type} STREQUAL "dll")
 			    set_target_properties(${target} PROPERTIES INSTALL_RPATH "\\\$ORIGIN/")
 		    elseif(${type} STREQUAL "exe")
@@ -399,8 +399,8 @@ function(__add_real_target target type)
 					get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
 					if(NOT DIR_NAME)
 						INSTALL(TARGETS ${target} RUNTIME DESTINATION .
-									  LIBRARY DESTINATION ./lib/
-									  ARCHIVE DESTINATION .)
+									  LIBRARY DESTINATION ./bin/Release/lib/
+									  ARCHIVE DESTINATION ./bin/Release/)
 					endif()
 				endif()
 					if(target_DEPLOYQT)
