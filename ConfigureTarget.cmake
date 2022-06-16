@@ -379,7 +379,10 @@ function(__add_real_target target type)
 			endif()
 		endif()
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
-		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT NOT_INSTALL_IMPORT) AND (NOT ${type} STREQUAL "lib"))
+		
+		message("=======CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE}  NOT_INSTALL_IMPORT ${NOT_INSTALL_IMPORT} type: ${type} ")
+		
+		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT ${type} STREQUAL "lib"))
 			if(CC_BC_WIN)
 				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe" OR ${type} STREQUAL "winexe")
 					INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
@@ -398,6 +401,7 @@ function(__add_real_target target type)
 				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe")
 					get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
 					if(NOT DIR_NAME)
+					message("DIR_NAME ${DIR_NAME}==================")
 						INSTALL(TARGETS ${target} RUNTIME DESTINATION .
 									  LIBRARY DESTINATION ./bin/Release/lib/
 									  ARCHIVE DESTINATION ./bin/Release/)
