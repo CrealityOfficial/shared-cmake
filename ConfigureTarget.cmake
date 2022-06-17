@@ -399,9 +399,15 @@ function(__add_real_target target type)
 				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe")
 					get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
 					if(NOT DIR_NAME)
-						INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+						if(CC_GLOBAL_PACKAGE_INSTALL)
+							INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+										  LIBRARY DESTINATION ./lib/
+										  ARCHIVE DESTINATION ./)
+						else()
+							INSTALL(TARGETS ${target} RUNTIME DESTINATION .
 									  LIBRARY DESTINATION ./bin/Release/lib/
 									  ARCHIVE DESTINATION ./bin/Release/)
+						endif()
 					endif()
 				endif()
 					if(target_DEPLOYQT)
