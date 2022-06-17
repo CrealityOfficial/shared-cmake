@@ -57,7 +57,7 @@ if(WIN32)
 			$<$<CONFIG:Debug>:DEBUG>)
 	endif()
 	
-	add_definitions(-DUNICODE -D_UNICODE)
+	#add_definitions(-DUNICODE -D_UNICODE)
 endif()
 
 macro(__enable_vld)
