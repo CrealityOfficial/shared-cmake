@@ -27,6 +27,6 @@ cd build
 # make -j8
 cmake ../../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=out
 make -j8
-sudo make install
+make install
 
 cd ../../
