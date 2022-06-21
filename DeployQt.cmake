@@ -98,8 +98,7 @@ macro(__windeployqt target)
 				env PATH="${_qt_bin_dir}" "${WINDEPLOYQT_EXECUTABLE}"
 					--verbose 0
 					--no-compiler-runtime
-					--no-angle
-					--no-opengl-sw
+					--angle
 					${QMLDIR}
 					--dir "${CMAKE_CURRENT_BINARY_DIR}/windeployqt"
 					\"$<TARGET_FILE:${target}>\"
@@ -117,7 +116,11 @@ macro(__windeployqt target)
         message(WARNING "Deploying with MSVC 2015+ requires CMake 3.6+")
     endif()
 
-    set(CMAKE_INSTALL_UCRT_LIBRARIES FALSE)
+    include(InstallRequiredSystemLibraries)
+    foreach(lib ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS})
+        get_filename_component(filename ${lib} NAME)
+        INSTALL(FILES ${lib} DESTINATION .)
+    endforeach()
 endmacro()
 
 # Add commands that copy the required Qt files to the application bundle
