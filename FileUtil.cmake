@@ -385,7 +385,20 @@ macro(__copy_find_targets targets)
 				elseif(CC_BC_MAC)
 					INSTALL(FILES ${IMPORT_LOC_RELEASE} DESTINATION "${MACOS_INSTALL_LIB_DIR}")
 				elseif(CC_BC_LINUX)
-					INSTALL(FILES ${IMPORT_LOC_RELEASE} DESTINATION ./lib/)
+					#INSTALL(FILES ${IMPORT_LOC_RELEASE} DESTINATION ./lib/)
+					install(CODE "
+								MESSAGE(STATUS \"=====linux install import target ${target}.\")
+								MESSAGE(STATUS \"cmake command ${CMAKE_COMMAND} -E copy_if_different  \")
+								MESSAGE(STATUS \"import loc release ${IMPORT_LOC_RELEASE} \")
+								MESSAGE(STATUS \"target path ${CMAKE_INSTALL_PREFIX}/lib/ \")
+								execute_process(COMMAND ${CMAKE_COMMAND} -E copy_if_different
+												${IMPORT_LOC_RELEASE}
+												${CMAKE_INSTALL_PREFIX}/lib/
+												RESULT_VARIABLE CODE_RESULT
+										)
+								message(STATUS \"====end install import target ${target}  ${CODE_RESULT}\")
+								"
+								)
 				endif()
 			endif()
 		endif()
