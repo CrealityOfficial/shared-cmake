@@ -77,10 +77,10 @@ endmacro()
 
 macro(__build_engine_info_header)
 	string(TIMESTAMP BUILD_TIME "%y_%m_%d_%H_%M")
-	set(BUILD_ENGINE_INFO_HEAD "${PROJECT_NAME}_${BUILD_TIME}")
+	set(BUILD_ENGINE_INFO_HEAD "${PROJECT_NAME}_cxss_${BUILD_TIME}")
 	
 	set(SUB "cxss")
-	__get_submodule_git_hash(${SUB} MAIN_GIT_HASH)
+	__get_submodule_git_hash(${SUB} CXSS_GIT_HASH)
 	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cxss/engineinfo.h.prebuild
                ${CMAKE_CURRENT_BINARY_DIR}/buildengineinfo.h)
 endmacro()
