@@ -17,8 +17,7 @@ function(__get_main_git_hash _git_hash)
 endfunction()
 
 function(__get_submodule_git_hash sub _git_hash)
-{
-	message("__get_submodule_git_hash  sub=${sub}")
+	message("__get_submodule_git_hash sub=${sub}")
 	if(EXISTS "${CMAKE_SOURCE_DIR}/${sub}/.git")
 		execute_process(
 			COMMAND git rev-parse HEAD
@@ -34,8 +33,7 @@ function(__get_submodule_git_hash sub _git_hash)
 		set(GIT_HASH "${BUILD_VERSION_HASH}")
 	endif()
 	set(${_git_hash} "${GIT_HASH}" PARENT_SCOPE)
-}
-
+endfunction()
 function(__get_usr_binary_git_hash _git_hash)
 	if(EXISTS "$ENV{USR_INSTALL_ROOT}/.git")
 		execute_process(

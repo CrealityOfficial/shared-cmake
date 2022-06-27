@@ -32,7 +32,7 @@ macro(__set_install_project)
 endmacro()
 
 macro(__set_cloud_project)
-	set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/)
+	#set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/install/)
 	__set_not_install_import()
 	set(CC_GLOBAL_FORCE_STATIC 1)
 endmacro()
