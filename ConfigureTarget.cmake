@@ -730,7 +730,7 @@ macro(__remap_target_debug_2_release targets)
 endmacro()
 
 function(__add_emcc_target target)
-	cmake_parse_arguments(target "DEBUG" "IDLS;IDLINCS" "CSOURCE;LIBRARIES;WSAM_ARGS;" ${ARGN})
+	cmake_parse_arguments(target "DEBUG;WSAM_THREAD" "IDLS;IDLINCS" "CSOURCE;LIBRARIES;WSAM_ARGS;" ${ARGN})
 	set(LIBRARIES)
 	if(target_LIBRARIES)
 		#message(STATUS "__add_emcc_target LIBRARIES : ${target_LIBRARIES}")
@@ -806,9 +806,21 @@ function(__add_emcc_target target)
 		set(EXTRA_ARGS --post-js ${target_IDLS}.js ${EXTRA_ARGS})
 		message(STATUS ${EXTRA_ARGS})
 	endif()
-	
-	set(WARGS  #default args
-	    #-Wl,--shared-memory,--no-check-features
+	if(target_WSAM_THREAD)
+		set(WARGS  #default args
+			-Wl,--shared-memory,--no-check-features
+			-s MODULARIZE=1
+			-s ALLOW_MEMORY_GROWTH=0
+			-s EXPORTED_RUNTIME_METHODS=["addFunction","UTF8ToString","FS"]
+			#-s DISABLE_EXCEPTION_CATCHING=1
+			-s USE_PTHREADS=1
+			-s PTHREAD_POOL_SIZE=4
+			-s TOTAL_MEMORY=536870912
+			-s ENVIRONMENT=worker
+			-s NO_FILESYSTEM=0)
+	else()
+		set(WARGS  #default args
+		#-Wl,--shared-memory,--no-check-features
 		-s MODULARIZE=1
 		-s ALLOW_MEMORY_GROWTH=1
 		#-s TOTAL_MEMORY=512MB
@@ -824,6 +836,7 @@ function(__add_emcc_target target)
 		-s USE_SDL=0
 		-s ENVIRONMENT=worker
 		-s NO_FILESYSTEM=0)
+	endif()
 		
 	if(target_WSAM_ARGS)
 		#message(STATUS "__add_emcc_target WSAM_ARGS : ${target_WSAM_ARGS}")
