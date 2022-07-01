@@ -67,6 +67,11 @@ macro(__install_directory_specif source dest)
 	INSTALL(DIRECTORY ${source} DESTINATION include/${dest}/ FILES_MATCHING REGEX "/[^.]+$")
 endmacro()
 
+macro(__install_directory_specif2 source dest)
+	INSTALL(DIRECTORY ${source} DESTINATION include/${dest}/ FILES_MATCHING PATTERN "*.tcc")
+	INSTALL(DIRECTORY ${source} DESTINATION include/${dest}/ FILES_MATCHING REGEX "/[^.]+$")
+endmacro()
+
 function(__install_files source dest)
 	INSTALL(FILES ${source} DESTINATION ${dest})
 endfunction()
@@ -153,6 +158,7 @@ endmacro()
 
 if(INSTALL_CC_GLOBAL)
 	__install_directory_specif(${CMAKE_MODULE_SOURCE_DIR}/ccglobal/ ccglobal)
+	__install_directory_specif2(${CMAKE_MODULE_SOURCE_DIR}/ccglobal/ ccglobal)
 endif()
 
 macro(__install_import_targets targets)
