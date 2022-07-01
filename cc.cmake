@@ -14,7 +14,7 @@ function(__test_import target type)
 	
 	if(${target}_INCLUDE_DIRS AND ${target}_LIBRARIES_DEBUG AND ${target}_LIBRARIES_RELEASE)
 		set(${target}_FOUND 1)
-		__import_target(${target} ${type})
+		__import_target(${target} ${type} ${ARGN})
 		message(STATUS "import ${target} success.")
 	else()
 		if(CC_BC_LINUX AND ${target}_INCLUDE_DIRS AND ${target}_LIBRARIES_RELEASE)

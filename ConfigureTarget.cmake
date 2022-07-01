@@ -150,7 +150,8 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT;FORCE_DLL" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER;QML_PLUGINS" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT;FORCE_DLL" ""
+		"SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER;QML_PLUGINS;INTERFACE_DEF" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -331,6 +332,9 @@ function(__add_real_target target type)
 				target_compile_definitions(${target} PRIVATE ${def})
 				#message(STATUS ${def}) 	
 			endforeach()
+		endif()
+		if(target_INTERFACE_DEF)
+			set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${target_INTERFACE_DEF})
 		endif()
 		#dep
 		if(target_DEP)
@@ -534,7 +538,10 @@ function(__add_shared_lib target)
 endfunction()
 
 macro(__import_target target type)
-	if (NOT TARGET ${target})		
+	if (NOT TARGET ${target})
+		cmake_parse_arguments(target "" ""
+			"INTERFACE_DEF" ${ARGN})
+			
 		if(${type} STREQUAL "dll")
 			add_library(${target} SHARED IMPORTED GLOBAL)
 		else()
@@ -545,6 +552,10 @@ macro(__import_target target type)
 		set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${${target}_INCLUDE_DIRS})
 		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Debug")
 		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Release")
+		
+		if(target_INTERFACE_DEF)
+			set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${target_INTERFACE_DEF})
+		endif()
 		
 		if(NOT CC_BC_LINUX)
 			set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${${target}_LIBRARIES_DEBUG})
