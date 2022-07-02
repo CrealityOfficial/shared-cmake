@@ -81,6 +81,9 @@ macro(__build_engine_info_header)
 	
 	set(SUB "cxss")
 	__get_submodule_git_hash(${SUB} CXSS_GIT_HASH)
+	__get_branch_name(MAGE_VERSION_GIT_HEAD_BRANCH)
+	__get_last_commit_time(MAGE_VERSION_LAST_COMMIT_TIME)
+	
 	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cxss/engineinfo.h.prebuild
                ${CMAKE_CURRENT_BINARY_DIR}/buildengineinfo.h)
 endmacro()
