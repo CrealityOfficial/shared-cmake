@@ -6,6 +6,6 @@ mkdir build
 cd build
 
 conan install ../../
-cmake ../../ -G "Visual Studio 16 2019"
+cmake ../../ -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON
 			 
 cd ../../
