@@ -2,12 +2,13 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/conan/")
 
 if(EXISTS ${CMAKE_BINARY_DIR}/conan_paths.cmake)
 	include(${CMAKE_BINARY_DIR}/conan_paths.cmake)
-	message(STATUS "Use conan_paths ${CMAKE_BINARY_DIR}/conan_paths.cmake")
+	message(STATUS "Conan Use conan_paths.cmake")
+elseif(EXISTS ${CMAKE_BINARY_DIR}/conanbuildinfo_multi.cmake)
+	include(${CMAKE_BINARY_DIR}/conanbuildinfo_multi.cmake)
+	message(STATUS "Conan Use conanbuildinfo_multi.cmake")
 else()
-	message(STATUS "Disable conan_paths.")
+	message(STATUS "Disable Conan")
 endif()
-
-
 
 macro(__conan_find)
 	message(STATUS "CONAN ****** Start Find ${ARGN}")
