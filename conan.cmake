@@ -38,7 +38,7 @@ macro(__conan_import package type)
 		set(RELEASE_ROOT ${CONAN_${UPPER_PACKAGE}_ROOT_RELEASE})
 		foreach(_component ${Components})
 			if(NOT TARGET ${_component})
-				set(${_component}_INCLUDE_DIRS RELEASE_ROOT/include/)
+				set(${_component}_INCLUDE_DIRS ${RELEASE_ROOT}/include/)
 				
 				if(CC_BC_WIN)
 					set(${_component}_LIBRARIES_DEBUG "${DEBUG_ROOT}/lib/Debug/${_component}.lib")
