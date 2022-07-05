@@ -2,7 +2,12 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cc/")
 
 macro(__cc_find)
 	message(STATUS "CC ****** Start Find ${ARGN}")
-	find_package(_CC_${ARGN})
+	if(HAVE_CONAN_CACHE)
+		string(TOLOWER ${ARGN} LTARGET)
+		__conan_find(${LTARGET})
+	else()
+		find_package(_CC_${ARGN})
+	endif()
 	message(STATUS "CC ****** End Find ${ARGN}")
 endmacro()
 
