@@ -1,3 +1,3 @@
 # zlib target
 
-__conan_import(zlib lib)
+__conan_import(zlib dll)

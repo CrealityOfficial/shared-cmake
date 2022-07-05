@@ -16,6 +16,9 @@ else()
 	endif()
 endif()
 
+if(CMAKE_USE_CONAN)
+endif()
+
 macro(__conan_find)
 	message(STATUS "CONAN ****** Start Find ${ARGN}")
 	find_package(_conan_${ARGN})
