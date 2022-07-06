@@ -75,6 +75,19 @@ macro(__build_info_header)
                ${CMAKE_BINARY_DIR}/buildinfo.h)
 endmacro()
 
+macro(__build_engine_info_header)
+	string(TIMESTAMP BUILD_TIME "%y_%m_%d_%H_%M")
+	set(BUILD_ENGINE_INFO_HEAD "${PROJECT_NAME}_cxss_${BUILD_TIME}")
+	
+	set(SUB "cxss")
+	__get_submodule_git_hash(${SUB} CXSS_GIT_HASH)
+	__get_branch_name(MAGE_VERSION_GIT_HEAD_BRANCH)
+	__get_last_commit_time(MAGE_VERSION_LAST_COMMIT_TIME)
+	
+	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cxss/engineinfo.h.prebuild
+               ${CMAKE_CURRENT_BINARY_DIR}/buildengineinfo.h)
+endmacro()
+
 function(__scope_add tlist item)
 	list(APPEND ${tlist} ${item})
 	list(REMOVE_DUPLICATES ${tlist})

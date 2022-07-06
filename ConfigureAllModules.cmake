@@ -5,6 +5,7 @@ include(CCBuildSystem)
 
 include(lib)
 include(git)
+include(conan)
 
 include(ConfigureTarget)
 

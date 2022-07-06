@@ -17,29 +17,34 @@ macro(__add_common_library target)
 	if(NOT DEFS)
 		set(DEFS)
 	endif()
+	if(NOT INTERFACE_DEFS)
+		set(INTERFACE_DEFS)
+	endif()
 	
 	string(TOUPPER ${target} UpperName)
 			
 	if(CC_GLOBAL_FORCE_STATIC OR ${UpperName}_STATIC)
+		list(APPEND INTERFACE_DEFS USE_${UpperName}_STATIC)
 		__add_real_target(${target} lib SOURCE ${SRCS} 
 										LIB ${LIBS}
 										INC ${INCS}
 										DEF ${DEFS}
 										INTERFACE ${INTERFACES}
+										INTERFACE_DEF ${INTERFACE_DEFS}
 										SOURCE_FOLDER
 										${ARGN}
 										)
-		set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS USE_${UpperName}_STATIC)
 	else()
 		list(APPEND DEFS ${UpperName}_DLL)
+		list(APPEND INTERFACE_DEFS USE_${UpperName}_DLL)
 		__add_real_target(${target} dll SOURCE ${SRCS} 
 										LIB ${LIBS}
 										INC ${INCS}
 										DEF ${DEFS}
 										INTERFACE ${INTERFACES}
+										INTERFACE_DEF ${INTERFACE_DEFS}
 										SOURCE_FOLDER
 										${ARGN}
 										)
-		set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS USE_${UpperName}_DLL)
 	endif()
 endmacro()

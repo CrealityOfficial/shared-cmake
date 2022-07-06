@@ -20,10 +20,11 @@ add_definitions(-DCGAL_HEADER_ONLY=1)
 
 macro(__cc_cgal_include package)
 	if(NOT CGAL_INCLUDE_DIRS)
-		message(FATAL_ERROR "Please Specified CGAL_INCLUDE_DIRS")
+		message(FATAL_ERROR "Please Specified CGAL_INCLUDE_DIRS--"${package})
 	endif()
 	include_directories(${CGAL_INCLUDE_DIRS}/${package})
 	include_directories(${CGAL_INCLUDE_DIRS}/${package}/include/)
+	include_directories(${CGAL_INCLUDE_DIRS}/${package}/poly/)
 endmacro()
 
 if(CGAL_INSTALL_ROOT)
@@ -31,17 +32,17 @@ if(CGAL_INSTALL_ROOT)
 	set(CGAL_INCLUDE_DIRS ${CGAL_INSTALL_ROOT}/include/)
 elseif(CXCGAL_INSTALL_ROOT)
 	message(STATUS "CGAL Specified CXCGAL_INSTALL_ROOT : ${CXCGAL_INSTALL_ROOT}")
-	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
+	find_path(CGAL_INCLUDE_DIRS CGAL/Kernel_23/internal/Projection_traits_3.h
 		HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
 		PATHS "/usr/include/cgal/include")
 else()
-	find_path(CGAL_INCLUDE_DIRS Kernel_23/CGAL/basic_classes.h
+	find_path(CGAL_INCLUDE_DIRS CGAL/Kernel_23/internal/Projection_traits_3.h
 		HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
 		PATHS "$ENV{USR_INSTALL_ROOT}/include/CGAL" "$ENV{USR_INSTALL_ROOT}/include/"
 		NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
 		)
 	if(NOT CGAL_INCLUDE_DIRS)
-		find_path(CGAL_INCLUDE_DIRS Kernel_23/include/CGAL/basic_classes.h
+		find_path(CGAL_INCLUDE_DIRS CGAL/Kernel_23/internal/Projection_traits_3.h
 			HINTS  "${CXCGAL_INSTALL_ROOT}/include/"
 			PATHS "$ENV{USR_INSTALL_ROOT}/include/CGAL/" "$ENV{USR_INSTALL_ROOT}/include/"
 			NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH

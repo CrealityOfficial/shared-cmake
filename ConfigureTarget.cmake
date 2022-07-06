@@ -150,7 +150,8 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT;FORCE_DLL" "" "SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER;QML_PLUGINS" ${ARGN})
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT;FORCE_DLL" ""
+		"SOURCE;INC;LIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUTNAME;MAC_GUI_IDENTIFIER;QML_PLUGINS;INTERFACE_DEF" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -307,8 +308,14 @@ function(__add_real_target target type)
 		endif()
 		if(target_LIB)
 			foreach(lib ${target_LIB})
-				target_link_libraries(${target} PRIVATE ${lib})
-				#message(STATUS ${lib}) 	
+				if(TARGET ${lib})
+					target_link_libraries(${target} PRIVATE ${lib})
+				endif()
+				#message(STATUS ${lib})
+				if(TARGET CONAN_PKG::${lib})
+					message(STATUS "${target} link conan lib [CONAN_PKG::${lib}]")
+					target_link_libraries(${target} PRIVATE CONAN_PKG::${lib})
+				endif()
 			endforeach()
 		endif()
 		if(ANDROID)
@@ -331,6 +338,9 @@ function(__add_real_target target type)
 				target_compile_definitions(${target} PRIVATE ${def})
 				#message(STATUS ${def}) 	
 			endforeach()
+		endif()
+		if(target_INTERFACE_DEF)
+			set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${target_INTERFACE_DEF})
 		endif()
 		#dep
 		if(target_DEP)
@@ -534,7 +544,10 @@ function(__add_shared_lib target)
 endfunction()
 
 macro(__import_target target type)
-	if (NOT TARGET ${target})		
+	if (NOT TARGET ${target})
+		cmake_parse_arguments(target "" ""
+			"INTERFACE_DEF" ${ARGN})
+			
 		if(${type} STREQUAL "dll")
 			add_library(${target} SHARED IMPORTED GLOBAL)
 		else()
@@ -545,6 +558,10 @@ macro(__import_target target type)
 		set_property(TARGET ${target} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${${target}_INCLUDE_DIRS})
 		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Debug")
 		set_property(TARGET ${target} APPEND PROPERTY IMPORTED_CONFIGURATIONS "Release")
+		
+		if(target_INTERFACE_DEF)
+			set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${target_INTERFACE_DEF})
+		endif()
 		
 		if(NOT CC_BC_LINUX)
 			set_target_properties(${target} PROPERTIES IMPORTED_IMPLIB_DEBUG ${${target}_LIBRARIES_DEBUG})
@@ -730,7 +747,7 @@ macro(__remap_target_debug_2_release targets)
 endmacro()
 
 function(__add_emcc_target target)
-	cmake_parse_arguments(target "DEBUG" "IDLS;IDLINCS" "CSOURCE;LIBRARIES;WSAM_ARGS;" ${ARGN})
+	cmake_parse_arguments(target "DEBUG;WSAM_THREAD" "IDLS;IDLINCS" "CSOURCE;LIBRARIES;WSAM_ARGS;" ${ARGN})
 	set(LIBRARIES)
 	if(target_LIBRARIES)
 		#message(STATUS "__add_emcc_target LIBRARIES : ${target_LIBRARIES}")
@@ -806,9 +823,21 @@ function(__add_emcc_target target)
 		set(EXTRA_ARGS --post-js ${target_IDLS}.js ${EXTRA_ARGS})
 		message(STATUS ${EXTRA_ARGS})
 	endif()
-	
-	set(WARGS  #default args
-	    #-Wl,--shared-memory,--no-check-features
+	if(target_WSAM_THREAD)
+		set(WARGS  #default args
+			-Wl,--shared-memory,--no-check-features
+			-s MODULARIZE=1
+			-s ALLOW_MEMORY_GROWTH=0
+			-s EXPORTED_RUNTIME_METHODS=["addFunction","UTF8ToString","FS"]
+			#-s DISABLE_EXCEPTION_CATCHING=1
+			-s USE_PTHREADS=1
+			-s PTHREAD_POOL_SIZE=4
+			-s TOTAL_MEMORY=536870912
+			-s ENVIRONMENT=worker
+			-s NO_FILESYSTEM=0)
+	else()
+		set(WARGS  #default args
+		#-Wl,--shared-memory,--no-check-features
 		-s MODULARIZE=1
 		-s ALLOW_MEMORY_GROWTH=1
 		#-s TOTAL_MEMORY=512MB
@@ -824,6 +853,7 @@ function(__add_emcc_target target)
 		-s USE_SDL=0
 		-s ENVIRONMENT=worker
 		-s NO_FILESYSTEM=0)
+	endif()
 		
 	if(target_WSAM_ARGS)
 		#message(STATUS "__add_emcc_target WSAM_ARGS : ${target_WSAM_ARGS}")
