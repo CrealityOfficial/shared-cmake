@@ -9,5 +9,6 @@ if(MSVC)    #disable some common vs warnning
 	add_compile_options(/wd4127)
 	add_compile_options(/wd4828)
 	add_compile_options(/wd4275)
+	add_compile_options(/wd4819)
 else(MSVC)
 endif(MSVC)
