@@ -1,1 +1,1 @@
-__conan_import(cJSON lib)
+__conan_import(cjson lib)
