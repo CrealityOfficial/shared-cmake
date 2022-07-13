@@ -1,1 +1,1 @@
-__conan_import(openssl lib COMPONENT ssl crypto)
+__conan_import(openssl dll COMPONENT ssl crypto)
