@@ -414,9 +414,15 @@ function(__add_real_target target type)
 										  LIBRARY DESTINATION ./lib/
 										  ARCHIVE DESTINATION ./)
 						else()
-							INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+							if(HAVE_CONAN_CACHE)
+								INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+									LIBRARY DESTINATION ./lib/
+									ARCHIVE DESTINATION ./lib/)
+							else()
+								INSTALL(TARGETS ${target} RUNTIME DESTINATION .
 									  LIBRARY DESTINATION ./bin/Release/lib/
 									  ARCHIVE DESTINATION ./bin/Release/)
+							endif()
 						endif()
 					endif()
 				endif()
