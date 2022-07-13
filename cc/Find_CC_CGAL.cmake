@@ -14,8 +14,11 @@ endif()
 
 include_directories(${BOOST_INCLUDE_DIRS})
 include_directories(${EIGEN_INCLUDE_DIRS})
-add_definitions(-DCGAL_NO_GMP=1)
-add_definitions(-DCGAL_NO_MPFR=1)
+
+if(NOT USE_IGL)
+	add_definitions(-DCGAL_NO_GMP=1)
+	add_definitions(-DCGAL_NO_MPFR=1)
+endif()
 add_definitions(-DCGAL_HEADER_ONLY=1)
 
 macro(__cc_cgal_include package)
