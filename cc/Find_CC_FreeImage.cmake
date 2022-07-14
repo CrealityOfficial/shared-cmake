@@ -1,6 +1,7 @@
 # This sets the following variables:
 # freeImage target
 
+if(NOT TARGET freeImage)
  if(THIRD0_INSTALL_ROOT)
 	message(STATUS "Specified THIRD0_INSTALL_ROOT : ${THIRD0_INSTALL_ROOT}")
 	set(freeImage_INCLUDE_ROOT ${THIRD0_INSTALL_ROOT}/include/freeImage/)
@@ -16,3 +17,4 @@
 							    )
  __test_import(freeImage dll)
 
+endif()
