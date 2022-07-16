@@ -10,14 +10,15 @@ endif()
 
 	message(STATUS "Mysql Specified MYSQL_INSTALL_ROOT : ${MYSQL_INSTALL_ROOT}")
 	
-	  find_path(mysqlclient_INCLUDE_DIRS
-			  NAMES mysql.h
-			  HINTS "${MYSQL_INSTALL_ROOT}"
-			  PATHS "/usr/include/" "/usr/include/mysql/mysql.h"
-					  "/usr/local/include/" "/usr/local/include/mysql/mysql.h"
-					  "$ENV{MYSQL_INSTALL_ROOT}/include/" "$ENV{MYSQL_INSTALL_ROOT}/include/mysql"
-			  NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
-			  )
+	  # find_path(mysqlclient_INCLUDE_DIRS
+			  # NAMES mysql.h
+			  # HINTS "${MYSQL_INSTALL_ROOT}"
+			  # PATHS "/usr/include/" "/usr/include/mysql/mysql.h"
+					  # "/usr/local/include/" "/usr/local/include/mysql/mysql.h"
+					  # "$ENV{MYSQL_INSTALL_ROOT}/include/" "$ENV{MYSQL_INSTALL_ROOT}/include/mysql"
+			  # NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH
+			  # 
+	 set(mysqlclient_INCLUDE_DIRS "${MYSQL_INSTALL_ROOT}/include")
 	 find_library(mysqlclient_LIBRARIES_DEBUG
 				  NAMES mysqlclient
 				  PATHS "${MYSQL_INSTALL_ROOT}/lib/")	
