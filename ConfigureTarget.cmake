@@ -388,73 +388,82 @@ function(__add_real_target target type)
 			    set_target_properties(${target} PROPERTIES INSTALL_RPATH "\\\$ORIGIN/lib")
 			endif()
 		endif()
-		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
-			
-		if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT ${type} STREQUAL "lib"))
-			if(CC_BC_WIN)
-				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe" OR ${type} STREQUAL "winexe")
-					INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
-				endif()
-			elseif(CC_BC_MAC)
-				if(${type} STREQUAL "dll" OR ${type} STREQUAL "bundle" OR ${type} STREQUAL "exe")
-					INSTALL(TARGETS ${target}
-						BUNDLE DESTINATION . COMPONENT Runtime
-						RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
-						FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
-						ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
-						LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
-					)
-				endif()
-			elseif(CC_BC_LINUX)
-				if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe")
-					get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
-					if(NOT DIR_NAME)
-						if(CC_GLOBAL_PACKAGE_INSTALL)
-							INSTALL(TARGETS ${target} RUNTIME DESTINATION .
-										  LIBRARY DESTINATION ./lib/
-										  ARCHIVE DESTINATION ./)
-						else()
-							if(HAVE_CONAN_CACHE)
+		
+		if(CREATE_CONAN_PACKAGE)
+			INSTALL(TARGETS ${target}
+				RUNTIME DESTINATION bin
+				FRAMEWORK DESTINATION lib
+				ARCHIVE DESTINATION lib
+				LIBRARY DESTINATION lib
+			)			
+		else()
+			get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
+			if((CMAKE_BUILD_TYPE MATCHES "Release") AND (NOT ${type} STREQUAL "lib"))
+				if(CC_BC_WIN)
+					if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe" OR ${type} STREQUAL "winexe")
+						INSTALL(TARGETS ${target} RUNTIME DESTINATION .)
+					endif()
+				elseif(CC_BC_MAC)
+					if(${type} STREQUAL "dll" OR ${type} STREQUAL "bundle" OR ${type} STREQUAL "exe")
+						INSTALL(TARGETS ${target}
+							BUNDLE DESTINATION . COMPONENT Runtime
+							RUNTIME DESTINATION ${MACOS_INSTALL_RUNTIME_DIR}
+							FRAMEWORK DESTINATION ${MACOS_INSTALL_LIB_DIR}
+							ARCHIVE DESTINATION ${MACOS_INSTALL_LIB_DIR}
+							LIBRARY DESTINATION ${MACOS_INSTALL_LIB_DIR}
+						)
+					endif()
+				elseif(CC_BC_LINUX)
+					if(${type} STREQUAL "dll" OR ${type} STREQUAL "exe")
+						get_target_property(DIR_NAME ${target} QML_PLUGIN_DIR_NAME)
+						if(NOT DIR_NAME)
+							if(CC_GLOBAL_PACKAGE_INSTALL)
 								INSTALL(TARGETS ${target} RUNTIME DESTINATION .
-									LIBRARY DESTINATION ./lib/
-									ARCHIVE DESTINATION ./lib/)
+											  LIBRARY DESTINATION ./lib/
+											  ARCHIVE DESTINATION ./)
 							else()
-								INSTALL(TARGETS ${target} RUNTIME DESTINATION .
-									  LIBRARY DESTINATION ./bin/Release/lib/
-									  ARCHIVE DESTINATION ./bin/Release/)
+								if(HAVE_CONAN_CACHE)
+									INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+										LIBRARY DESTINATION ./lib/
+										ARCHIVE DESTINATION ./lib/)
+								else()
+									INSTALL(TARGETS ${target} RUNTIME DESTINATION .
+										  LIBRARY DESTINATION ./bin/Release/lib/
+										  ARCHIVE DESTINATION ./bin/Release/)
+								endif()
 							endif()
 						endif()
 					endif()
-				endif()
-					if(target_DEPLOYQT)
-						include(DeployQt)
-						install(CODE "
-								MESSAGE(STATUS \"linuxdeploy install.\")
-								MESSAGE(STATUS \"target: ${CMAKE_INSTALL_PREFIX}/${target} \")
-								MESSAGE(STATUS \"qml entry : [${QML_ENTRY_DIR}]\")
-								#set(QMLDIR)
-								#if(EXISTS ${QML_ENTRY_DIR})
-								#	set(QMLDIR -qmldir=${QML_ENTRY_DIR})
-								#	message(STATUS \"qml import ${QMLDIR}\")
-								#endif()
-								execute_process(COMMAND ${LINUXDEPLOYQT_EXECUTABLE} ${CMAKE_INSTALL_PREFIX}/${target}
-            														-always-overwrite
-															-appimage
-															-unsupported-allow-new-glibc
-															-qmldir=${QML_ENTRY_DIR}
-															RESULT_VARIABLE CODE_RESULT
-										)
-								
-								message(STATUS \"end linuxdeploy ${CODE_RESULT}\")
-								#if(CODE_RESULT AND ${CODE_RESULT} EQUAL 0)
-								#	message(STATUS \"linuxdeploy success.\")
-								#else()
-								#	message(FATAL_ERROR \"linuxdeploy failed.\")
-								#endif()
-							     "
-							     )
+						if(target_DEPLOYQT)
+							include(DeployQt)
+							install(CODE "
+									MESSAGE(STATUS \"linuxdeploy install.\")
+									MESSAGE(STATUS \"target: ${CMAKE_INSTALL_PREFIX}/${target} \")
+									MESSAGE(STATUS \"qml entry : [${QML_ENTRY_DIR}]\")
+									#set(QMLDIR)
+									#if(EXISTS ${QML_ENTRY_DIR})
+									#	set(QMLDIR -qmldir=${QML_ENTRY_DIR})
+									#	message(STATUS \"qml import ${QMLDIR}\")
+									#endif()
+									execute_process(COMMAND ${LINUXDEPLOYQT_EXECUTABLE} ${CMAKE_INSTALL_PREFIX}/${target}
+																		-always-overwrite
+																-appimage
+																-unsupported-allow-new-glibc
+																-qmldir=${QML_ENTRY_DIR}
+																RESULT_VARIABLE CODE_RESULT
+											)
+									
+									message(STATUS \"end linuxdeploy ${CODE_RESULT}\")
+									#if(CODE_RESULT AND ${CODE_RESULT} EQUAL 0)
+									#	message(STATUS \"linuxdeploy success.\")
+									#else()
+									#	message(FATAL_ERROR \"linuxdeploy failed.\")
+									#endif()
+									 "
+									 )
+						endif()
 					endif()
-		        endif()
+			endif()
 		endif()
 	else(target_SOURCE)
 		message("add target ${target} without sources")
