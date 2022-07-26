@@ -23,7 +23,7 @@ add_definitions(-DCGAL_HEADER_ONLY=1)
 
 macro(__cc_cgal_include package)
 	if(NOT CGAL_INCLUDE_DIRS)
-		message(FATAL_ERROR "Please Specified CGAL_INCLUDE_DIRS--"${package})
+		message(FATAL_ERROR "Please Specified CGAL_INCLUDE_DIRS--> ${package}")
 	endif()
 	include_directories(${CGAL_INCLUDE_DIRS}/${package})
 	include_directories(${CGAL_INCLUDE_DIRS}/${package}/include/)

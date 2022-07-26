@@ -2,6 +2,7 @@
 # libnest2d target
 
 if(NOT TARGET libnest2d)
+	__cc_find(Nlopt)
 	__search_target_components(libnest2d
 							INC libnest2d/nester.hpp
 							DLIB libnest2d
