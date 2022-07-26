@@ -309,7 +309,7 @@ function(__add_real_target target type)
 		if(target_LIB)
 			foreach(lib ${target_LIB})
 				target_link_libraries(${target} PRIVATE ${lib})
-				message(STATUS "target_link_libraries---" ${lib})
+				#message(STATUS "target_link_libraries---" ${lib})
 				
 				#message(STATUS ${lib})
 				if(TARGET CONAN_PKG::${lib})
