@@ -1,4 +1,7 @@
 # boost target
+if(BOOST_INSTALL_ROOT)
+	set(BOOST_INCLUDE_DIRS ${BOOST_INSTALL_ROOT}/include/)
+endif()
 
 if(BOOST_STATIC)
 	__conan_import(boost lib COMPONENT boost_filesystem

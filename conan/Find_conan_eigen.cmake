@@ -1,3 +1,3 @@
-# eigen target
-
-__conan_import(eigen dll)
+if(CONAN_EIGEN_ROOT_RELEASE)
+	set(EIGEN_INCLUDE_DIRS "${CONAN_EIGEN_ROOT_RELEASE}/include/")
+endif()
