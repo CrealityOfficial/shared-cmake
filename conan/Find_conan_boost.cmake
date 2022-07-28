@@ -1,6 +1,6 @@
 # boost target
 if(CONAN_BOOST_ROOT_RELEASE)
-	set(BOOST_INCLUDE_DIRS ${CONAN_BOOST_ROOT_RELEASE}/include/)
+	set(BOOST_INCLUDE_DIRS ${CONAN_BOOST_ROOT_RELEASE}/include/boost/)
 endif()
 
 if(BOOST_STATIC)
