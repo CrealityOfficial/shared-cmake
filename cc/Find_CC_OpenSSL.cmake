@@ -37,3 +37,5 @@ endif()
 __test_import(ssl lib)
 __test_import(crypto lib)
 set(openssl ssl crypto)
+
+set(OPENSSL_INCLUDE_DIR ${ssl_INCLUDE_DIRS})

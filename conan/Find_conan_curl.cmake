@@ -1,1 +1,1 @@
-__conan_import(curl dll COMPONENT curl)
+__conan_import(curl lib COMPONENT curl)
