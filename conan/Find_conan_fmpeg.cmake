@@ -1,2 +1,12 @@
 
-
+if(CC_BC_WIN)
+	__conan_import_one(ffmpeglib dll NAME avcodec LIB avcodec DLL avcodec-58)
+	__conan_import_one(ffmpeglib dll NAME avdevice LIB avdevice DLL avdevice-58)
+	__conan_import_one(ffmpeglib dll NAME avfilter LIB avfilter DLL avfilter-7)
+	__conan_import_one(ffmpeglib dll NAME avformat LIB avformat DLL avformat-58)
+	__conan_import_one(ffmpeglib dll NAME avutil LIB avutil DLL avutil-56)
+	__conan_import_one(ffmpeglib dll NAME postproc LIB postproc DLL postproc-55)
+	__conan_import_one(ffmpeglib dll NAME swresample LIB swresample DLL swreample-3)
+	__conan_import_one(ffmpeglib dll NAME swscale LIB swscale DLL swscale-5)
+else()
+endif()
