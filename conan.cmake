@@ -76,7 +76,7 @@ macro(__conan_import package type)
 endmacro()
 
 macro(__conan_import_one package type)
-	cmake_parse_arguments(package "" "NAME;LIB;DLL" "" ${ARGN})
+	cmake_parse_arguments(package "" "NAME;LIB;DLL;INC" "" ${ARGN})
 
 	string(TOUPPER ${package} UPPER_PACKAGE)
 	if(CONAN_${UPPER_PACKAGE}_ROOT_RELEASE)
@@ -97,7 +97,9 @@ macro(__conan_import_one package type)
 					message(STATUS "__conan_import target ${package} [${package_NAME}]")
 		
 					set(${package_NAME}_INCLUDE_DIRS ${INC_DIRS})
-					
+					if(package_INC)
+						set(${package_NAME}_INCLUDE_DIRS ${package_INC})
+					endif()
 					if(CC_BC_WIN)
 						set(${package_NAME}_LIBRARIES_DEBUG "${LIB_DEBUG_DIRS}/${package_LIB}.lib")
 						set(${package_NAME}_LIBRARIES_RELEASE "${LIB_RELEASE_DIRS}/${package_LIB}.lib")
