@@ -76,7 +76,7 @@ macro(__conan_import package type)
 endmacro()
 
 macro(__conan_import_one package type)
-	cmake_parse_arguments(package "" "NAME;LIB;DLL;INC" "" ${ARGN})
+	cmake_parse_arguments(package "" "NAME;LIB;DLL;INC;INTERFACE_DEF" "" ${ARGN})
 
 	string(TOUPPER ${package} UPPER_PACKAGE)
 	if(CONAN_${UPPER_PACKAGE}_ROOT_RELEASE)
@@ -124,6 +124,9 @@ macro(__conan_import_one package type)
 					endif()
 					
 					__test_import(${package_NAME} ${type})
+					if(package_INTERFACE_DEF)
+						set_property(TARGET ${package_NAME} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${package_INTERFACE_DEF})
+					endif()
 				endif()
 			endif()
 		else()
