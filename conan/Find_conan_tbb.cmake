@@ -1,3 +1,3 @@
 # tbb target
 
-__conan_import(tbb lib)
+__conan_import(tbb dll)
