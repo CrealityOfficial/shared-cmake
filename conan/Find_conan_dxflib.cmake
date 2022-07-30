@@ -1,3 +1,3 @@
 # dxflib target
 
-__conan_import(dxflib lib)
+__conan_import(dxflib dll)
