@@ -127,12 +127,9 @@ if(NOT TARGET boost_thread)
 endif()
 
 if(NOT TARGET boost_nowide)						   
-	__search_target_components(boost_nowide
-							INC boost/thread.hpp
-							DLIB boost_nowide
-							LIB boost_nowide
-							PRE boost
-							)
+	set(boost_nowide_INCLUDE_DIRS ${BOOST_INCLUDE_DIRS}/)
+	set(boost_nowide_LIBRARIES_DEBUG ${BOOST_INSTALL_ROOT}/lib/libboost_nowide.a)
+	set(boost_nowide_LIBRARIES_RELEASE ${BOOST_INSTALL_ROOT}/lib/libboost_nowide.a)
 	__test_import(boost_nowide dll)
 endif()
 	
