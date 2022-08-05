@@ -20,3 +20,4 @@ __search_target_components(AliyunOss
 						   )
 
 __test_import(AliyunOss dll)
+add_library(aliyunoss ALIAS AliyunOss)
