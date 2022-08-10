@@ -1,1 +1,1 @@
-__conan_import(advancedocking dll COMPONENT qtadvanceddocking)
+__conan_import(qtadvanceddocking dll COMPONENT qtadvanceddocking)
