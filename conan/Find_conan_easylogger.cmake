@@ -1,1 +1,1 @@
-__conan_import(easylogger dll)
+__conan_import(easylogger lib)
