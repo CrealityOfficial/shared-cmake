@@ -1,3 +1,3 @@
 # png target
 
-__conan_import(png dll)
+__conan_import(png lib)
