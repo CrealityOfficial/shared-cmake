@@ -24,7 +24,29 @@ macro(__build_unit_testing_from_directory directory)
 												)
 		add_dependencies(__unit_testing ${RELATIVE_TEST})
 	endforeach()
+endmacro()
 
+macro(__python_build_unit_test_from_directory directory)
+	set(SHELL ${CMAKE_SOURCE_DIR}/cmake/ci/shell/run_unit_test_from_directory.py)
+	set(EXECUTE_DIR $<$<CONFIG:Release>:${BIN_OUTPUT_DIR}/Release/>$<$<CONFIG:Debug>:${BIN_OUTPUT_DIR}/Debug/>)
+	
+	add_custom_target(__unit_testing ALL 
+		COMMAND ${SHELL} ${EXECUTE_DIR}
+		COMMENT "execute all unit testing.")
+	__set_target_folder(__unit_testing unit_test)
+	#message(STATUS "global_cache_libs : ${global_cache_libs}")
+	#message(STATUS "ALL_TESTS : ${ALL_TESTS}")
+	
+	file(GLOB  ALL_TESTS "${directory}/*.cpp")
+	foreach(TEST ${ALL_TESTS})
+		STRING(REGEX REPLACE ".+/(.+)\\..*" "\\1" RELATIVE_TEST ${TEST})
+		#message(STATUS "build unit testing : ${RELATIVE_TEST}")
+		__add_real_target(${RELATIVE_TEST} exe SOURCE ${TEST}
+												LIB ${global_cache_libs}
+												FOLDER unit_test
+												)
+		add_dependencies(__unit_testing ${RELATIVE_TEST})
+	endforeach()
 endmacro()
 
 macro(__enable_unit_testing)
@@ -36,8 +58,10 @@ macro(__enable_unit_testing)
 		if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unitTesting/)
 			#add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/unitTesting/)
 			__build_unit_testing_from_directory(${CMAKE_CURRENT_SOURCE_DIR}/unitTesting/)
+		elseif(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/unit_test/)
+			__python_build_unit_test_from_directory(${CMAKE_CURRENT_SOURCE_DIR}/unit_test/)
 		else()
-			message(FATAL_ERROR "CC_UNIT_TESTING is enabled, but ${CMAKE_CURRENT_SOURCE_DIR}/unitTesting/ not exists!")
+			message(FATAL_ERROR "CC_UNIT_TESTING is enabled, but ${CMAKE_CURRENT_SOURCE_DIR}/unitTesting/ or ${CMAKE_CURRENT_SOURCE_DIR}/unit_test/ not exists!")
 		endif()
 	endif()
 endmacro()
