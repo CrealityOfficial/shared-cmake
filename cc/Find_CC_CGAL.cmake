@@ -118,3 +118,6 @@ __cc_cgal_include(Bounding_volumes)
 __cc_cgal_include(Optimisation_basic)
 __cc_cgal_include(Principal_component_analysis_LGPL)
 __cc_cgal_include(CGAL_Core)
+
+#Root 
+__cc_cgal_include(CGAL/Root)
