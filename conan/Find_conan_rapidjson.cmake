@@ -1,6 +1,1 @@
-# rapidjson target
-
-if(CONAN_RAPIDJSON_ROOT_RELEASE)
-	set(RAPIDJSON_INCLUDE_DIRS "${CONAN_RAPIDJSON_ROOT_RELEASE}/include/")
-	message(STATUS " RapidJson RAPIDJSON_INCLUDE_DIRS ${RAPIDJSON_INCLUDE_DIRS}")
-endif()
+__conan_set_include(rapidjson)

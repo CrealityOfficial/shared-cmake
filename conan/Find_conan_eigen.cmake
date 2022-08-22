@@ -1,4 +1,1 @@
-if(CONAN_EIGEN_ROOT_RELEASE)
-	set(EIGEN_INCLUDE_DIRS "${CONAN_EIGEN_ROOT_RELEASE}/include/")
-	message(STATUS "eigen EIGEN_INCLUDE_DIRS ${EIGEN_INCLUDE_DIRS}")
-endif()
+__conan_set_include(eigen)
