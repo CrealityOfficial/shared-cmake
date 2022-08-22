@@ -96,6 +96,17 @@ macro(__conan_import package type)
 	endif()
 endmacro()
 
+macro(__conan_set_include package)
+	string(TOUPPER ${package} UPPER_PACKAGE)
+	
+	set(${UPPER_PACKAGE}_INCLUDE_DIRS ${CONAN_INCLUDE_DIRS_${UPPER_PACKAGE}_DEBUG})
+	if(CONAN_INCLUDE_DIRS_${UPPER_PACKAGE}_RELEASE)
+		set(${UPPER_PACKAGE}_INCLUDE_DIRS ${CONAN_INCLUDE_DIRS_${UPPER_PACKAGE}_RELEASE})
+	endif()
+
+	message(STATUS "${package} ${UPPER_PACKAGE}_INCLUDE_DIRS ${${UPPER_PACKAGE}_INCLUDE_DIRS}")
+endmacro()
+
 macro(__conan_import_one package type)
 	cmake_parse_arguments(package "" "NAME;LIB;DLL;INC;INTERFACE_DEF" "" ${ARGN})
 
