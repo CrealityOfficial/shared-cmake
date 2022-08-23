@@ -11,6 +11,6 @@ cd build
 conan install -g cmake_multi -s build_type=Debug ../../
 conan install -g cmake_multi -s build_type=Release ../../
 
-cmake ../../ -DCMAKE_USE_CONAN=ON
+cmake ../../ -DCMAKE_USE_CONAN=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./install/
 			 
 cd ../../
