@@ -33,6 +33,12 @@
     <lib name="msimplify" version="0.0.3">
         <sublib name="trimesh2" version="0.0.3"/>
     </lib>
+    <lib name="mmesh" version="0.0.2">
+        <sublib name="trimesh2" version="0.0.2"/>
+    </lib>
+    <lib name="mmesh" version="0.0.3">
+        <sublib name="trimesh2" version="0.0.3"/>
+    </lib>
     <lib name="lib3mf" version="0.0.2">
         <sublib name="zip" version="0.0.2"/>
     </lib>
