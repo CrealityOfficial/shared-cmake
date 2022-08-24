@@ -12,7 +12,6 @@
     <lib name="tinyxml/0.0.2"/>
     <lib name="osg/0.0.2"/>
     <lib name="qtadvanceddocking/0.0.2"/>
-    <lib name="qhullwrapper/0.0.2"/>
     <lib name="eigen/0.0.2"/>
     <lib name="cgal/0.0.2"/>
     <lib name="zip/0.0.2">
@@ -27,6 +26,12 @@
     <lib name="libxml/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
+    <lib name="qhullwrapper/0.0.2">
+	    <sublib name="trimesh2/0.0.2"/>
+	</lib>
+    <lib name="qhullwrapper/0.0.3">
+        <sublib name="trimesh2/0.0.3"/>
+	</lib>
     <lib name="msimplify/0.0.2">
         <sublib name="trimesh2/0.0.2"/>
     </lib>
