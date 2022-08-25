@@ -15,6 +15,23 @@
     <lib name="qtadvanceddocking/0.0.2"/>
     <lib name="eigen/0.0.2"/>
     <lib name="cgal/0.0.2"/>
+	<lib name="stb/0.0.2"/>
+	<lib name="rapidjson/0.0.2"/>
+	<lib name="qrlib/0.0.2"/>
+	<lib name="tbb/0.0.2"/>
+	<lib name="qrlib/0.0.2"/>
+	<lib name="clipper3r/0.0.2"/>
+	<lib name="qhull/0.0.2"/>
+	<lib name="openssl/0.0.2"/>
+	<lib name="curl/0.0.2"/>
+	<lib name="freetype/0.0.2"/>
+	<lib name="nlopt/0.0.2"/>
+    <lib name="enchase/0.0.2">
+        <sublib name="trimesh2/0.0.2"/>
+    </lib>
+    <lib name="enchase/0.0.3">
+        <sublib name="trimesh2/0.0.3"/>
+    </lib>
     <lib name="zip/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
@@ -47,6 +64,16 @@
     </lib>
     <lib name="lib3mf/0.0.2">
         <sublib name="zip/0.0.2"/>
+    </lib>
+    <lib name="libnest2d/0.0.2">
+        <sublib name="tbb/0.0.2"/>
+		<sublib name="clipper3r/0.0.2"/>
+		<sublib name="nlopt/0.0.2"/>
+		<sublib name="boost/0.0.2"/>
+    </lib>
+    <lib name="nestplacer/0.0.2">
+        <sublib name="libnest2d/0.0.2"/>
+		<sublib name="trimesh2/0.0.2"/>
     </lib>
     <lib name="colladadom/0.0.2">
         <sublib name="minizip/0.0.2"/>
