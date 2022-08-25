@@ -12,6 +12,66 @@ def toDotID(name, version):
 def toDotName(name, version):
     n = name + "." + version
     return n     
+
+def create_base_libs_from_xml(base_graph_file):
+    tree = ET.parse(base_graph_file)
+    root = tree.getroot()
+    
+    libs = root.findall("lib")
+    subs = {}
+    for lib in libs:
+        sublibs = lib.findall("sublib")
+        subss = []
+        for sub in sublibs:
+            subss.append(sub.attrib["name"])
+        
+        subs[lib.attrib["name"]] = subss
+    return subs
+    
+def create_libs_from_txt(graph_file):
+    file = open(graph_file, 'r')
+    
+    libs = []
+    contents = file.readlines()
+    for content in contents:
+        libs.append(content.rstrip())
+    file.close()
+    return libs
+
+def collect_unique_libs(subs, libs):
+    result = []
+    
+    first = libs;
+    second = []
+    while len(first) > 0:
+        for value in first:
+            if value not in result:
+                result.append(value)
+                nex = subs[value]
+                for nvalue in  nex:
+                    if nvalue not in second:
+                        second.append(nvalue)
+            
+        first = second
+        second = []
+    
+    return result 
+    
+def write_conan_file(conanfile, libs, channel):
+    file = open(conanfile, "w")
+    file.write('[requires]\n')
+    for lib in libs:
+        file.write(lib + '@' + channel)
+        file.write('\n')
+    file.close()     
+    
+def create_conan_file_from_graph(base_graph_file, graph_file, conanfile, channel):
+    subs = create_base_libs_from_xml(base_graph_file)
+    libs = create_libs_from_txt(graph_file)
+    uniques = collect_unique_libs(subs, libs)
+    
+    print('create_conan_file_from_graph -> ' + str(uniques))
+    write_conan_file(conanfile, uniques, channel)
     
 def create_sub_libs():
     name = ''
