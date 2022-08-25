@@ -26,12 +26,6 @@
     <lib name="libxml/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
-    <lib name="qhullwrapper/0.0.2">
-	    <sublib name="trimesh2/0.0.2"/>
-	</lib>
-    <lib name="qhullwrapper/0.0.3">
-        <sublib name="trimesh2/0.0.3"/>
-	</lib>
     <lib name="msimplify/0.0.2">
         <sublib name="trimesh2/0.0.2"/>
     </lib>
