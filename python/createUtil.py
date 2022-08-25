@@ -196,3 +196,26 @@ def invoke_conan_build(params, subLibs = []):
         os.system(debug_cmd)
         release_cmd = 'conan create --profile ' + profile + ' -s build_type=Release ' + temp_directory + ' ' + user_channel        
         os.system(release_cmd)
+        
+def build_recipes(recipes, channel, xml_file):
+    for recipe in recipes:
+        seg = recipe.split('/')
+        if len(seg) == 2:
+            name = seg[0]
+            version = seg[1]
+            params['name'] = name
+            params['version'] = version
+            
+            ref = recipe + '@' + channel
+            cmd = 'conan upload ' + ref + ' -r artifactory --all -c'          
+            
+            subs = create_sub_libs_from_xml(xml_file, name, version)
+            invoke_conan_build(params, subs)
+            os.system(cmd)
+            
+def get_channel_from_type(name):
+    channel = 'desktop/win'
+    if name == 'linux':
+        channel = 'desktop/linux'
+    
+    return channel
