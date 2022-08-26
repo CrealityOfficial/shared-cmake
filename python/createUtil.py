@@ -196,8 +196,14 @@ def invoke_conan_build(params, subLibs = []):
         os.system(debug_cmd)
         release_cmd = 'conan create --profile ' + profile + ' -s build_type=Release ' + temp_directory + ' ' + user_channel        
         os.system(release_cmd)
-        
-def build_recipes(recipes, channel, xml_file):
+      
+def invoke_conan_upload(recipe, channel):
+    ref = recipe + '@' + channel
+    cmd = 'conan upload ' + ref + ' -r artifactory --all -c'
+    os.system(cmd)
+            
+def build_recipes(recipes, channel, profile, xml_file):
+    params = {'name':'xxx', 'version':'0.0.0', 'profile':'linux', 'channel':'desktop/linux'}
     for recipe in recipes:
         seg = recipe.split('/')
         if len(seg) == 2:
@@ -205,13 +211,12 @@ def build_recipes(recipes, channel, xml_file):
             version = seg[1]
             params['name'] = name
             params['version'] = version
-            
-            ref = recipe + '@' + channel
-            cmd = 'conan upload ' + ref + ' -r artifactory --all -c'          
+            params['profile'] = profile
+            params['channel'] = channel
             
             subs = create_sub_libs_from_xml(xml_file, name, version)
             invoke_conan_build(params, subs)
-            os.system(cmd)
+            invoke_conan_upload(recipe, channel)
             
 def get_channel_from_type(name):
     channel = 'desktop/win'
@@ -219,3 +224,10 @@ def get_channel_from_type(name):
         channel = 'desktop/linux'
     
     return channel
+    
+def get_profile_from_type(name):
+    profile = 'win'
+    if name == 'linux':
+        profile = 'linux'
+    
+    return profile    

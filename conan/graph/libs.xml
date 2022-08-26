@@ -23,9 +23,26 @@
 	<lib name="clipper3r/0.0.2"/>
 	<lib name="qhull/0.0.2"/>
 	<lib name="openssl/0.0.2"/>
-	<lib name="curl/0.0.2"/>
 	<lib name="freetype/0.0.2"/>
 	<lib name="nlopt/0.0.2"/>
+	<lib name="dxflib/0.0.2"/>
+	<lib name="openjpeg/0.0.2"/>
+	<lib name="potrace/0.0.2"/>
+	<lib name="ffmpeglib/0.0.2"/>
+	<lib name="curl/0.0.2">
+        <sublib name="openssl/0.0.2"/>
+    </lib>
+	<lib name="librevenge/0.0.2">
+        <sublib name="boost/0.0.2"/>
+		<sublib name="zlib/0.0.2"/>
+    </lib>
+	<lib name="freeimage/0.0.2">
+        <sublib name="openjpeg/0.0.2"/>
+		<sublib name="png/0.0.2"/>
+    </lib>
+    <lib name="aliyunoss/0.0.2">
+		<sublib name="curl/0.0.2"/>
+    </lib>
     <lib name="enchase/0.0.2">
         <sublib name="trimesh2/0.0.2"/>
     </lib>
@@ -65,6 +82,12 @@
     <lib name="lib3mf/0.0.2">
         <sublib name="zip/0.0.2"/>
     </lib>
+    <lib name="quazip/0.0.2">
+        <sublib name="zip/0.0.2"/>
+    </lib>
+    <lib name="qcxffmpeg/0.0.2">
+        <sublib name="ffmpeglib/0.0.2"/>
+    </lib>
     <lib name="libnest2d/0.0.2">
         <sublib name="tbb/0.0.2"/>
 		<sublib name="clipper3r/0.0.2"/>
@@ -88,5 +111,40 @@
         <sublib name="zip/0.0.2"/>
 		<sublib name="lib3mf/0.0.2"/>
 		<sublib name="stringutil/0.0.2"/>		
+    </lib>
+    <lib name="cmesh/0.0.2">
+        <sublib name="mmesh/0.0.2"/>
+		<sublib name="eigen/0.0.2"/>
+        <sublib name="cgal/0.0.2"/>
+        <sublib name="clipper/0.0.2"/>
+		<sublib name="boost/0.0.2"/>
+		<sublib name="tbb/0.0.2"/>
+    </lib>
+    <lib name="fmesh/0.0.2">
+        <sublib name="cmesh/0.0.2"/>
+		<sublib name="freetype/0.0.2"/>
+        <sublib name="dxflib/0.0.2"/>
+        <sublib name="librevenge/0.0.2"/>
+		<sublib name="rapidjson/0.0.2"/>
+		<sublib name="tinyxml/0.0.2"/>
+    </lib>
+    <lib name="ovdbutil/0.0.2">
+        <sublib name="mmesh/0.0.2"/>
+		<sublib name="zlib/0.0.2"/>
+        <sublib name="boost/0.0.2"/>
+        <sublib name="tbb/0.0.2"/>
+    </lib>
+    <lib name="imageproc/0.0.2">
+        <sublib name="freeimage/0.0.2"/>
+		<sublib name="potrace/0.0.2"/>
+        <sublib name="trimesh2/0.0.2"/>
+    </lib>
+    <lib name="imageproc/0.0.3">
+        <sublib name="freeimage/0.0.2"/>
+		<sublib name="potrace/0.0.2"/>
+        <sublib name="trimesh2/0.0.3"/>
+    </lib>
+    <lib name="splitslot/0.0.2">
+        <sublib name="fmesh/0.0.2"/>
     </lib>
 </workspace>
