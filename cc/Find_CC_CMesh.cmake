@@ -2,8 +2,8 @@
 # cmesh target
 
 if(NOT TARGET cmesh)
-	__cc_find(gmp)
-	__cc_find(mpfr)
+	__cc_find(Gmp)
+	__cc_find(Mpfr)
 
 	__search_target_components(cmesh
 							INC cmesh/poly/roof.h
