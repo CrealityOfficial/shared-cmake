@@ -15,6 +15,23 @@ macro(__enable_cxx17)
 	endif()
 endmacro()
 
+macro(__enable_cxx14)
+	if ( CMAKE_SYSTEM_NAME MATCHES "Windows" )
+		set( my_std_pre "/std:" )
+	else()
+		set( my_std_pre "-std=" )
+	endif()
+
+	set( basic_cxx14 "c++14" )
+	set( str_cxx14 "${my_std_pre}${basic_cxx14}" )
+	
+	include( CheckCXXCompilerFlag )
+	check_cxx_compiler_flag( "${str_cxx14}" _cpp_14_flag_supported )
+	if ( _cpp_14_flag_supported )
+		set( CMAKE_CXX_STANDARD 14 )
+	endif()
+endmacro()
+
 macro(__enable_mem_leak_check)
 	if(WIN32)
 		add_definitions(-DCXX_MEMORY_LEAK_CHECK)
