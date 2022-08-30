@@ -29,6 +29,7 @@
 	<lib name="openjpeg/0.0.2"/>
 	<lib name="potrace/0.0.2"/>
 	<lib name="ffmpeglib/0.0.2"/>
+	<lib name="glew/0.0.2"/>
 	<lib name="curl/0.0.2">
         <sublib name="openssl/0.0.2"/>
     </lib>
