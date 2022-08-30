@@ -18,6 +18,12 @@ if(NOT TARGET gmp)
 	    set(gmp_LIBRARIES_RELEASE "${GMP_INSTALL_ROOT}/lib/Release/libgmp.a")
 	    set(gmp_LOC_DEBUG "${GMP_INSTALL_ROOT}/bin/Debug/libgmp.a")
 	    set(gmp_LOC_RELEASE "${GMP_INSTALL_ROOT}/bin/Release/libgmp.a")	
+	elseif(CC_BC_MAC)
+          set(gmp_LIBRARIES_DEBUG "${GMP_INSTALL_ROOT}/lib/Release/libgmp.dylib")
+            set(gmp_LIBRARIES_RELEASE "${GMP_INSTALL_ROOT}/lib/Release/libgmp.dylib")
+            set(gmp_LOC_DEBUG "${GMP_INSTALL_ROOT}/bin/Release/libgmp.dylib")
+            set(gmp_LOC_RELEASE "${GMP_INSTALL_ROOT}/bin/Release/libgmp.dylib")
+
 	endif()
 
 	__test_import(gmp dll)
