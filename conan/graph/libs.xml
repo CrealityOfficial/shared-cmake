@@ -30,7 +30,9 @@
 	<lib name="potrace/0.0.2"/>
 	<lib name="ffmpeglib/0.0.2"/>
 	<lib name="glew/0.0.2"/>
-	<lib name="openexr/0.0.1"/>
+	<lib name="openexr/0.0.1">
+		<sublib name="zlib/0.0.2"/>
+	</lib>
 	<lib name="curl/0.0.2">
         <sublib name="openssl/0.0.2"/>
     </lib>
