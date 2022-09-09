@@ -33,6 +33,9 @@
 	<lib name="openexr/0.0.1">
 		<sublib name="zlib/0.0.2"/>
 	</lib>
+	<lib name="openimageio/0.0.1">
+		<sublib name="openexr/0.0.1"/>
+	</lib>
 	<lib name="curl/0.0.2">
         <sublib name="openssl/0.0.2"/>
     </lib>
