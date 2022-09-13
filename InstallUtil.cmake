@@ -87,6 +87,11 @@ function(__install_files source dest)
 	INSTALL(FILES ${source} DESTINATION ${dest})
 endfunction()
 
+function(__conan_install_files dest)
+	cmake_parse_arguments(file "" "" "SOURCE" ${ARGN})
+	INSTALL(FILES ${file_SOURCE} DESTINATION include/${dest}/)
+endfunction()
+
 function(__install_inc_files dest)
 	cmake_parse_arguments(file "" "" "SOURCE" ${ARGN})
 	if(file_SOURCE)
