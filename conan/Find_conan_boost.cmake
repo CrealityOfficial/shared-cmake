@@ -3,7 +3,7 @@ if(CONAN_BOOST_ROOT_RELEASE)
 	set(BOOST_INCLUDE_DIRS ${CONAN_BOOST_ROOT_RELEASE}/include/)
 endif()
 
-set(BOOST_COMPONETS boost_file_system
+set(BOOST_COMPONETS boost_filesystem
 					boost_iostreams
 					boost_nowide
 					boost_regex
