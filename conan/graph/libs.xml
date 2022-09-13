@@ -162,6 +162,9 @@
         <sublib name="boost/0.0.2"/>
         <sublib name="tbb/0.0.2"/>
     </lib>
+    <lib name="tiff/0.0.2">
+		<sublib name="zlib/0.0.2"/>
+    </lib>
     <lib name="imageproc/0.0.2">
         <sublib name="freeimage/0.0.2"/>
 		<sublib name="potrace/0.0.2"/>
