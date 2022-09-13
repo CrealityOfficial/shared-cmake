@@ -22,3 +22,7 @@ else()
 endif()
 
 __conan_import(boost lib COMPONENT boost_test)
+
+foreach(_component ${BOOST_COMPONETS} boost_test)
+	__add_target_interface(${_component} DEF BOOST_ALL_NO_LIB)
+endforeach()
