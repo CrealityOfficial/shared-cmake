@@ -104,6 +104,9 @@ macro(__conan_set_include package)
 		set(${UPPER_PACKAGE}_INCLUDE_DIRS ${CONAN_INCLUDE_DIRS_${UPPER_PACKAGE}_RELEASE})
 	endif()
 
+	add_library(${package} INTERFACE)
+	set_property(TARGET ${package} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${${UPPER_PACKAGE}_INCLUDE_DIRS})
+  
 	message(STATUS "${package} ${UPPER_PACKAGE}_INCLUDE_DIRS ${${UPPER_PACKAGE}_INCLUDE_DIRS}")
 endmacro()
 
