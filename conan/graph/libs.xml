@@ -34,6 +34,7 @@
 	<lib name="glew/0.0.2"/>
 	<lib name="cereal/0.0.1"/>
 	<lib name="cxsparse/0.0.1"/>
+	<lib name="easyexif/0.0.1"/>
 	<lib name="ceres/0.0.1">
 		<sublib name="eigen/0.0.2"/>
 		<sublib name="cxsparse/0.0.1"/>
