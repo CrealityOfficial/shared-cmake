@@ -33,7 +33,7 @@ macro(__conan_import package type)
 	else()
 		set(Components ${package})
 	endif()
-	#message(STATUS "__conan_import ${package} [${Components}]")
+	message(STATUS "__conan_import ${package} [${Components}]")
 	
 	string(TOUPPER ${package} UPPER_PACKAGE)
 	if(CONAN_${UPPER_PACKAGE}_ROOT_RELEASE OR CONAN_${UPPER_PACKAGE}_ROOT_DEBUG)
