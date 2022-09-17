@@ -97,6 +97,7 @@ macro(__conan_import package type)
 endmacro()
 
 macro(__conan_set_include package)
+	cmake_parse_arguments(package "" "INTERFACE_DEF" "" ${ARGN})
 	string(TOUPPER ${package} UPPER_PACKAGE)
 	
 	set(${UPPER_PACKAGE}_INCLUDE_DIRS ${CONAN_INCLUDE_DIRS_${UPPER_PACKAGE}_DEBUG})
@@ -107,6 +108,9 @@ macro(__conan_set_include package)
 	add_library(${package} INTERFACE)
 	set_property(TARGET ${package} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${${UPPER_PACKAGE}_INCLUDE_DIRS})
   
+  	if(package_INTERFACE_DEF)
+		set_property(TARGET ${package} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${package_INTERFACE_DEF})
+	endif()
 	message(STATUS "${package} ${UPPER_PACKAGE}_INCLUDE_DIRS ${${UPPER_PACKAGE}_INCLUDE_DIRS}")
 endmacro()
 
