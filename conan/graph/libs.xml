@@ -42,6 +42,7 @@
 	<lib name="fast/0.0.1"/>
 	<lib name="flann/0.0.1"/>
 	<lib name="lemon/0.0.1"/>
+	<lib name="glfw/0.0.1"/>
 	<lib name="ceres/0.0.1">
 		<sublib name="eigen/0.0.2"/>
 		<sublib name="cxsparse/0.0.1"/>
