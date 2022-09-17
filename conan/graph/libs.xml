@@ -39,6 +39,7 @@
 	<lib name="cppunitlite/0.0.1"/>
 	<lib name="jpeg/0.0.1"/>
 	<lib name="osiclp/0.0.1"/>
+	<lib name="fast/0.0.1"/>
 	<lib name="ceres/0.0.1">
 		<sublib name="eigen/0.0.2"/>
 		<sublib name="cxsparse/0.0.1"/>
