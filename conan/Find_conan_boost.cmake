@@ -5,6 +5,8 @@ endif()
 
 set(BOOST_COMPONETS boost_filesystem
 					boost_iostreams
+					boost_program_options
+					boost_serialization
 					boost_nowide
 					boost_regex
 					boost_system
@@ -23,6 +25,8 @@ endif()
 
 __conan_import(boost lib COMPONENT boost_test)
 
-foreach(_component ${BOOST_COMPONETS} boost_test)
-	__add_target_interface(${_component} DEF BOOST_ALL_NO_LIB)
+foreach(_component ${BOOST_COMPONETS} )
+	__add_target_interface(${_component} DEF BOOST_ALL_NO_LIB BOOST_ALL_DYN_LINK)
 endforeach()
+
+__add_target_interface(boost_test DEF BOOST_ALL_NO_LIB)
