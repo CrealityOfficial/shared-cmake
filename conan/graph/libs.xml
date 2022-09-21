@@ -43,6 +43,7 @@
 	<lib name="flann/0.0.1"/>
 	<lib name="lemon/0.0.1"/>
 	<lib name="glfw/0.0.1"/>
+	<lib name="glfw/0.0.2"/>
 	<lib name="opencv/0.0.1"/>
 	<lib name="vcg/0.0.1"/>
 	<lib name="zstd/0.0.1"/>
