@@ -27,7 +27,7 @@ macro(__add_boost_target module)
 										DEF ${DEFS}
 										INTERFACE ${INTERFACES}
 										)
-		set_property(TARGET ${btarget} PROPERTY INTERFACE_COMPILE_DEFINITIONS BOOST_ALL_DYN_LINK)
+		set_property(TARGET ${btarget} PROPERTY INTERFACE_COMPILE_DEFINITIONS BOOST_ALL_DYN_LINK BOOST_ALL_NO_LIB)
 	endif()
 endmacro()
 
