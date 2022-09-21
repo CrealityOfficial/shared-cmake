@@ -46,6 +46,7 @@
 	<lib name="glfw/0.0.1"/>
 	<lib name="opencv/0.0.1"/>
 	<lib name="vcg/0.0.1"/>
+	<lib name="zstd/0.0.1"/>
 	<lib name="ceres/0.0.1">
 		<sublib name="eigen/0.0.2"/>
 		<sublib name="cxsparse/0.0.1"/>
