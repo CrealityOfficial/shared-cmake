@@ -55,6 +55,10 @@
 		<sublib name="eigen/0.0.2"/>
 		<sublib name="cxsparse/0.0.1"/>
 	</lib>
+	<lib name="ceres/1.0.0">
+		<sublib name="eigen/1.0.0"/>
+		<sublib name="cxsparse/0.0.1"/>
+	</lib>
 	<lib name="openexr/0.0.1">
 		<sublib name="zlib/0.0.2"/>
 	</lib>
