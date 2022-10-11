@@ -36,7 +36,16 @@ def win_conan_cmake(working_path):
     cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
         
     os.system(cmd)
-    
+
+def jwin_conan_cmake(working_path):
+    project_path = working_path + '/build/'
+    mkdirs(project_path)
+      
+    print("[cmake/ci] project path :" + project_path)
+    conan_install(working_path, project_path, 'desktop/win')
+    cmd = 'cmake -G "Ninja" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path   
+    os.system(cmd)    
+
 def conan_cmake():
     argv = sys.argv[1:]
     working_path = working_path_from_ci(sys.path[0])
@@ -54,6 +63,8 @@ def conan_cmake():
     
     if work_type == 'win':
         win_conan_cmake(working_path)
+    if work_type == 'jwin':
+        jwin_conan_cmake(working_path)
     elif work_type == 'linux':
         pass
     else:
