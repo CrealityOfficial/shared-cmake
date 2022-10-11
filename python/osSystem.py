@@ -37,6 +37,16 @@ def win_conan_cmake(working_path):
         
     os.system(cmd)
 
+def linux_conan_cmake(working_path):
+    project_path = working_path + '/build/'
+    mkdirs(project_path)
+      
+    print("[cmake/ci] project path :" + project_path)
+    conan_install(working_path, project_path, 'desktop/linux')
+    cmd = 'cmake -G "Ninja" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
+        
+    os.system(cmd)
+
 def jwin_conan_cmake(working_path):
     project_path = working_path + '/build/'
     mkdirs(project_path)
@@ -66,7 +76,7 @@ def conan_cmake():
     if work_type == 'jwin':
         jwin_conan_cmake(working_path)
     elif work_type == 'linux':
-        pass
+        linux_conan_cmake(working_path)
     else:
         pass
 

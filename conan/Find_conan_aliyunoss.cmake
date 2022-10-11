@@ -1,1 +1,1 @@
-__conan_import(aliyunoss dll)
+__conan_import(AliyunOss dll)
