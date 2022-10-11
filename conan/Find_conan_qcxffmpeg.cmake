@@ -1,2 +1,2 @@
-__conan_find(fmpeg)
+__conan_find(ffmpeglib)
 __conan_import(qcxffmpeg dll)
