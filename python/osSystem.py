@@ -22,9 +22,9 @@ def conan_install(working_path, project_path, channel):
     createUtil.create_conan_file_from_graph(base_graph_file, graph_file, conan_file, channel)
     
     if os.path.exists(conan_file):
-        cmd = 'conan install -g cmake_multi -s build_type=Debug -if ' + project_path + ' ' + project_path
+        cmd = 'conan install -g cmake_multi -s build_type=Debug --build=missing -if ' + project_path + ' ' + project_path
         os.system(cmd)
-        cmd = 'conan install -g cmake_multi -s build_type=Release -if ' + project_path + ' ' + project_path
+        cmd = 'conan install -g cmake_multi -s build_type=Release --build=missing -if ' + project_path + ' ' + project_path
         os.system(cmd)    
     
 def win_conan_cmake(working_path):
@@ -36,7 +36,14 @@ def win_conan_cmake(working_path):
     cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
         
     os.system(cmd)
-
+def emcc_conan_cmake(working_path):
+    project_path = working_path + '/emcc-build/build/'
+    mkdirs(project_path)
+      
+    print("[cmake/ci] project path :" + project_path)
+    conan_install(working_path, project_path, 'desktop/emscripten')
+    cmd = 'cmake -G "MinGW Makefiles" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
+    
 def linux_conan_cmake(working_path):
     project_path = working_path + '/build/'
     mkdirs(project_path)
@@ -77,6 +84,8 @@ def conan_cmake():
         jwin_conan_cmake(working_path)
     elif work_type == 'linux':
         linux_conan_cmake(working_path)
+    elif work_type == 'emcc':
+        emcc_conan_cmake(working_path)
     else:
         pass
 
