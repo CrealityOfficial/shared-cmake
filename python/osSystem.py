@@ -42,7 +42,8 @@ def emcc_conan_cmake(working_path):
       
     print("[cmake/ci] project path :" + project_path)
     conan_install(working_path, project_path, 'desktop/emscripten')
-    cmd = 'cmake -G "MinGW Makefiles" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
+    cmd = 'emcmake cmake -G "MinGW Makefiles" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
+    os.system(cmd)
     
 def linux_conan_cmake(working_path):
     project_path = working_path + '/build/'
