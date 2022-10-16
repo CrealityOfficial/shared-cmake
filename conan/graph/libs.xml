@@ -47,6 +47,7 @@
 	<lib name="opencv/0.0.1"/>
 	<lib name="vcg/0.0.1"/>
 	<lib name="zstd/0.0.1"/>
+	<lib name="ppcs/0.0.1"/>
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
