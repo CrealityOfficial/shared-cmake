@@ -165,6 +165,17 @@
 		<sublib name="stringutil/0.0.2"/>
 		<sublib name="imageproc/0.0.3"/>
     </lib>
+	<lib name="thumbnail/0.0.2">
+        <sublib name="png/0.0.2"/>
+		<sublib name="cxbin/0.0.2"/>
+		<sublib name="mmesh/0.0.2"/>
+		<sublib name="glm/0.0.1"/>
+    </lib>
+	<lib name="thumbnail/0.0.3">
+        <sublib name="png/0.0.2"/>
+		<sublib name="cxbin/0.0.3"/>
+		<sublib name="glm/0.0.1"/>
+    </lib>
     <lib name="cmesh/0.0.2">
         <sublib name="mmesh/0.0.2"/>
 		<sublib name="eigen/0.0.2"/>
