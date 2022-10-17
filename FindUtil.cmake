@@ -24,7 +24,7 @@ macro(__assert_parameter param)
 endmacro()
 
 macro(__find_gtest)
-	__cc_find(Gtest)
+	__cc_find(gtest)
 	__assert_target(gtest)
 	__assert_target(gtest_main)
 endmacro()

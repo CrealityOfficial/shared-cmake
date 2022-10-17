@@ -2,5 +2,5 @@
 if(CC_BC_EMCC)
 __conan_import(colladadom lib COMPONENT colladadom colladadom141)
 else()
-__conan_import(colladadom dll)
+__conan_import(colladadom dll COMPONENT colladadom colladadom141)
 endif()
