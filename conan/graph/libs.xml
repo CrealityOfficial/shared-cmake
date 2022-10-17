@@ -51,6 +51,7 @@
 	<lib name="sensors_analytics_sdk/0.0.1"/>
 	<lib name="gmp/0.0.1"/>
 	<lib name="mpfr/0.0.1"/>
+    <lib name="gtest/1.8.1"/>
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
