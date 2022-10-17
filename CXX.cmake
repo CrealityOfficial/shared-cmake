@@ -61,6 +61,7 @@ endif()
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cmake)
+include_directories(${CMAKE_BINARY_DIR})
 
 if(WIN32)
 	set_property(DIRECTORY APPEND PROPERTY COMPILE_DEFINITIONS
