@@ -55,6 +55,7 @@
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
+        <sublib name="icu/64.2"/> 
 	</lib>
 	<lib name="ceres/0.0.1">
 		<sublib name="eigen/0.0.2"/>

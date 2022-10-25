@@ -117,10 +117,11 @@ def create_sub_libs_from_xml(xml_file, name, version):
         for value in first:
             if value not in result:
                 result.append(value)
-                nex = subs[value]
-                for nvalue in  nex:
-                    if nvalue not in second:
-                        second.append(nvalue)
+                if value in subs:
+                    nex = subs[value]
+                    for nvalue in  nex:
+                        if nvalue not in second:
+                            second.append(nvalue)
             
         first = second
         second = []
@@ -222,12 +223,14 @@ def get_channel_from_type(name):
     channel = 'desktop/win'
     if name == 'linux':
         channel = 'desktop/linux'
-    
+    if name == 'mac':
+        channel = 'desktop/mac'    
     return channel
     
 def get_profile_from_type(name):
     profile = 'win'
     if name == 'linux':
         profile = 'linux'
-    
+    if name == 'mac':
+        profile = 'mac'
     return profile    
