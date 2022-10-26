@@ -59,7 +59,7 @@ def mac_conan_cmake(working_path):
     mkdirs(project_path)
       
     print("[cmake/ci] mac project path :" + project_path)
-    conan_install(working_path, project_path, 'desktop/linux')
+    conan_install(working_path, project_path, 'desktop/mac')
     cmd = 'cmake -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
         
     os.system(cmd)
