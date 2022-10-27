@@ -198,8 +198,8 @@
         <sublib name="clipper/0.0.2"/>
 		<sublib name="boost/0.0.2"/>
 		<sublib name="tbb/0.0.2"/>
-		<sublib name="gmp/0.0.1"/>
-		<sublib name="mpfr/0.0.1"/>
+		<sublib name="gmp/6.1.2"/>
+		<sublib name="mpfr/4.0.2"/>
     </lib>
     <lib name="fmesh/0.0.2">
         <sublib name="cmesh/0.0.2"/>
