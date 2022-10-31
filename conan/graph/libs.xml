@@ -48,7 +48,6 @@
 	<lib name="vcg/0.0.1"/>
 	<lib name="zstd/0.0.1"/>
 	<lib name="ppcs/0.0.1"/>
-	<lib name="sensors_analytics_sdk/0.0.1"/>
 	<lib name="gmp/0.0.1"/>
 	<lib name="mpfr/0.0.1"/>
     <lib name="gtest/1.8.1"/>
@@ -77,6 +76,10 @@
 	<lib name="curl/0.0.2">
         <sublib name="openssl/0.0.2"/>
     </lib>
+	<lib name="sensors_analytics_sdk/0.0.1">
+		<sublib name="curl/0.0.2"/>
+		<sublib name="zlib/0.0.2"/>
+	</lib>
 	<lib name="librevenge/0.0.2">
         <sublib name="boost/0.0.2"/>
 		<sublib name="zlib/0.0.2"/>
