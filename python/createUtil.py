@@ -47,10 +47,11 @@ def collect_unique_libs(subs, libs):
         for value in first:
             if value not in result:
                 result.append(value)
-                nex = subs[value]
-                for nvalue in  nex:
-                    if nvalue not in second:
-                        second.append(nvalue)
+                if value in subs:
+                    nex = subs[value]
+                    for nvalue in  nex:
+                        if nvalue not in second:
+                            second.append(nvalue)
             
         first = second
         second = []
