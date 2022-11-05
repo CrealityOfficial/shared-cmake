@@ -45,7 +45,7 @@ def emcc_conan_cmake(working_path):
     os.system(cmd)
     
 def linux_conan_cmake(working_path):
-    project_path = working_path + '/build/'
+    project_path = working_path + '/linux-build/build/'
     mkdirs(project_path)
       
     print("[cmake/ci] project path :" + project_path)
