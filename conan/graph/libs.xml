@@ -91,6 +91,9 @@
     <lib name="aliyunoss/0.0.2">
 		<sublib name="curl/0.0.2"/>
     </lib>
+	<lib name="osswrapper/0.0.2">
+		<sublib name="aliyunoss/0.0.2"/>
+    </lib>
     <lib name="enchase/0.0.2">
         <sublib name="trimesh2/0.0.2"/>
     </lib>
