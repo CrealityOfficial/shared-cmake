@@ -50,6 +50,8 @@
 	<lib name="ppcs/0.0.1"/>
 	<lib name="gmp/0.0.1"/>
 	<lib name="mpfr/0.0.1"/>
+	<lib name="gmp/6.1.2"/>
+	<lib name="mpfr/4.0.2"/>
     <lib name="gtest/1.8.1"/>
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
@@ -204,8 +206,8 @@
         <sublib name="clipper/0.0.2"/>
 		<sublib name="boost/0.0.2"/>
 		<sublib name="tbb/0.0.2"/>
-		<sublib name="gmp/6.1.2"/>
-		<sublib name="mpfr/4.0.2"/>
+		<sublib name="gmp/0.0.1"/>
+		<sublib name="mpfr/0.0.1"/>
     </lib>
     <lib name="fmesh/0.0.2">
         <sublib name="cmesh/0.0.2"/>
