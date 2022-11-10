@@ -106,4 +106,4 @@ function(__bind_usr_binary)
 	__write_usr_binary_git_hash(USR_BINARY_HASH)
 endfunction()
 
-__bind_usr_binary()
+#__bind_usr_binary()
