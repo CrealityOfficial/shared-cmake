@@ -260,4 +260,8 @@
     <lib name="gcodeparase/0.0.3">
         <sublib name="trimesh2/0.0.3"/>
     </lib>
+    <lib name="cpr/0.0.1">
+        <sublib name="curl/0.0.2"/>
+		<sublib name="zlib/0.0.2"/>
+    </lib>
 </workspace>
