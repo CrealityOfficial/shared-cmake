@@ -53,6 +53,7 @@
 	<lib name="gmp/6.1.2"/>
 	<lib name="mpfr/4.0.2"/>
     <lib name="gtest/1.8.1"/>
+	<lib name="libqrencode/0.0.1"/>
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
