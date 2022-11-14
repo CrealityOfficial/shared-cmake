@@ -20,9 +20,9 @@ def conan_install(working_path, project_path, channel):
     createUtil.create_conan_file_from_graph(base_graph_file, graph_file, conan_file, channel)
     
     if os.path.exists(conan_file):
-        cmd = 'conan install -g cmake_multi -s build_type=Debug --build=missing -if ' + project_path + ' ' + project_path
+        cmd = 'conan install  -g cmake_multi -s build_type=Debug --build=missing -if ' + project_path + ' ' + project_path + '--update'
         os.system(cmd)
-        cmd = 'conan install -g cmake_multi -s build_type=Release --build=missing -if ' + project_path + ' ' + project_path
+        cmd = 'conan install -g cmake_multi -s build_type=Release --build=missing -if ' + project_path + ' ' + project_path + '--update'
         os.system(cmd)    
     
 def win_conan_cmake(working_path):
