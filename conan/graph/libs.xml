@@ -19,6 +19,7 @@
     <lib name="cgal/0.0.2"/>
 	<lib name="stb/0.0.2"/>
 	<lib name="rapidjson/0.0.2"/>
+	<lib name="rapidjson/1.0.0"/>
 	<lib name="qrlib/0.0.2"/>
 	<lib name="tbb/0.0.2"/>
 	<lib name="qrlib/0.0.2"/>
