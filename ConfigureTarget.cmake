@@ -761,6 +761,24 @@ macro(__remap_target_debug_2_release targets)
 	endforeach()
 endmacro()
 
+macro(__add_include_interface package)
+	cmake_parse_arguments(package "" "INTERFACE;INTERFACE_DEF" "" ${ARGN})
+
+	set(INCS ${CMAKE_CURRENT_SOURCE_DIR})
+	if(package_INTERFACE)
+		set(INCS ${package_INTERFACE})
+	endif()
+	
+	if(NOT TARGET ${package})
+		add_library(${package} INTERFACE)
+		set_property(TARGET ${package} PROPERTY INTERFACE_INCLUDE_DIRECTORIES ${INCS})
+		
+		if(package_INTERFACE_DEF)
+			set_property(TARGET ${package} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${package_INTERFACE_DEF})
+		endif()
+	endif()
+endmacro()
+
 function(__add_emcc_target target)
 	cmake_parse_arguments(target "DEBUG;WSAM_THREAD" "IDLS;IDLINCS" "CSOURCE;LIBRARIES;WSAM_ARGS;" ${ARGN})
 	set(LIBRARIES)

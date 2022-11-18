@@ -107,7 +107,7 @@ macro(__conan_import package type)
 endmacro()
 
 macro(__conan_set_include package)
-	cmake_parse_arguments(package "" "INTERFACE_DEF" "" ${ARGN})
+	cmake_parse_arguments(package "" "INTERFACE;INTERFACE_DEF" "" ${ARGN})
 	string(TOUPPER ${package} UPPER_PACKAGE)
 	
 	set(${UPPER_PACKAGE}_INCLUDE_DIRS ${CONAN_INCLUDE_DIRS_${UPPER_PACKAGE}_DEBUG})
