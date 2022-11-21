@@ -20,6 +20,9 @@ macro(__add_common_library target)
 	if(NOT INTERFACE_DEFS)
 		set(INTERFACE_DEFS)
 	endif()
+	if(NOT ILIBS)
+		set(ILIBS)
+	endif()
 	
 	string(TOUPPER ${target} UpperName)
 			
@@ -27,6 +30,7 @@ macro(__add_common_library target)
 		list(APPEND INTERFACE_DEFS USE_${UpperName}_STATIC)
 		__add_real_target(${target} lib SOURCE ${SRCS} 
 										LIB ${LIBS}
+										ILIB ${ILIBS}
 										INC ${INCS}
 										DEF ${DEFS}
 										INTERFACE ${INTERFACES}
@@ -39,6 +43,7 @@ macro(__add_common_library target)
 		list(APPEND INTERFACE_DEFS USE_${UpperName}_DLL)
 		__add_real_target(${target} dll SOURCE ${SRCS} 
 										LIB ${LIBS}
+										ILIB ${ILIBS}
 										INC ${INCS}
 										DEF ${DEFS}
 										INTERFACE ${INTERFACES}
