@@ -29,3 +29,5 @@ if(RAPIDJSON_INCLUDE_DIRS)
 else()
 	message(STATUS "Find RapidJson Failed")
 endif()
+
+__add_include_interface(rapidjson INTERFACE ${RAPIDJSON_INCLUDE_DIRS})
