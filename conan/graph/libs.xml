@@ -57,6 +57,7 @@
 	<lib name="libqrencode/0.0.1"/>
 	<lib name="polyclipping/0.0.1"/>
 	<lib name="expat/0.0.1"/>
+	<lib name="miniz/0.0.1"/>
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
