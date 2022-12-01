@@ -14,7 +14,7 @@ set(BOOST_COMPONETS boost_filesystem
 					)
 					
 if(CC_BC_WIN)
-	list(APPEND BOOST_COMPONETS boost_log)
+	list(APPEND BOOST_COMPONETS boost_log boost_locale)
 endif()
 
 if(BOOST_STATIC)
