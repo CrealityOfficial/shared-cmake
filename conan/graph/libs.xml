@@ -60,6 +60,7 @@
 	<lib name="miniz/0.0.1"/>
 	<lib name="glu-libtess/0.0.1"/>
 	<lib name="wx/0.0.1"/>
+	<lib name="minilzo/0.0.1"/>
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
