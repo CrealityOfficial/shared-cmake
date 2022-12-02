@@ -24,6 +24,9 @@
 	<lib name="tbb/0.0.2"/>
 	<lib name="qrlib/0.0.2"/>
 	<lib name="clipper3r/0.0.2"/>
+    <lib name="clipper3r/1.0.0">
+		<sublib name="eigen/0.0.2"/>
+	</lib>
 	<lib name="qhull/0.0.2"/>
 	<lib name="openssl/0.0.2"/>
 	<lib name="freetype/0.0.2"/>
