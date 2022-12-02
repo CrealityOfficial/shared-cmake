@@ -11,6 +11,7 @@ set(BOOST_COMPONETS boost_filesystem
 					boost_regex
 					boost_system
 					boost_thread
+					boost_chrono
 					)
 					
 if(CC_BC_WIN)
