@@ -67,6 +67,7 @@
 	<lib name="semver/0.0.1"/>
 	<lib name="nlohmann/0.0.1"/>
 	<lib name="hidapi/0.0.1"/>
+	<lib name="shiny/0.0.1"/>
     <lib name="boost/0.0.2">
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
