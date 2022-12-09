@@ -21,7 +21,7 @@ if [%4] == [] (
 )
 set APPNAME=%5
 if [%5] == [] (
-	set APPNAME="Piocreat Box"
+	set APPNAME="Creality Print"
 )
 set APP_VER=%1
 set APP_VER=%APP_VER:~1%
