@@ -51,6 +51,7 @@ echo %PATCH%
 echo %BUILD%
 echo %VERSION_EXTRA%
 echo %FACTORY_TYPE%
+echo %EXTRA_OPTION%
 rem Configure the application in the current directory
 
 set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
@@ -82,6 +83,7 @@ cmake ^
 	-DFACTORY_TYPE=%FACTORY_TYPE% ^
 	-DAPPNAME=%APPNAME% ^
 	-DSIGN_PACKAGE=%SIGN_PACKAGE% ^
+	%EXTRA_OPTION% ^
     ..\ || exit /b 2
 
 rem Build and install the application
