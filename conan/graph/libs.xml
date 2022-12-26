@@ -289,6 +289,9 @@
     <lib name="splitslot/0.0.3">
         <sublib name="fmesh/0.0.3"/>
     </lib>
+    <lib name="splitslot/0.0.4">
+        <sublib name="fmesh/0.0.4"/>
+    </lib>
     <lib name="gcodeparase/0.0.3">
         <sublib name="trimesh2/0.0.3"/>
     </lib>
