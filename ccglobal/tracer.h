@@ -35,17 +35,17 @@ namespace ccglobal
 			va_end(args);
 		}
 
-		void resetProgressScope(float start = 0, float end = 1)
+		void resetProgressScope(float start = 0.0f, float end = 1.0f)
 		{
 			m_start = start;
 			m_end = end;
 			progress(start);
 		}
 
-		void resetScope(float end = -1)
+		void resetScope(float end = -1.0f)
 		{
 			m_start = m_realValue;
-			if(end > 0)
+			if(end > 0.0f)
 				m_end = end;
 		}
 
@@ -66,8 +66,8 @@ namespace ccglobal
 		}
 
 	protected:
-		float m_start = 0;
-		float m_end = 1;
+		float m_start = 0.0f;
+		float m_end = 1.0f;
 		float m_realValue;
 	};
 
