@@ -39,7 +39,7 @@ namespace ccglobal
 		{
 			m_start = start;
 			m_end = end;
-			progress(start);
+			progress(0.0f);
 		}
 
 		void resetScope(float end = -1.0f)
