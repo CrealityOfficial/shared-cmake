@@ -3,6 +3,9 @@ import sys, getopt
 import tempfile
 import shutil
 import createUtil
+
+Global_Debug = False
+
 def mkdirs(path_dir):
     if not os.path.exists(path_dir):
         os.makedirs(path_dir)
@@ -30,8 +33,11 @@ def win_conan_cmake(working_path):
     mkdirs(project_path)
       
     print("[cmake/ci] project path :" + project_path)
+    debug_str = ""
+    if(Global_Debug == True):
+        debug_str = " -DCXX_VLD=ON"
     conan_install(working_path, project_path, 'desktop/win')
-    cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
+    cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path + debug_str
         
     os.system(cmd)
     
@@ -80,14 +86,18 @@ def conan_cmake():
     
     work_type = 'win'
     try:
-        opts, args = getopt.getopt(argv,"t:")
+        opts, args = getopt.getopt(argv, '-d-t:')
+        print("getopt.getopt -> :" + str(opts))
     except getopt.GetoptError:
         print("create.py -t <type>")
         sys.exit(2)
     for opt, arg in opts:
-        if opt in ("-t"):
+        if opt in ('-t'):
             work_type = arg
-    
+        if opt in ('-d'):
+            global Global_Debug
+            Global_Debug = True
+                
     if work_type == 'win':
         win_conan_cmake(working_path)
     if work_type == 'jwin':

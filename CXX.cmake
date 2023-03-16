@@ -80,7 +80,7 @@ endif()
 
 macro(__enable_vld)
 	if(WIN32)
-		message(STATUS "------------${CMAKE_SOURCE_DIR}")
+		message(STATUS "__enable_vld --------> : ${CMAKE_SOURCE_DIR}")
 		include_directories(${CMAKE_SOURCE_DIR}/cmake/vld)
 		link_directories(${CMAKE_SOURCE_DIR}/cmake/vld)
 		add_custom_target(__vld ALL COMMENT "memory leak check!")
