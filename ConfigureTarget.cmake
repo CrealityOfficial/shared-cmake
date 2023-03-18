@@ -583,6 +583,8 @@ macro(__import_target target type)
 			
 		if(${type} STREQUAL "dll")
 			add_library(${target} SHARED IMPORTED GLOBAL)
+		elseif(${type} STREQUAL "ndll")
+			add_library(${target} SHARED IMPORTED GLOBAL)
 		else()
 			add_library(${target} STATIC IMPORTED GLOBAL)
 		endif()
