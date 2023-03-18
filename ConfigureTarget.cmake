@@ -627,7 +627,7 @@ macro(__import_target target type)
 		
 		get_property(NOT_INSTALL_IMPORT GLOBAL PROPERTY GLOBAL_NOT_INSTALL_IMPORT)
 		message(STATUS "GLOBAL_NOT_INSTALL_IMPORT ---->[${NOT_INSTALL_IMPORT}]")
-		if((${type} STREQUAL "dll") AND NOT NOT_INSTALL_IMPORT)
+		if((${type} STREQUAL "dll" OR ${type} STREQUAL "ndll") AND NOT NOT_INSTALL_IMPORT)
 			__copy_find_targets(${target})
 		endif()
 	endif()
