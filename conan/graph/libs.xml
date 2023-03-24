@@ -181,6 +181,10 @@
         <sublib name="libnest2d/0.0.3"/>
 		<sublib name="trimesh2/0.0.3"/>
     </lib>
+    <lib name="muparser/0.0.1">
+    </lib>
+	<lib name="libprotobuf/0.0.1">
+    </lib>
     <lib name="nestplacer/0.0.5">
         <sublib name="libnest2d/0.0.3"/>
 		<sublib name="trimesh2/0.0.3"/>
