@@ -57,7 +57,7 @@ endmacro()
 macro(__add_target_interface target)
 	cmake_parse_arguments(package "" "DEF" "" ${ARGN})
 	
-	if(package_DEF)
+	if(package_DEF AND TARGET {target})
 		set_property(TARGET ${target} PROPERTY INTERFACE_COMPILE_DEFINITIONS ${package_DEF})
 	endif()
 endmacro()
