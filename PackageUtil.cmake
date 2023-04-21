@@ -132,8 +132,7 @@ macro(__win_package_without_sign)
 		message(STATUS "__win_package_without_sign ........... [${PROJECT_NAME} ${PROJECT_VERSION_MAJOR}]")
 	    add_custom_target(packaging ALL DEPENDS ${PROJECT_NAME} COMMENT "Packaging Projects...")
 
-		set(Package_Name "BBDENTAL")
-		set(CPACK_PACKAGE_NAME ${Package_Name})
+		set(CPACK_PACKAGE_NAME ${PROJECT_NAME})
 	
 		SET(CPACK_GENERATOR "NSIS")
 		SET(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
