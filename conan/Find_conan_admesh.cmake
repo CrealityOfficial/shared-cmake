@@ -2,4 +2,4 @@
 __cc_find(Eigen)
 __cc_find(Boost)
 
-__conan_import(admesh dll)
+__conan_import(admesh lib)
