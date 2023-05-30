@@ -2,6 +2,7 @@
 <workspace Version="1.0">
     <lib name="cencrypt/0.0.1"/>
     <lib name="glm/0.0.1"/>
+	<lib name="poly2tri/0.0.1"/>
 	<lib name="cxlog/0.0.2"/>
 	<lib name="trimesh2/0.0.0"/>
 	<lib name="trimesh2/0.0.2"/>
