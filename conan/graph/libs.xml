@@ -78,7 +78,7 @@
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="zstd/0.0.1"/>
 	</lib>
-    <lib name="Slice3rBase/0.0.2">
+    <lib name="Slice3rBase/0.0.1">
 		<sublib name="semver/0.0.1"/>
 		<sublib name="boost/0.0.2"/>
 		<sublib name="eigen/0.0.2"/>
