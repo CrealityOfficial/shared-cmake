@@ -11,7 +11,9 @@ def mkdirs(path_dir):
         os.makedirs(path_dir)
     
 def system(cmd):
+    print('cmake system : ' + cmd)
     os.system(cmd)
+    
 def working_path_from_ci(path):
     return path[0:-8]
     

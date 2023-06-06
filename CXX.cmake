@@ -178,3 +178,11 @@ macro(__enable_gprof)
 		SET(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -pg")
 	endif()
 endmacro()
+
+macro(__execute)
+	message(STATUS "__execute ${ARGV} :")
+	
+	execute_process(COMMAND ${ARGV}
+					OUTPUT_VARIABLE ret)
+	message(STATUS ${ret})
+endmacro()
