@@ -6,7 +6,7 @@ set(TCLTK_COMPONETS
 				tk)
 				
 if(TCLTK_STATIC)
-	__conan_import(tcltk lib COMPONENT ${OPENCASCADE_COMPONETS})
+	__conan_import(tcltk lib COMPONENT ${TCLTK_COMPONETS})
 else()
-	__conan_import(tcltk dll COMPONENT ${OPENCASCADE_COMPONETS})
+	__conan_import(tcltk dll COMPONENT ${TCLTK_COMPONETS})
 endif()
