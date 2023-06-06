@@ -87,6 +87,14 @@
 		<sublib name="tbb/0.0.2"/>
 		<sublib name="clipper2/0.0.1"/>
 	</lib>
+	<lib name="tcltk/0.0.1">
+		<sublib name="zlib/0.0.2"/>
+	</lib>
+    <lib name="opencascade/0.0.1">
+		<sublib name="tcltk/0.0.1"/>
+		<sublib name="freetype/0.0.2"/>
+		<sublib name="tbb/0.0.2"/>
+	</lib>
 	<lib name="ceres/0.0.1">
 		<sublib name="eigen/0.0.2"/>
 		<sublib name="cxsparse/0.0.1"/>
