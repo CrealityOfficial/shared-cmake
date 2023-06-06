@@ -5,7 +5,7 @@
 DOXYFILE_ENCODING      = UTF-8
 
 
-PROJECT_NAME           = "My Project"
+PROJECT_NAME           = "@CMAKE_DOXYGEN_NAME@"
 
 
 PROJECT_NUMBER         =
@@ -17,7 +17,7 @@ PROJECT_BRIEF          =
 PROJECT_LOGO           =
 
 
-OUTPUT_DIRECTORY       =
+OUTPUT_DIRECTORY       = "@CMAKE_DOXYGEN_OUTPUT_DIRECTORY@"
 
 
 CREATE_SUBDIRS         = NO
@@ -321,7 +321,7 @@ WARN_LOGFILE           =
 
 
 
-INPUT                  =
+INPUT                  = "@CMAKE_DOXYGEN_INPUT@"
 
 
 INPUT_ENCODING         = UTF-8
@@ -658,7 +658,7 @@ EXTRA_SEARCH_MAPPINGS  =
 
 
 
-GENERATE_LATEX         = YES
+GENERATE_LATEX         = NO
 
 
 LATEX_OUTPUT           = latex

@@ -71,8 +71,10 @@ macro(__build_info_header)
 	set(RELEASE_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Release/resources/")
 	
 	__get_main_git_hash(MAIN_GIT_HASH)
-	configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.prebuild
-               ${CMAKE_BINARY_DIR}/buildinfo.h)
+	if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.prebuild)
+		configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.prebuild
+				${CMAKE_BINARY_DIR}/buildinfo.h)
+	endif()
 endmacro()
 
 macro(__build_engine_info_header)
