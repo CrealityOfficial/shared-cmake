@@ -378,7 +378,7 @@ FILE_PATTERNS          = *.c \
                          *.ice
 
 
-RECURSIVE              = NO
+RECURSIVE              = YES
 
 
 EXCLUDE                =
