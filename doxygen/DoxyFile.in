@@ -161,11 +161,6 @@ LOOKUP_CACHE_SIZE      = 0
 
 NUM_PROC_THREADS       = 1
 
-
-TIMESTAMP              = NO
-
-
-
 EXTRACT_ALL            = NO
 
 
@@ -450,20 +445,6 @@ USE_HTAGS              = NO
 
 VERBATIM_HEADERS       = YES
 
-
-CLANG_ASSISTED_PARSING = NO
-
-
-CLANG_ADD_INC_PATHS    = YES
-
-
-CLANG_OPTIONS          =
-
-
-CLANG_DATABASE_PATH    =
-
-
-
 ALPHABETICAL_INDEX     = YES
 
 
@@ -553,10 +534,6 @@ BINARY_TOC             = NO
 
 
 TOC_EXPAND             = NO
-
-
-SITEMAP_URL            =
-
 
 GENERATE_QHP           = NO
 
