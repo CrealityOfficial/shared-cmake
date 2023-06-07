@@ -27,3 +27,9 @@ configure_file(${CMAKE_SOURCE_DIR}/DoxyFile.in
            ${DOXYGEN_OUT_PATH}/DoxyFile)
 		   
 __execute(doxygen ${DOXYGEN_OUT_PATH}/DoxyFile)
+
+set(USER_NAME cxsw@172.16.33.10)
+
+#ssh cxsw@172.16.33.10 "rm -rf /vagrant_data/www/shared/build/doxygen/${repository}/"
+#ssh cxsw@172.16.33.10 "mkdir -p /vagrant_data/www/shared/build/doxygen/${repository}/" 
+#scp -r  doxygen/html/ cxsw@172.16.33.10:/vagrant_data/www/shared/build/doxygen/${repository}/html/
