@@ -33,4 +33,4 @@ set(HTML_NET /vagrant_data/www/shared/build/doxygen/)
 
 __execute(ssh ${USER_NAME} "rm -rf ${HTML_NET}${CMAKE_DOXYGEN_NAME}/")
 __execute(ssh ${USER_NAME} "mkdir -p ${HTML_NET}${CMAKE_DOXYGEN_NAME}/")
-__execute(scp -r ${DOXYGEN_OUT_PATH}/html/ ${USER_NAME}${HTML_NET}${CMAKE_DOXYGEN_NAME}/html/)
+__execute(scp -r ${DOXYGEN_OUT_PATH}/html/ ${USER_NAME}:${HTML_NET}${CMAKE_DOXYGEN_NAME}/html/)
