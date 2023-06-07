@@ -39,7 +39,7 @@ def win_conan_cmake(working_path):
     if(Global_Debug == True):
         debug_str = " -DCXX_VLD=ON"
     conan_install(working_path, project_path, 'desktop/win')
-    cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path + debug_str
+    cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path + debug_str + ' -T host=x64 -A x64'
         
     os.system(cmd)
     
