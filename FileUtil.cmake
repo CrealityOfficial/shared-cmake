@@ -1,3 +1,5 @@
+include(BuildInfoUtil)
+
 macro(__source_recurse dir src)
 	file(GLOB_RECURSE _tmp_list ${dir}/*.h ${dir}/*.hpp ${dir}/*.cpp ${dir}/*.c ${dir}/*.inl)
 	set(${src} ${_tmp_list})
@@ -62,35 +64,6 @@ endmacro()
 
 macro(__add_all_directory)
 	__recursive_add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR})
-endmacro()
-
-macro(__build_info_header)
-	if(NOT APP_TYPE)
-		set(APP_TYPE 0)
-	endif()
-	if(NOT DUMPTOOL_OPTION_DUMP_FILE)
-		set(DUMPTOOL_OPTION_DUMP_FILE false)
-	endif()
-	if(NOT DUMPTOOL_OPTION_INFO_JSON)
-		set(DUMPTOOL_OPTION_INFO_JSON false)
-	endif()
-	if(NOT CXCLOUD_PLATFORM_INDEX)
-		set(CXCLOUD_PLATFORM_INDEX 0)
-	endif()
-	if(NOT CXCLOUD_COMPRESS_SLICE_FILE)
-		set(CXCLOUD_COMPRESS_SLICE_FILE false)
-	endif()
-
-	string(TIMESTAMP BUILD_TIME "%y_%m_%d_%H_%M")
-	set(BUILD_INFO_HEAD "${PROJECT_NAME}_${BUILD_TIME}")
-	set(DEBUG_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Debug/resources/")
-	set(RELEASE_RESOURCES_DIR "${BIN_OUTPUT_DIR}/Release/resources/")
-
-	__get_main_git_hash(MAIN_GIT_HASH)
-	if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.prebuild)
-		configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.prebuild
-				${CMAKE_BINARY_DIR}/buildinfo.h)
-	endif()
 endmacro()
 
 macro(__build_engine_info_header)
