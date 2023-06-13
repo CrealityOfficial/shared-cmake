@@ -19,7 +19,7 @@ set(global_all_targets)
 set(global_all_targets "" CACHE STRING INTERNAL FORCE)
 set(global_cache_libs "" CACHE STRING INTERNAL FORCE)
 
-set(MACOS_PREFIX "${PROJECT_NAME}.app/Contents")
+set(MACOS_PREFIX "${BUNDLE_NAME}.app/Contents")
 set(MACOS_INSTALL_RUNTIME_DIR "${MACOS_PREFIX}/MacOS")
 set(MACOS_INSTALL_CMAKE_DIR "${MACOS_PREFIX}/Resources")
 set(MACOS_INSTALL_PLUGIN_DIR "${MACOS_PREFIX}/PlugIns")
