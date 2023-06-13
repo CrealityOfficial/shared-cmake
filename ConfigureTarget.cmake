@@ -222,10 +222,10 @@ function(__add_real_target target type)
 		    set_target_properties(${target} PROPERTIES
 				MACOSX_BUNDLE TRUE
 			)
-			if(target_MAC_OUTPUTNAME)
-				message(STATUS "${target} set mac properties OUTPUT_NAME ${target_MAC_OUTPUTNAME}")
+			if(target_MAC_OUTPUT_NAME)
+				message(STATUS "${target} set mac properties OUTPUT_NAME ${target_MAC_OUTPUT_NAME}")
 				set_target_properties(${target} PROPERTIES
-						OUTPUT_NAME ${target_MAC_OUTPUTNAME}
+						OUTPUT_NAME ${target_MAC_OUTPUT_NAME}
 				)
 			endif()
 			if(target_MAC_GUI_IDENTIFIER)
