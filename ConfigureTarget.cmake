@@ -291,7 +291,7 @@ function(__add_real_target target type)
 								COMMAND ${CMAKE_COMMAND} -E copy "$<TARGET_FILE_DIR:${plugin}>/${targetName}" "$<TARGET_FILE_DIR:${target}>/../Resources/qml/${plugin}/"
 								)
 						if(CMAKE_BUILD_TYPE MATCHES "Release")
-	                       	install(CODE "execute_process(COMMAND codesign --force --options=runtime -s \"${OSX_CODESIGN_IDENTITY}\"  	\"\${CMAKE_INSTALL_PREFIX}/${target}.app/Contents/Resources/qml/${plugin}/${targetName}\")")
+	                       	install(CODE "execute_process(COMMAND codesign --force --options=runtime -s \"${OSX_CODESIGN_IDENTITY}\"  	\"\${CMAKE_INSTALL_PREFIX}/${BUNDLE_NAME}.app/Contents/Resources/qml/${plugin}/${targetName}\")")
 						endif()
 					elseif(CC_BC_LINUX)
 					        #add_custom_command(TARGET ${target} POST_BUILD
