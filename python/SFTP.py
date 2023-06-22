@@ -34,14 +34,13 @@ def createCXSFTP():
     return createSFTP(sftpIp, sftpPort, sftpUsername, sftpPassword)
 
 def putFile(sftp, localName, remoteName):
-    if(not os.path.isabs(remoteName)):
-        remoteName = sftpRemoteRoot + '/' + remoteName
+    remoteName = sftpRemoteRoot + '/' + remoteName
     
     createSftpDir(sftp, remoteName)
     sftp.put(localName, remoteName)
 
 def getFile(sftp, remoteName, localName):
-    if(not os.path.isabs(remoteName)):
-        remoteName = sftpRemoteRoot + '/' + remoteName
+    remoteName = sftpRemoteRoot + '/' + remoteName
         
+    print('sftp getFile -> ' + remoteName)
     sftp.get(remoteName, localName)

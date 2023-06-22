@@ -6,7 +6,12 @@ macro(__use_python)
 		message(STATUS "INCLUDES : ${Python3_INCLUDE_DIRS}")
 		message(STATUS "LIBRARIES : ${Python3_LIBRARIES}")
 		message(STATUS "LIBRARY DIRS : ${Python3_LIBRARY_DIRS}")
-		
+		message(STATUS "Python3_EXECUTABLE : ${Python3_EXECUTABLE}")
+		if(NOT Python3_EXECUTABLE)
+    		message(WARNING "Python3_EXECUTABLE Must be Set.")
+		endif()
+		set(PYTHON ${Python3_EXECUTABLE})
+
 		set(PYTHON_INCLUDE_DIR ${Python3_INCLUDE_DIRS})
 		set(PYTHON_INCLUDE_DIRS ${Python3_INCLUDE_DIRS})
 		list(GET Python3_LIBRARIES 1 Python3_LIBRARIES_RELEASE)

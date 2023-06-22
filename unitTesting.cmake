@@ -65,3 +65,28 @@ macro(__enable_unit_testing)
 		endif()
 	endif()
 endmacro()
+
+include(Python)
+__use_python()
+macro(__add_testing_target target)
+	message(STATUS "[cmake add testing] ---> ${target}")
+	__enable_gprof()
+
+	__add_real_target(${target} exe SOURCE ${SRCS}
+			LIB ${LIBS}
+			FOLDER testing
+			INC ${INCS}
+			DEF ${DEFS}
+		)
+
+	set(python_script ${CMAKE_SOURCE_DIR}/cmake/python/test/testing.py)
+	set(config_file ${CMAKE_SOURCE_DIR}/auto.json)
+
+	add_custom_command(TARGET ${target}
+                   POST_BUILD
+                   COMMAND ${PYTHON} ${python_script}
+				   					 "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target}"
+									 ${config_file}
+                   COMMENT "auto testing ------> ${target}"
+				   )
+endmacro()
