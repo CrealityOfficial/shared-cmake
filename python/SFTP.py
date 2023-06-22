@@ -1,4 +1,7 @@
 import paramiko
+import os
+
+sftpRemoteRoot = '/home/data/vagrantbox/sharedata/www/data/'
 
 def createSftpDir(sftp, remotePath):
     index = 0
@@ -31,8 +34,14 @@ def createCXSFTP():
     return createSFTP(sftpIp, sftpPort, sftpUsername, sftpPassword)
 
 def putFile(sftp, localName, remoteName):
+    if(not os.path.isabs(remoteName)):
+        remoteName = sftpRemoteRoot + '/' + remoteName
+    
     createSftpDir(sftp, remoteName)
     sftp.put(localName, remoteName)
 
 def getFile(sftp, remoteName, localName):
+    if(not os.path.isabs(remoteName)):
+        remoteName = sftpRemoteRoot + '/' + remoteName
+        
     sftp.get(remoteName, localName)
