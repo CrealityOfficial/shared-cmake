@@ -80,11 +80,12 @@ macro(__add_testing_target target)
 		)
 
 	set(python_script ${CMAKE_SOURCE_DIR}/cmake/python/test/testing.py)
-	set(config_file ${CMAKE_SOURCE_DIR}/auto.json)
+	set(config_file ${CMAKE_SOURCE_DIR}/${target}.json)
 
 	add_custom_command(TARGET ${target}
                    POST_BUILD
                    COMMAND ${PYTHON} ${python_script}
+				   					 ${target}
 				   					 "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target}"
 									 ${config_file}
                    COMMENT "auto testing ------> ${target}"

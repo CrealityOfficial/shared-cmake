@@ -14,9 +14,18 @@ if __name__ == '__main__':
     
     fileNames = PathUtil.dirFileNames(dir)
     
+    useIndex = False
+    if len(sys.argv) >= 4:
+         useIndex = True
+         
+    index = 1
     for fileName in fileNames:
         localFile = dir + '/' + fileName
         remoteFile = remoteSub + '/' + fileName
+        if useIndex == True:
+            remoteFile = remoteSub + '/' + str(index)
+            
         print(localFile + ' --> ' + remoteFile)
         
         SFTP.putFile(sftp, localFile, remoteFile)
+        index = index + 1
