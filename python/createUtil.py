@@ -139,10 +139,11 @@ def create_param_from_argv():
     version = ''
     profile = 'default'
     user_channel = '_/_'
+    location = ""
     try:
-        opts, args = getopt.getopt(argv,"n:v:p:")
+        opts, args = getopt.getopt(argv,"n:v:p:l:")
     except getopt.GetoptError:
-        print("create.py -n <name> -v <version> -p <profile>")
+        print("create.py -n <name> -v <version> -p <profile> -l <location>")
         sys.exit(2)
     for opt, arg in opts:
         if opt in ("-n"):
@@ -151,8 +152,10 @@ def create_param_from_argv():
             version = arg
         elif opt in ("-p"):
             profile = arg
-    
-    params = {'name':name, 'version':version, 'profile':profile, 'channel':user_channel}
+        elif opt in ("-l"):
+            location = arg
+            
+    params = {'name':name, 'version':version, 'profile':profile, 'channel':user_channel, 'location':location}
     return params
     
 def invoke_conan_build(params, subLibs = []):
@@ -198,7 +201,42 @@ def invoke_conan_build(params, subLibs = []):
         os.system(debug_cmd)
         release_cmd = 'conan create --profile ' + profile + ' -s build_type=Release ' + temp_directory + ' ' + user_channel        
         os.system(release_cmd)
-      
+
+def invoke_conan_build_data(params):
+    print("[conan DEBUG] params : " + str(params))
+    
+    directory = sys.path[0]
+    name = params['name']
+    profile = params['profile']
+    version = params['version']
+    user_channel = params['channel']
+    
+    with tempfile.TemporaryDirectory() as temp_directory:
+        print("[conan DEBUG] created temporary directory ", temp_directory)
+        print("[conan DEBUG] temp directory exist ", os.path.exists(temp_directory))
+        
+        create_script_src = directory + "/scripts/conanfile-data.py"
+        cmake_script_src = directory + "/scripts/CMakeLists-data.txt"
+        meta_data_src = directory + "/recipes/data/conandata.yml";
+        shutil.copy2(create_script_src, temp_directory + '/conanfile.py')
+        shutil.copy2(meta_data_src, temp_directory)
+        shutil.copy2(cmake_script_src, temp_directory + '/CMakeLists.txt')
+        
+        meta_data_dest = temp_directory + "/conandata.yml"
+        meta_file = open(meta_data_dest, "a")
+        meta_file.write("version: " + "\"" + version + "\"\n")
+        meta_file.write("name: " + "\"" + name + "\"\n")
+        meta_file.write("channel: " + "\"" + user_channel + "\"")
+        meta_file.close()
+        cmake_script_dest = temp_directory + "/CMakeLists.txt"
+        cmake_file = open(cmake_script_dest, "a")
+        cmake_file.write("install(DIRECTORY \"" + params['location'] + "\" DESTINATION . PATTERN \"*.*\")")
+        cmake_file.close()       
+        
+        os.system("pause")
+        release_cmd = 'conan create --profile ' + profile + ' -s build_type=Release ' + temp_directory + ' ' + user_channel        
+        os.system(release_cmd)
+        
 def invoke_conan_upload(recipe, channel):
     ref = recipe + '@' + channel
     cmd = 'conan upload ' + ref + ' -r artifactory --all -c'

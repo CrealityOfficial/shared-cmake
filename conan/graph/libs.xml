@@ -342,4 +342,5 @@
         <sublib name="curl/0.0.2"/>
 		<sublib name="zlib/0.0.2"/>
     </lib>
+	<lib name="data-polygon/0.0.1"/>
 </workspace>
