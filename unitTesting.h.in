@@ -1,0 +1,10 @@
+#ifndef ${BUILD_INFO_HEAD}
+#define ${BUILD_INFO_HEAD}
+
+#ifdef _DEBUG
+#define DATA_ROOT "@DATA_DEBUG@"
+#else
+#define DATA_ROOT "@DATA_RELEASE@"
+#endif
+
+#endif // ${BUILD_INFO_HEAD}

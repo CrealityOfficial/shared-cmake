@@ -106,6 +106,12 @@ macro(__conan_import package type)
 	endif()
 endmacro()
 
+macro(__conan_find_data package)
+	string(TOUPPER ${package} UPPER_PACKAGE)
+	set(DATA_DEBUG ${CONAN_${UPPER_PACKAGE}_ROOT_DEBUG})
+	set(DATA_RELEASE ${CONAN_${UPPER_PACKAGE}_ROOT_RELEASE})
+endmacro()
+
 macro(__conan_set_include package)
 	cmake_parse_arguments(package "" "INTERFACE;INTERFACE_DEF" "" ${ARGN})
 	string(TOUPPER ${package} UPPER_PACKAGE)

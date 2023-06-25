@@ -79,15 +79,18 @@ macro(__add_testing_target target)
 			DEF ${DEFS}
 		)
 
-	set(python_script ${CMAKE_SOURCE_DIR}/cmake/python/test/testing.py)
-	set(config_file ${CMAKE_SOURCE_DIR}/${target}.json)
+	set(python_script ${CMAKE_SOURCE_DIR}/cmake/python/test/unitTesting.py)
 
+	if(EXISTS ${CMAKE_SOURCE_DIR}/cmake/unitTesting.h.in)
+		set(BUILD_INFO_HEAD "${target}")
+		configure_file(${CMAKE_SOURCE_DIR}/cmake/unitTesting.h.in
+				${CMAKE_CURRENT_BINARY_DIR}/${target}_data.h)
+	endif()
+	
 	add_custom_command(TARGET ${target}
                    POST_BUILD
                    COMMAND ${PYTHON} ${python_script}
-				   					 ${target}
 				   					 "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${target}"
-									 ${config_file}
                    COMMENT "auto testing ------> ${target}"
 				   )
 endmacro()
