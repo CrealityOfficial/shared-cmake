@@ -233,7 +233,9 @@ def invoke_conan_build_data(params):
         cmake_file.write("install(DIRECTORY \"" + params['location'] + "\" DESTINATION . PATTERN \"*.*\")")
         cmake_file.close()       
         
-        os.system("pause")
+        #os.system("pause")
+        debug_cmd = 'conan create --profile ' + profile + ' -s build_type=Debug ' + temp_directory + ' ' + user_channel
+        os.system(debug_cmd)
         release_cmd = 'conan create --profile ' + profile + ' -s build_type=Release ' + temp_directory + ' ' + user_channel        
         os.system(release_cmd)
         
