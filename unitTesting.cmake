@@ -72,8 +72,9 @@ macro(__add_testing_target target)
 	message(STATUS "[cmake add testing] ---> ${target}")
 	__enable_gprof()
 
+	__assert_target(system_support)
 	__add_real_target(${target} exe SOURCE ${SRCS}
-			LIB ${LIBS}
+			LIB ${LIBS} system_support
 			FOLDER testing
 			INC ${INCS}
 			DEF ${DEFS}

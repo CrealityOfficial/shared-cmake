@@ -15,25 +15,19 @@ print('testing : ' + exe_file, flush=True)
 cmd = exe_file
 osSystem.system(cmd)
 
+local_path, local_file_name = os.path.split(exe_file)
+
 import os
+import pandas
 import matplotlib.pyplot as plt
 
-#f = open(r'vertex_duplication.csv','r')
-#data = list(f)
-#print(data)
-#f.close()
-#v0 = []
-#v1 = []
-#for d in data:
-#	v0.append(d.split()[0])
-#	v1.append(d.split()[1])
-#
-#print(v0)
-#print(v1)
-#
-#plt.plot(v0)
-#plt.plot(v1)
-#
-#
-#plt.savefig("vertex_duplication.png")
-#plt.show()
+for file in os.listdir(local_path):
+    complete_name = os.path.join(local_path, file)
+    if os.path.isfile(complete_name) and file.endswith('csv'):
+        result = pandas.read_csv(complete_name)
+
+        for row in range(result.shape[0]): 
+            plt.plot(list(result.iloc[row][1:result.shape[1]]))
+        
+        plt.savefig(local_path + '/' + file + '.png')
+        plt.show()

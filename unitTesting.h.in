@@ -3,8 +3,10 @@
 
 #ifdef _DEBUG
 #define DATA_ROOT "@DATA_DEBUG@"
+#define BINARY_ROOT "@BIN_OUTPUT_DIR@/Debug/"
 #else
 #define DATA_ROOT "@DATA_RELEASE@"
+#define BINARY_ROOT "@BIN_OUTPUT_DIR@/Release/"
 #endif
 
 #endif // ${BUILD_INFO_HEAD}
