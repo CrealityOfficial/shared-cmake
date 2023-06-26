@@ -37,7 +37,7 @@ macro(__sub_build_info_end_group group_name)
   __sub_build_info_line()
 endmacro()
 
-function(__configure_build_info_header)
+macro(__configure_build_info_header)
 	set(__SUB_BUILD_INFO_DEFINE "")
 	foreach(dir ${ARGV})
     set(__SUB_BUILD_INFO_DIR ${CMAKE_SOURCE_DIR}/${dir})
@@ -64,7 +64,7 @@ function(__configure_build_info_header)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.in
                    ${CMAKE_BINARY_DIR}/buildinfo.h)
   endif()
-endfunction()
+endmacro()
 
 macro(__build_info_header)
 	if(NOT APP_TYPE)
