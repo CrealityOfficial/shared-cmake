@@ -1,6 +1,6 @@
 macro(__use_python)
 	find_package(Python3 COMPONENTS Interpreter Development)
-		
+
 	if(Python3_FOUND AND Python3_Development_FOUND)
 		message(STATUS "Find Python3 ${Python3_VERSION}")
 		message(STATUS "INCLUDES : ${Python3_INCLUDE_DIRS}")
@@ -14,7 +14,7 @@ macro(__use_python)
 
 		set(PYTHON_INCLUDE_DIR ${Python3_INCLUDE_DIRS})
 		set(PYTHON_INCLUDE_DIRS ${Python3_INCLUDE_DIRS})
-		list(GET Python3_LIBRARIES 1 Python3_LIBRARIES_RELEASE)
+		list(GET Python3_LIBRARIES 0 Python3_LIBRARIES_RELEASE)
 		list(LENGTH Python3_LIBRARIES LIB_LEN)
 		set(Python3_LIBRARIES_DEBUG ${Python3_LIBRARIES_RELEASE})
 		if(${LIB_LEN} GREATER 3)
@@ -39,6 +39,6 @@ macro(__copy_python_pyc)
 		COMMAND ${CMAKE_COMMAND} -E make_directory "${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
 		COMMAND ${CMAKE_COMMAND} -E copy_directory "${PYTHON_ROOT}/PYC/"
 			"${BIN_OUTPUT_DIR}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>"
-		)	
+		)
 
 endmacro()
