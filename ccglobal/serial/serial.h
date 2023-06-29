@@ -53,7 +53,7 @@ void loadVectorT(std::fstream& in, std::vector<T>& vecs)
 }
 
 template<class T>
-void saveVectorT(std::fstream& out, std::vector<T>& vecs)
+void saveVectorT(std::fstream& out, const std::vector<T>& vecs)
 {
 	int num = (int)vecs.size();
 	saveT(out, num);
