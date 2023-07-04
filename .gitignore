@@ -8,3 +8,4 @@
 /win32-build/
 /conan-temp/
 __pycache__/
+*.pyc
