@@ -59,6 +59,8 @@ if(NOT WIN32)
     #	link_directories("/usr/local/lib/")
 endif()
 
+__enable_cxx14()
+
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 include_directories(${CMAKE_BINARY_DIR})
