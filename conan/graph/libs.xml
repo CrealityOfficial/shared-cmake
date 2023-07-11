@@ -148,6 +148,9 @@
     <lib name="enchase/0.0.3">
         <sublib name="trimesh2/0.0.3"/>
     </lib>
+    <lib name="poissonRecon/0.0.1">
+        <sublib name="trimesh2/0.0.3"/>
+    </lib>
     <lib name="zip/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
