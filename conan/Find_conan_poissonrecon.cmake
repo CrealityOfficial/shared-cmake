@@ -2,4 +2,4 @@
 __cc_find(Trimesh)
 
 
-__conan_import(poissonRecon lib)
+__conan_import(poissonRecon dll)
