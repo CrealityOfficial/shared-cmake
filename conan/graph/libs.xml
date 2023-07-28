@@ -18,6 +18,7 @@
     <lib name="qtadvanceddocking/0.0.2"/>
     <lib name="eigen/0.0.2"/>
 	<lib name="eigen/1.0.0"/>
+	<lib name="range/0.0.1"/>
 	<lib name="tsl/0.0.1"/>
 	<lib name="fmt/0.0.1"/>
     <lib name="cgal/0.0.2">
