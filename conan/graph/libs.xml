@@ -236,6 +236,10 @@
         <sublib name="libnest2d/0.0.3"/>
 		<sublib name="trimesh2/0.0.3"/>
     </lib>
+	<lib name="nestplacer/0.0.6">
+        <sublib name="libnest2d/0.0.3"/>
+		<sublib name="trimesh2/0.0.3"/>
+    </lib>
     <lib name="colladadom/0.0.2">
         <sublib name="minizip/0.0.2"/>
 		<sublib name="libxml/0.0.2"/>
