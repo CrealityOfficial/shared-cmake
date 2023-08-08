@@ -1,0 +1,10 @@
+# qtuser target
+
+set(QTUSER_COMPONETS qtuser_core
+					 qtuser_3d
+					 qtuser_quick
+					 qtuser_qml
+					)
+
+__conan_import(qtuser dll COMPONENT ${QTUSER_COMPONETS})
+
