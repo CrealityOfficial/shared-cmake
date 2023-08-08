@@ -197,9 +197,10 @@
     <lib name="quazip/0.0.2">
         <sublib name="zip/0.0.2"/>
     </lib>
-	<lib name="qtuser/1.0.">
+	<lib name="qtuser/1.0.0">
         <sublib name="quazip/0.0.2"/>
 		<sublib name="zlib/0.0.2"/>
+		<sublib name="glew/0.0.2"/>
     </lib>
     <lib name="qcxffmpeg/0.0.2">
         <sublib name="ffmpeglib/0.0.2"/>
