@@ -27,4 +27,14 @@
 #define PROFILE_GET_ROOT_DATA()			ShinyGetEmptyData()
 #endif
 
+#if CC_USE_SYSTEM_PROFILER
+#include "system_support/profile/simpleprofiler.h"
+#define SYSTEM_RESET() system_support::SimpleProfiler::instance().reset()
+#define SYSTEM_TICK(x) system_support::SimpleProfiler::instance().tick(x)
+#define SYSTEM_FLUSH_COLUMN(x) system_support::SimpleProfiler::instance().flushColumn(x)
+#else
+#define SYSTEM_TICK(x) (void)0
+#define SYSTEM_RESET() (void)0
+#define SYSTEM_FLUSH_COLUMN(x) (void)0
+#endif
 #endif // __CC_GLOBAL_SHINY__
