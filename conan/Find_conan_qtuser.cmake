@@ -6,5 +6,6 @@ set(QTUSER_COMPONETS qtuser_core
 					 qtuser_qml
 					)
 
+__enable_qt5()
 __conan_import(qtuser dll COMPONENT ${QTUSER_COMPONETS})
 

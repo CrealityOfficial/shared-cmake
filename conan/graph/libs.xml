@@ -202,6 +202,13 @@
 		<sublib name="zlib/0.0.2"/>
 		<sublib name="glew/0.0.2"/>
     </lib>
+	<lib name="cxcloud/0.0.1">
+        <sublib name="qtuser/1.0.0"/>
+		<sublib name="boost/0.0.2"/>
+		<sublib name="libqrencode/0.0.1"/>
+		<sublib name="osswrapper/0.0.2"/>
+		<sublib name="cpr/0.0.1"/>
+    </lib>	
     <lib name="qcxffmpeg/0.0.2">
         <sublib name="ffmpeglib/0.0.2"/>
     </lib>

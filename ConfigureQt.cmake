@@ -1,15 +1,17 @@
 SET(CMAKE_PREFIX_PATH $ENV{QT5_DIR})
 
 macro(__enable_qt5)
-	set(CMAKE_AUTOMOC ON)
-	set(CMAKE_AUTORCC ON)
-
-	find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Multimedia Concurrent OpenGL WebSockets LinguistTools Svg)
+	if(NOT TARGET Qt5::Core)
+		set(CMAKE_AUTOMOC ON)
+		set(CMAKE_AUTORCC ON)
 	
-	if(TARGET Qt5::Core)
-		include(qml)
-		set(QT5_ENABLED 1)
-		set(QT_VERSION_MAJOR 5)
+		find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Multimedia Concurrent OpenGL WebSockets LinguistTools Svg)
+		
+		if(TARGET Qt5::Core)
+			include(qml)
+			set(QT5_ENABLED 1)
+			set(QT_VERSION_MAJOR 5)
+		endif()
 	endif()
 endmacro()
 
