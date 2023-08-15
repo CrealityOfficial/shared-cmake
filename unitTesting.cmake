@@ -95,3 +95,20 @@ macro(__add_testing_target target)
                    COMMENT "auto testing ------> ${target}"
 				   )
 endmacro()
+
+macro(__add_unit_test target data)
+	__conan_find_data(${data})
+	
+	if(EXISTS ${CMAKE_SOURCE_DIR}/cmake/unitTesting.h.in)
+		set(BUILD_INFO_HEAD "${target}")
+		configure_file(${CMAKE_SOURCE_DIR}/cmake/unitTesting.h.in
+				${CMAKE_CURRENT_BINARY_DIR}/${target}_data.h)
+	endif()
+	
+	__add_real_target(${target} exe SOURCE ${SRCS}
+			LIB ${LIBS}
+			FOLDER unitTesting
+			INC ${INCS}
+			DEF ${DEFS}
+		)
+endmacro()
