@@ -208,6 +208,7 @@
 		<sublib name="libqrencode/0.0.1"/>
 		<sublib name="osswrapper/0.0.2"/>
 		<sublib name="cpr/0.0.1"/>
+		<sublib name="rapidjson/1.0.0"/>
     </lib>	
     <lib name="qcxffmpeg/0.0.2">
         <sublib name="ffmpeglib/0.0.2"/>

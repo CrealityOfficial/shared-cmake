@@ -1,4 +1,5 @@
 # qtuser target
+__cc_find(quazip)
 
 set(QTUSER_COMPONETS qtuser_core
 					 qtuser_3d
