@@ -31,10 +31,10 @@
 #include "system_support/profile/simpleprofiler.h"
 #define SYSTEM_RESET() system_support::SimpleProfiler::instance().reset()
 #define SYSTEM_TICK(x) system_support::SimpleProfiler::instance().tick(x)
-#define SYSTEM_FLUSH_COLUMN(x) system_support::SimpleProfiler::instance().flushColumn(x)
+#define SYSTEM_DATA_COPY() system_support::SimpleProfiler::instance().copy()
 #else
 #define SYSTEM_TICK(x) (void)0
 #define SYSTEM_RESET() (void)0
-#define SYSTEM_FLUSH_COLUMN(x) (void)0
+#define SYSTEM_DATA_COPY() (void)0
 #endif
 #endif // __CC_GLOBAL_SHINY__
