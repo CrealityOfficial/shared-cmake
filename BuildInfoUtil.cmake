@@ -62,6 +62,17 @@ macro(__configure_build_info_header)
 
 	__get_main_git_hash(MAIN_GIT_HASH)
 
+  set(SHIPPING_LEVEL 2)
+  if(${PROJECT_VERSION_EXTRA} STREQUAL "Release")
+	set(SHIPPING_LEVEL 2)
+  elseif(${PROJECT_VERSION_EXTRA} STREQUAL "Beta")
+	set(SHIPPING_LEVEL 1)
+  elseif(${PROJECT_VERSION_EXTRA} STREQUAL "Alpha")
+	set(SHIPPING_LEVEL 0)
+  else()
+	set(SHIPPING_LEVEL 0)
+  endif()
+  
   if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.in)
     configure_file(${CMAKE_CURRENT_SOURCE_DIR}/cmake/buildinfo.h.in
                    ${CMAKE_BINARY_DIR}/buildinfo.h)
