@@ -13,7 +13,7 @@ if __name__ == "__main__":
     
     name = 'dummy'
     branch = 'master'
-    repository = 'http://172.20.180.12:8050/'
+    repository = 'https://github.com/CrealityOfficial/'
     try:
         opts, args = getopt.getopt(argv, '-b:-n:')
         print("getopt.getopt -> :" + str(opts))

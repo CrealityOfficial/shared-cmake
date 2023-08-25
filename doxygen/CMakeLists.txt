@@ -11,7 +11,7 @@ if(NOT CMAKE_DOXYGEN_BRANCH)
 	set(CMAKE_DOXYGEN_BRANCH master)
 endif()
 
-set(rep_prefix http://172.20.180.12:8050/)
+set(rep_prefix https://github.com/CrealityOfficial/)
 set(branch master)
 
 file(REMOVE_RECURSE ${CMAKE_SOURCE_DIR}/../../root/)
