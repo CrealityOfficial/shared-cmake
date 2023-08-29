@@ -10,7 +10,6 @@ echo $origin_path
 
 #compile
 echo "compile"
-git submodule update --init
 python3 cmake/ci/conan-cmake.py -t linux
 cd linux-build/build/
 ninja all
