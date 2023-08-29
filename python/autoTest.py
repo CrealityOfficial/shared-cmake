@@ -3,12 +3,12 @@ import osSystem
 
 origin_path = sys.path[0] + '/../../'
 bin_path = origin_path + 'linux-build/bin/Release/'
-webhook = sys.path[1]
+webhook = sys.argv[1]
 
 def execute_test(name):
     cmd = bin_path + name
     osSystem.system(cmd)
-    print("webhook" + webhook)
+    print("webhook " + webhook)
     
     
 #web hook
