@@ -5,10 +5,15 @@ origin_path = sys.path[0] + '/../../'
 bin_path = origin_path + 'linux-build/bin/Release/'
 webhook = sys.argv[1]
 
+def execute_hook(json):
+    cmd = 'curl -X POST -H "Content-Type: application/json" -d ' + json + ' ' + webhook
+    
 def execute_test(name):
     cmd = bin_path + name
     osSystem.system(cmd)
-    print("webhook " + webhook)
+    
+    json = '{"msg_type":"post","content": {"post": {"zh_cn": {"title": "自动测试结果通知","content": [[{"tag": "text","text": "'"项目名称：构建编号：第次构建\n远程分支：\n构建状态：成功\n构建日期：\n输出结果：\n"'"}]]} } }}'
+    execute_hook()
     
     
 #web hook
