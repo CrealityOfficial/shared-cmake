@@ -7,7 +7,7 @@ print("algrithm auto check")
 print("autoTest origin_path: " + autoTest.origin_path)
 print("autoTest bin_path: " + autoTest.bin_path)
 
-sys.path.append(origin_path)
+sys.path.append(autoTest.origin_path)
 import demo.test
     
 

@@ -9,6 +9,7 @@ job_display_name=$BUILD_DISPLAY_NAME
 job_base_name=$JOB_BASE_NAME
 now_time=$(date "+%Y-%m-%d %H:%M:%S")
 git_branch=$GIT_BRANCH
+webhook=$1
 
 echo "jeckin env"
 echo "origin_path" $origin_path
@@ -28,4 +29,4 @@ cd $origin_path
 #test
 pwd
 echo "run test"
-python3 cmake/ci/algrithm-auto-check.py
+python3 cmake/ci/algrithm-auto-check.py $webhook
