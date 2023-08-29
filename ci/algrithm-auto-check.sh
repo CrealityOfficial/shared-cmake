@@ -19,7 +19,7 @@ cd $origin_path
 #test
 echo "test"
 
-/bin/Release/unit_test_format
+/bin/Release/unit_test_format 
 
 JOB_URL="${JENKINS_URL}job/${JOB_NAME}"
 
