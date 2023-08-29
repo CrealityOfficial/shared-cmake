@@ -16,11 +16,15 @@ ninja all
 cd $origin_path
 
 #test
-echo "test"
 pwd
+echo "run test"
 
 ./bin/Release/unit_test_format 
 
+
+
+#web hook
+echo "web hook"
 JOB_URL="${JENKINS_URL}job/${JOB_NAME}"
 
 string1=$BUILD_DISPLAY_NAME
