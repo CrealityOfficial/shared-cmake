@@ -19,9 +19,9 @@ cd $origin_path
 pwd
 echo "run test"
 
-./bin/Release/unit_test_format 
+bin_path=$origin_path/linux-build/bin/Release/
 
-
+$bin_path/unit_test_format 
 
 #web hook
 echo "web hook"
