@@ -1,12 +1,21 @@
 #!/bin/bash
 
 PATH=$PATH:/home/cxsw/.local/bin/
-
 origin_path=$PWD
 
-#path
-echo "print path:"
-echo $origin_path
+#jeckin env
+job_url="${JENKINS_URL}job/${JOB_NAME}"
+job_display_name=$BUILD_DISPLAY_NAME
+job_base_name=$JOB_BASE_NAME
+now_time=$(date "+%Y-%m-%d %H:%M:%S")
+
+echo "jeckin env"
+echo "origin_path" $origin_path
+echo "job_url" $job_url
+echo "job_display_name" $job_display_name
+echo "now_time" $now_time
+echo "job_base_name" $job_base_name
+
 
 #compile
 echo "compile"
@@ -18,33 +27,15 @@ cd $origin_path
 #test
 pwd
 echo "run test"
-
 bin_path=$origin_path/linux-build/bin/Release/
-
 $bin_path/unit_test_format 
-
-#jeckin env
-echo "jeckin env"
-job_url="${JENKINS_URL}job/${JOB_NAME}"
-job_display_name=$BUILD_DISPLAY_NAME
-job_base_name=$JOB_BASE_NAME
-now_time=$(date "+%Y-%m-%d %H:%M:%S")
-
-echo $job_url
-echo $job_display_name
-echo $now_time
-echo $job_base_name
 
 #web hook
 echo "web hook"
 string1=$job_display_name
 string2=$job_base_name
 
-
-CRTDIR=$(pwd)
-s1='/linux-build/bin/Release/out.csv'
-sfiless=$CRTDIR$s1
-
+sfiless=$origin_path$/linux-build/bin/Release/out.csv
 chmod -R 777 $sfiless
 
 cont=$(cat $sfiless|sed ':label;N;s/\n/\\n/;b label')
