@@ -7,6 +7,7 @@ webhook = sys.argv[1]
 
 def execute_hook(json):
     cmd = 'curl -X POST -H "Content-Type: application/json" -d ' + json + ' ' + webhook
+    osSystem.system(cmd)
     
 def execute_test(name):
     cmd = bin_path + name
