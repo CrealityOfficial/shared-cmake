@@ -8,8 +8,8 @@ if __name__ == "__main__":
     print("algrithm auto check")
     print("origin_path: " + origin_path)
     
-    sys.path.append(origin_path + '/demo/')
-    import test.py
+    sys.path.append(origin_path)
+    import demo.test
     
 
     
