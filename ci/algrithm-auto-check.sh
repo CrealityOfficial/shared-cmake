@@ -23,11 +23,17 @@ bin_path=$origin_path/linux-build/bin/Release/
 
 $bin_path/unit_test_format 
 
+#jeckin env
+job_url="${JENKINS_URL}job/${JOB_NAME}"
+job_display_name=$BUILD_DISPLAY_NAME
+
+echo job_url
+echo job_display_name
+
+
 #web hook
 echo "web hook"
-JOB_URL="${JENKINS_URL}job/${JOB_NAME}"
-
-string1=$BUILD_DISPLAY_NAME
+string1=$job_display_name
 string2=$JOB_BASE_NAME
 nowTime=$(date "+%Y-%m-%d %H:%M:%S")
 
