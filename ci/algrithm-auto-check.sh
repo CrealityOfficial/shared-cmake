@@ -24,18 +24,20 @@ bin_path=$origin_path/linux-build/bin/Release/
 $bin_path/unit_test_format 
 
 #jeckin env
+echo "jeckin env"
 job_url="${JENKINS_URL}job/${JOB_NAME}"
 job_display_name=$BUILD_DISPLAY_NAME
+now_time=$(date "+%Y-%m-%d %H:%M:%S")
 
-echo job_url
-echo job_display_name
-
+echo $job_url
+echo $job_display_name
+echo $now_time
 
 #web hook
 echo "web hook"
 string1=$job_display_name
 string2=$JOB_BASE_NAME
-nowTime=$(date "+%Y-%m-%d %H:%M:%S")
+
 
 CRTDIR=$(pwd)
 s1='/linux-build/bin/Release/out.csv'
