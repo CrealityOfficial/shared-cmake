@@ -297,13 +297,20 @@ def get_channel_from_type(name):
     if name == 'linux':
         channel = 'desktop/linux'
     if name == 'mac':
-        channel = 'desktop/mac'    
+        channel = 'desktop/mac'
+    if name == 'opensource-linux':
+        channel = 'opensource/linux'
+    if name == 'opensource-mac':
+        channel = 'opensource/mac'  
+    if name == 'opensource-win':
+        channel = 'opensource/win' 
+        
     return channel
     
 def get_profile_from_type(name):
     profile = 'win'
-    if name == 'linux':
+    if name == 'linux' or name == 'opensource-linux':
         profile = 'linux'
-    if name == 'mac':
+    if name == 'mac' or name == 'opensource-mac':
         profile = 'mac'
     return profile    

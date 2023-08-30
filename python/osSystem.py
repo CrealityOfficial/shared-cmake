@@ -30,7 +30,7 @@ def conan_install(working_path, project_path, channel):
         cmd = 'conan install -g cmake_multi -s build_type=Release --build=missing -if ' + project_path + ' ' + project_path + ' --update'
         os.system(cmd)    
     
-def win_conan_cmake(working_path):
+def win_conan_cmake(working_path, channel):
     project_path = working_path + '/win32-build/build/'
     mkdirs(project_path)
       
@@ -38,7 +38,7 @@ def win_conan_cmake(working_path):
     debug_str = ""
     if(Global_Debug == True):
         debug_str = " -DCXX_VLD=ON"
-    conan_install(working_path, project_path, 'desktop/win')
+    conan_install(working_path, project_path, channel)
     cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path + debug_str + ' -T host=x64 -A x64'
         
     os.system(cmd)
@@ -52,22 +52,22 @@ def emcc_conan_cmake(working_path):
     cmd = 'emcmake cmake -G "MinGW Makefiles" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
     os.system(cmd)
     
-def linux_conan_cmake(working_path):
+def linux_conan_cmake(working_path, channel):
     project_path = working_path + '/linux-build/build/'
     mkdirs(project_path)
       
     print("[cmake/ci] project path :" + project_path)
-    conan_install(working_path, project_path, 'desktop/linux')
+    conan_install(working_path, project_path, channel)
     cmd = 'cmake -G "Ninja" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
         
     os.system(cmd)
     
-def mac_conan_cmake(working_path):
+def mac_conan_cmake(working_path, channel):
     project_path = working_path + '/mac-build/build/'
     mkdirs(project_path)
       
     print("[cmake/ci] mac project path :" + project_path)
-    conan_install(working_path, project_path, 'desktop/mac')
+    conan_install(working_path, project_path, channel)
     cmd = 'cmake -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
         
     os.system(cmd)
@@ -101,14 +101,20 @@ def conan_cmake():
             Global_Debug = True
                 
     if work_type == 'win':
-        win_conan_cmake(working_path)
+        win_conan_cmake(working_path, 'desktop/win')
+    if work_type == 'opensource-win':
+        win_conan_cmake(working_path, 'opensource/win')
     if work_type == 'jwin':
         jwin_conan_cmake(working_path)
     elif work_type == 'linux':
-        linux_conan_cmake(working_path)
+        linux_conan_cmake(working_path, 'desktop/linux')
+    elif work_type == 'opensource-linux':
+        linux_conan_cmake(working_path, 'opensource/linux')
     elif work_type == 'emcc':
         emcc_conan_cmake(working_path)
     elif work_type == 'mac':
-        mac_conan_cmake(working_path)
+        mac_conan_cmake(working_path, 'desktop/mac')
+    elif work_type == 'opensource-mac':
+        mac_conan_cmake(working_path, 'opensource/mac')
     else:
         pass
