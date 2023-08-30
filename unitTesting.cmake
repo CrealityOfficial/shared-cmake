@@ -112,3 +112,12 @@ macro(__add_unit_test target data)
 			DEF ${DEFS}
 		)
 endmacro()
+
+macro(__add_simple_unit_test target)
+	__add_real_target(${target} exe SOURCE ${SRCS}
+			LIB ${LIBS}
+			FOLDER unittest
+			INC ${INCS}
+			DEF ${DEFS}
+		)
+endmacro()
