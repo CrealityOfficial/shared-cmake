@@ -372,6 +372,10 @@
         <sublib name="curl/0.0.2"/>
 		<sublib name="zlib/0.0.2"/>
     </lib>
+    <lib name="cpr/0.0.2">
+        <sublib name="curl/0.0.2"/>
+		<sublib name="zlib/0.0.2"/>
+    </lib>
 	<lib name="data_polygon/0.0.1"/>
 	<lib name="testdata_format_check/0.0.1"/>
 </workspace>
