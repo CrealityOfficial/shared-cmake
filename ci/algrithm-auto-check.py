@@ -3,12 +3,8 @@ sys.path.append(sys.path[0] + '/../python/')
 
 import autoTest
 
-print("algrithm auto check")
-print("autoTest origin_path: " + autoTest.origin_path)
-print("autoTest bin_path: " + autoTest.bin_path)
-
-sys.path.append(autoTest.origin_path)
-import demo.test
+sys.path.append(str(autoTest.origin_path))
+import utests.unittest
     
 
     

@@ -10,6 +10,9 @@ def mkdirs(path_dir):
     if not os.path.exists(path_dir):
         os.makedirs(path_dir)
     
+def cd(ab_path):
+    os.chdir(ab_path)
+    
 def system(cmd):
     print('cmake system : ' + cmd)
     os.system(cmd)
