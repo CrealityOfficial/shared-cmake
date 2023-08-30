@@ -56,7 +56,39 @@ def collect_unique_libs(subs, libs):
         first = second
         second = []
     
-    return result 
+    return result
+
+def collect_sequece_libs(libDict, libs):
+    result = []
+    
+    first = libs
+    second = []
+    while len(first) > 0:
+        for value in first:
+            nex = libDict[value]
+            if len(nex) == 0:
+                result.append(value)
+            else:
+                need = False
+                for nvalue in nex:
+                    if nvalue not in result:
+                        second.append(nvalue)
+                        need = True
+                
+                if need == True:
+                    second.append(value)
+                else:
+                    result.append(value)
+                
+        first = second
+        second = []
+      
+    new_result = []
+    for r in result:
+        if r not in new_result:
+            new_result.append(r)
+        
+    return new_result
     
 def write_conan_file(conanfile, libs, channel):
     file = open(conanfile, "w")
