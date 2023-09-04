@@ -11,22 +11,22 @@ bin_path = origin_path.joinpath('linux-build/bin/Release/')
 if platform.system() == 'Windows':
     bin_path = origin_path.joinpath('win32-build/bin/Release/')
     
-webhook = Path(sys.argv[1])
+webhook = sys.argv[1]
 
 print("autoTest origin_path: " + str(origin_path))
 print("autoTest bin_path: " + str(bin_path))
 
+osSystem.cd(str(bin_path))
+    
 def clone_source(url):
-    path = bin_path.joinpath('/data/')
-    print(str(path))
+    path = Path('data')
     if path.exists():
         osSystem.cd(str(path))
         osSystem.system("git pull")
     else:
-        osSystem.cd(str(bin_path))
         osSystem.system("git clone " + url + " data")
         
-    osSystem.cd(str(origin_path))
+    osSystem.cd(str(bin_path))
     
 def send_text(Text):
     """发送普通消息"""
