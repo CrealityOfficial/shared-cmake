@@ -138,12 +138,23 @@ def send_card(Text):
     } 
     r = requests.post(url, headers=headers, json=data)
     return r.text
+ 
+def send_col(text): 
+    url = webhook
+    headers = {"Content-Type": "text/plain"}
+    data = json.loads(text)
+    r = requests.post(url, headers=headers, json=data)
+    return r.content
     
 def execute_test(name):
+    print(bin_path.replace('\\', '/'))
+
     cmd = bin_path + name
     osSystem.system(cmd)
-   
-    send_markdown("hello")  
+    out_path = bin_path + 'out.json'
+    content = open(out_path,errors='ignore').read() 
+    data2 = send_col(content)
+    
     
 #web hook
 #echo "web hook"
