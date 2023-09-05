@@ -8,7 +8,7 @@ class SendNotice():
     def __init__(self, data):
         self.url = data['url']
         self.name = data['name']
-        self.scp_url = data['scp_url']
+        self.download_url = data['download_url']
         self.divs = data['divs']
         
         self.method = 'post'
@@ -29,7 +29,7 @@ class SendNotice():
                             "content": "查看测试报告",
                             "tag": "lark_md"
                         },
-                        "url": self.scp_url,
+                        "url": self.download_url,
                         "type": "default",
                         "value": {}
                     }
@@ -49,13 +49,13 @@ class SendNotice():
 
     def send_feishu(self):
         print('start send to feishu {}'.format(self.url))
-        print('scp_url {}'.format(self.scp_url))
+        print('download_url {}'.format(self.download_url))
         requests.request(method=self.method, url=self.url, headers=self.headers, json=self.json)
         
 ### notice is a dict
 ### url
 ### name
-### scp_url
+### download_url
 ### datas is a list of dict {'input', 'value', 'state'}
 def send_auto_test_notice(notice):
     protype = {
