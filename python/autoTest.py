@@ -17,7 +17,12 @@ class AutoTestBench():
         self.JECKINS_INFO = eval(sys.argv[1])
         
         self.webhook = self.JECKINS_INFO['WEBHOOK']
-        self.scp_url = self.JECKINS_INFO['RESULT_URL']
+        self.commit_id = self.JECKINS_INFO['COMMIT_ID']
+        self.job_name = self.JECKINS_INFO['JOB_NAME']
+        self.user = self.JECKINS_INFO['USER']
+        self.url = self.JECKINS_INFO['URL']
+        self.scp_url = '{}:{}'.format(self.user, self.url)
+        
         if self.system == 'Windows':
             self.bin_path = self.origin_path.joinpath('win32-build/bin/Release/')
             
@@ -60,12 +65,12 @@ class AutoTestBench():
         self.reset_working_directory()
     
     def send_feishu_notice(self, notice):
-        self.save_scp_csv(notice['datas'], self.scp_url)
+        self.save_scp_csv(notice['datas'])
         notice['url'] = self.webhook
         notice['scp_url'] = self.scp_url
         FeiShu.send_auto_test_notice(notice)
         
-    def save_scp_csv(self, datas, url):
+    def save_scp_csv(self, datas):
         csv_name = '{}/temp.csv'.format(str(self.bin_path))
         with open(csv_name, 'w', newline="") as f:
             writer = csv.writer(f)
@@ -79,15 +84,12 @@ class AutoTestBench():
             writer.writerows(csv_datas)
             f.close()
         
-        scp_cmd = 'scp {} {}'.format(csv_name, url)
-        if self.system != "Windows":
-            scp_cmd = 'scp -P 22 {} {}'.format(csv_name, url)
-            
+        scp_cmd = 'scp {} {}/{}.csv'.format(csv_name, self.scp_url, self.commit_id)            
         ret, value = subprocess.getstatusoutput(scp_cmd)   
         if ret == 0:
             print(scp_cmd + " success!")
         else:
-            print(scp_cmd + " error.")
+            print(scp_cmd + " error.")         
         
 def send_text(Text):
     """发送普通消息"""
