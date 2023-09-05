@@ -2,19 +2,15 @@
 import requests
 import sys
 import os
+import copy
+
 class SendNotice():
     def __init__(self, data):
-        #self.INFO = eval(sys.argv[1])
-        #self.INFO = argv_dic
-        #self.JOB_URL = self.INFO['BUILD_URL']  #项目地址路径
-        #self.JOB_NAME = self.INFO['JOB_NAME']  #项目名称
-        #self.BUILD_NUMBER = self.INFO['BUILD_NUMBER'] #构建次数
-        #self.BUILD_TIME = self.INFO['BUILD_TIME']  # 构建时间
-        
         self.url = data['url']
         self.name = data['name']
-        self.result_url = data['result_url']
+        self.scp_url = data['scp_url']
         self.divs = data['divs']
+        
         self.method = 'post'
         self.headers = {
             'Content-Type': 'application/json'
@@ -33,7 +29,7 @@ class SendNotice():
                             "content": "查看测试报告",
                             "tag": "lark_md"
                         },
-                        "url": self.result_url,
+                        "url": self.scp_url,
                         "type": "default",
                         "value": {}
                     }
@@ -53,4 +49,76 @@ class SendNotice():
 
     def send_feishu(self):
         requests.request(method=self.method, url=self.url, headers=self.headers, json=self.json)
+        
+### notice is a dict
+### url
+### name
+### scp_url
+### datas is a list of dict {'input', 'value', 'state'}
+def send_auto_test_notice(notice):
+    protype = {
+            "tag": "column_set",
+            "flex_mode": "bisect",
+            "background_style": "grey",
+            "horizontal_spacing": "default",
+            "columns": [
+                {
+                    "tag": "column",
+                    "width": "weighted",
+                    "weight": 1,
+                    "elements": [
+                        {
+                        "tag": "markdown",
+                        "text_align": "center",
+                        "content": ""
+                        }
+                    ]
+                },
+                {
+                    "tag": "column",
+                    "width": "weighted",
+                    "weight": 1,
+                    "elements": [
+                        {
+                        "tag": "markdown",
+                        "text_align": "center",
+                        "content": ""
+                        }
+                    ]
+                },
+                {
+                    "tag": "column",
+                    "width": "weighted",
+                    "weight": 1,
+                    "elements": [
+                        {
+                        "tag": "markdown",
+                        "text_align": "center",
+                        "content": ""
+                        }
+                    ]
+                }
+            ]
+        }
+        
+    header_div = copy.deepcopy(protype)
+    header_div['columns'][0]['elements'][0]['content'] = "**输入**"
+    header_div['columns'][1]['elements'][0]['content'] = "**测试输出**"
+    header_div['columns'][2]['elements'][0]['content'] = "**测试结果**"
+    
+    divs = []
+    divs.append(header_div)
 
+    for data in notice['datas']:
+        item = copy.deepcopy(protype)
+        state = "<font color='green'>PASS</font>"
+        if data['state'] == False:
+            state = "<font color='red'>FAILED</font>"
+    
+        item['columns'][0]['elements'][0]['content'] = data['input']
+        item['columns'][1]['elements'][0]['content'] = data['value']
+        item['columns'][2]['elements'][0]['content'] = state
+        divs.append(item)
+
+    notice['divs'] = divs
+    SendNotice(notice).send_feishu()

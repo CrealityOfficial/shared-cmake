@@ -1,9 +1,7 @@
 import sys;
 sys.path.append(sys.path[0] + '/../python/')
+sys.path.append(sys.path[0] + '/../../')
 
-import autoTest
-
-sys.path.append(str(autoTest.origin_path))
 import utests.unittest
     
 

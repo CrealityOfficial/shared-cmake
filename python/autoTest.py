@@ -4,30 +4,89 @@ import osSystem
 import json
 import requests
 import platform
+import subprocess
+import csv
+import FeiShu
 from pathlib import Path
 
-origin_path = Path(sys.path[0] + '/../../')
-bin_path = origin_path.joinpath('linux-build/bin/Release/')
-if platform.system() == 'Windows':
-    bin_path = origin_path.joinpath('win32-build/bin/Release/')
-    
-webhook = sys.argv[1]
-
-print("autoTest origin_path: " + str(origin_path))
-print("autoTest bin_path: " + str(bin_path))
-
-osSystem.cd(str(bin_path))
-    
-def clone_source(url):
-    path = Path('data')
-    if path.exists():
-        osSystem.cd(str(path))
-        osSystem.system("git pull")
-    else:
-        osSystem.system("git clone " + url + " data")
+class AutoTestBench():
+    def __init__(self):
+        self.origin_path = Path(sys.path[0] + '/../../')
+        self.bin_path = self.origin_path.joinpath('linux-build/bin/Release/')
+        self.system = platform.system()
+        self.JECKINS_INFO = eval(sys.argv[1])
         
-    osSystem.cd(str(bin_path))
+        self.webhook = self.JECKINS_INFO['']
+        
+        if self.system == 'Windows':
+            self.bin_path = self.origin_path.joinpath('win32-build/bin/Release/')
+            
+        self.print_info()
+        self.reset_working_directory()
+
+    def print_info(self):
+        print("AutoTest jeckins info " + str(self.JECKINS_INFO))
+        print("AutoTest origin_path: " + str(self.origin_path))
+        print("AutoTest bin_path: " + str(self.bin_path))
+        
+    def reset_working_directory(self):
+        osSystem.cd(str(self.bin_path))
     
+    def execute(self, name, tests):
+        datas = []
+        for test in tests:
+            exe_test = '{}/{} ./data/{}'.format(str(self.bin_path), 'unit_test_format_check', test) 
+            ret, value = subprocess.getstatusoutput(exe_test)
+            
+            if ret == 0:
+                data = {}
+                data['input'] = test
+                data['value'] = value
+                datas.append(data)
+                print(exe_test + " success!")
+            else:
+                print("subprocess.getstatusoutput error.")        
+        
+        return datas
+        
+    def clone_source(self, url):
+        path = Path('data')
+        if path.exists():
+            osSystem.cd(str(path))
+            osSystem.system("git pull")
+        else:
+            osSystem.system("git clone " + url + " data")
+            
+        self.reset_working_directory()
+    
+    def send_feishu_notice(self, notice):
+        self.save_scp_csv(notice['datas'], notice['scp_url'])
+        notice['url'] = self.webhook
+        FeiShu.send_auto_test_notice(notice)
+        
+    def save_scp_csv(self, datas, url):
+        csv_name = '{}/temp.csv'.format(str(self.bin_path))
+        with open(csv_name, 'w', newline="") as f:
+            writer = csv.writer(f)
+            names = ['input', 'result', 'state']
+            writer.writerow(names)
+            csv_datas = []
+            for data in datas:
+                csv_data = [data['input'], data['value'], str(data['state'])]
+                csv_datas.append(csv_data)
+                
+            writer.writerows(csv_datas)
+            f.close()
+        
+        if self.system != "Windows":
+            scp_cmd = 'scp {} {}'.format(csv, url)
+            
+            ret, value = subprocess.getstatusoutput(scp_cmd)   
+            if ret == 0:
+                print(scp_cmd + " success!")
+            else:
+                print(scp_cmd + " error.")
+        
 def send_text(Text):
     """发送普通消息"""
     url = webhook
@@ -155,17 +214,3 @@ def execute_test(name):
     content = open(out_path,errors='ignore').read() 
     data2 = send_col(content)
     
-    
-#web hook
-#echo "web hook"
-
-#sfiless=$origin_path$/linux-build/bin/Release/out.csv
-#chmod -R 777 $sfiless
-
-#cont=$(cat $sfiless|sed ':label;N;s/\n/\\n/;b label')
-#cont=${cont//,/------------->} 
-
-
-#curl -X POST -H "Content-Type: application/json" \
-#-d '{"msg_type":"post","content": {"post": {"zh_cn": {"title": "自动测试结果通知","content": [[{"tag": "text","text": "'"项目名称：$string2\n构建编号：第$BUILD_NUMBER次构建\n远程分支：$GIT_BRANCH\n构建状态：成功\n构建日期：$nowTime\n输出结果：\n$cont"'"}]]} } }}' \
-#https://open.feishu.cn/open-apis/bot/v2/hook/7ffe1550-8904-4b09-9e59-b3aaf4224236
