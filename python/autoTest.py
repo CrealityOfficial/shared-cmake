@@ -21,7 +21,7 @@ class AutoTestBench():
         self.job_name = self.JECKINS_INFO['JOB_NAME']
         self.user = self.JECKINS_INFO['USER']
         self.url = self.JECKINS_INFO['URL']
-        self.scp_url = '{}:{}'.format(self.user, self.url)
+        self.scp_url = '{}:{}/{}/'.format(self.user, self.url, self.job_name)
         
         if self.system == 'Windows':
             self.bin_path = self.origin_path.joinpath('win32-build/bin/Release/')
