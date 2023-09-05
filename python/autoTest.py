@@ -68,6 +68,8 @@ class AutoTestBench():
         self.save_scp_csv(notice['datas'])
         notice['url'] = self.webhook
         notice['scp_url'] = self.scp_url
+        
+        print('start send to feishu {}'.format(self.webhook))
         FeiShu.send_auto_test_notice(notice)
         
     def save_scp_csv(self, datas):
