@@ -16,7 +16,7 @@ class AutoTestBench():
         self.system = platform.system()
         self.JECKINS_INFO = eval(sys.argv[1])
         
-        self.webhook = self.JECKINS_INFO['']
+        self.webhook = self.JECKINS_INFO['WEBHOOK']
         
         if self.system == 'Windows':
             self.bin_path = self.origin_path.joinpath('win32-build/bin/Release/')
