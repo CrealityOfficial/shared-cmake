@@ -79,14 +79,15 @@ class AutoTestBench():
             writer.writerows(csv_datas)
             f.close()
         
+        scp_cmd = 'scp {} {}'.format(csv_name, url)
         if self.system != "Windows":
-            scp_cmd = 'scp {} {}'.format(csv_name, url)
+            scp_cmd = 'scp -P 22 {} {}'.format(csv_name, url)
             
-            ret, value = subprocess.getstatusoutput(scp_cmd)   
-            if ret == 0:
-                print(scp_cmd + " success!")
-            else:
-                print(scp_cmd + " error.")
+        ret, value = subprocess.getstatusoutput(scp_cmd)   
+        if ret == 0:
+            print(scp_cmd + " success!")
+        else:
+            print(scp_cmd + " error.")
         
 def send_text(Text):
     """发送普通消息"""
