@@ -78,7 +78,7 @@ class AutoTestBench():
             writer.writerow(names)
             csv_datas = []
             for data in datas:
-                csv_data = [data['input'], data['value'], str(data['state'])]
+                csv_data = [data['input'], data['value'], 'PASS' if data['state'] == True else 'FAILED']
                 csv_datas.append(csv_data)
                 
             writer.writerows(csv_datas)
