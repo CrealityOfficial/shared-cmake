@@ -72,7 +72,7 @@ class AutoTestBench():
         
     def save_scp_csv(self, datas):
         csv_name = '{}/temp.csv'.format(str(self.bin_path))
-        with open(csv_name, 'w', encode='utf-8', newline="") as f:
+        with open(csv_name, 'w', encoding='utf-8', newline="") as f:
             writer = csv.writer(f)
             names = ['input', 'result', 'state']
             writer.writerow(names)
