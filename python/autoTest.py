@@ -21,7 +21,8 @@ class AutoTestBench():
         self.job_name = self.JECKINS_INFO['JOB_NAME']
         self.user = self.JECKINS_INFO['USER']
         self.url = self.JECKINS_INFO['URL']
-        self.scp_url = '{}:{}/{}/'.format(self.user, self.url, self.job_name)
+        self.download_url = self.JECKINS_INFO['DOWNLOAD_URL']
+        self.scp_url = '{}/{}/{}.csv'.format(self.download_url, self.job_name, self.commit_id)
         
         if self.system == 'Windows':
             self.bin_path = self.origin_path.joinpath('win32-build/bin/Release/')
@@ -69,7 +70,6 @@ class AutoTestBench():
         notice['url'] = self.webhook
         notice['scp_url'] = self.scp_url
         
-        print('start send to feishu {}'.format(self.webhook))
         FeiShu.send_auto_test_notice(notice)
         
     def save_scp_csv(self, datas):

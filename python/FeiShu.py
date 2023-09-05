@@ -48,6 +48,8 @@ class SendNotice():
         self.json['card']['elements'] = self.divs + self.json['card']['elements']
 
     def send_feishu(self):
+        print('start send to feishu {}'.format(self.url))
+        print('scp_url {}'.format(self.scp_url))
         requests.request(method=self.method, url=self.url, headers=self.headers, json=self.json)
         
 ### notice is a dict
