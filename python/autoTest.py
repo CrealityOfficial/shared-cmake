@@ -17,7 +17,7 @@ class AutoTestBench():
         self.JECKINS_INFO = eval(sys.argv[1])
         
         self.webhook = self.JECKINS_INFO['WEBHOOK']
-        
+        self.scp_url = self.JECKINS_INFO['RESULT_URL']
         if self.system == 'Windows':
             self.bin_path = self.origin_path.joinpath('win32-build/bin/Release/')
             
@@ -79,7 +79,7 @@ class AutoTestBench():
             f.close()
         
         if self.system != "Windows":
-            scp_cmd = 'scp {} {}'.format(csv, url)
+            scp_cmd = 'scp {} {}'.format(csv_name, url)
             
             ret, value = subprocess.getstatusoutput(scp_cmd)   
             if ret == 0:
