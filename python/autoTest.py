@@ -79,11 +79,11 @@ class AutoTestBench():
         csv_name = '{}/temp.csv'.format(str(self.bin_path))
         with open(csv_name, 'w', encoding='utf-8-sig', newline="") as f:
             writer = csv.writer(f)
-            names = ['input', 'result', 'state']
+            names = ['输入', '结果', '细节']
             writer.writerow(names)
             csv_datas = []
             for data in datas:
-                csv_data = [data['input'], data['value'], 'PASS' if data['state'] == True else 'FAILED']
+                csv_data = [data['input'], 'PASS' if data['state'] == True else 'FAILED', data['value']]
                 csv_datas.append(csv_data)
                 
             writer.writerows(csv_datas)

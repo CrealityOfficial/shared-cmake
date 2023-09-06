@@ -105,8 +105,8 @@ def send_auto_test_notice(notice):
         
     header_div = copy.deepcopy(protype)
     header_div['columns'][0]['elements'][0]['content'] = "**输入**"
-    header_div['columns'][1]['elements'][0]['content'] = "**测试输出**"
-    header_div['columns'][2]['elements'][0]['content'] = "**测试结果**"
+    header_div['columns'][1]['elements'][0]['content'] = "**结果**"
+    header_div['columns'][2]['elements'][0]['content'] = "**细节**"
     
     divs = []
     divs.append(header_div)
@@ -118,8 +118,8 @@ def send_auto_test_notice(notice):
             state = "<font color='red'>FAILED</font>"
     
         item['columns'][0]['elements'][0]['content'] = data['input']
-        item['columns'][1]['elements'][0]['content'] = data['value']
-        item['columns'][2]['elements'][0]['content'] = state
+        item['columns'][1]['elements'][0]['content'] = state
+        #item['columns'][2]['elements'][0]['content'] = data['value']
         divs.append(item)
 
     notice['divs'] = divs
