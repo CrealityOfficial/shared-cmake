@@ -42,18 +42,20 @@ class AutoTestBench():
     def execute(self, name, tests):
         datas = []
         for test in tests:
-            exe_test = '{}/{} ./data/{}'.format(str(self.bin_path), 'unit_test_format_check', test) 
+            exe_test = '{}/{} ./data/{}'.format(str(self.bin_path), name, test) 
             ret, value = subprocess.getstatusoutput(exe_test)
             
+            data = {}
+            data['input'] = test
+            data['value'] = value
             if ret == 0:
-                data = {}
-                data['input'] = test
-                data['value'] = value
-                datas.append(data)
                 print(exe_test + " success!")
             else:
+                data['value'] = "subprocess error! " + data['value']
                 print("subprocess.getstatusoutput error.")        
-        
+            
+            datas.append(data)
+            
         return datas
         
     def clone_source(self, url):
