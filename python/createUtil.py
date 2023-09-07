@@ -215,7 +215,7 @@ def invoke_conan_build(params, subLibs = []):
         meta_file = open(meta_data_dest, "a")
         if params['channel'] == 'jwin':
             user_channel = 'desktop/win'
-            meta_file.write("generator: Ninja")
+            meta_file.write("generator: Ninja\n")
             params['channel'] = 'desktop/win'
             
         meta_file.write("version: " + "\"" + version + "\"\n")
