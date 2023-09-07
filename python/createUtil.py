@@ -213,6 +213,11 @@ def invoke_conan_build(params, subLibs = []):
         
         meta_data_dest = temp_directory + "/conandata.yml"
         meta_file = open(meta_data_dest, "a")
+        if params['channel'] == 'jwin':
+            user_channel = 'desktop/win'
+            meta_file.write("generator: Ninja")
+            params['channel'] = 'desktop/win'
+            
         meta_file.write("version: " + "\"" + version + "\"\n")
         meta_file.write("name: " + "\"" + name + "\"\n")
         meta_file.write("channel: " + "\"" + user_channel + "\"")
@@ -290,7 +295,7 @@ def build_recipes(recipes, channel, profile, xml_file):
             
             subs = create_sub_libs_from_xml(xml_file, name, version)
             invoke_conan_build(params, subs)
-            invoke_conan_upload(recipe, channel)
+            invoke_conan_upload(recipe, params['channel'])
             
 def get_channel_from_type(name):
     channel = 'desktop/win'
@@ -304,6 +309,8 @@ def get_channel_from_type(name):
         channel = 'opensource/mac'  
     if name == 'opensource-win':
         channel = 'opensource/win' 
+    if name == 'jwin':
+        channel = 'jwin'
         
     return channel
     
