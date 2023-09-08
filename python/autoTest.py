@@ -23,7 +23,7 @@ class AutoTestBench():
         self.user = self.JECKINS_INFO['USER']
         self.url = self.JECKINS_INFO['URL']
         self.download_url = self.JECKINS_INFO['DOWNLOAD_URL']
-        self.csv_name = '{}-{}.csv'.format(self.branch_name, self.commit_id)
+        self.csv_name = '{}-{}.csv'.format(self.branch_name.replace("/", "-"), self.commit_id)
         self.download_url = '{}/{}/{}'.format(self.download_url, self.job_name, self.csv_name)
         self.scp_url = '{}:{}/{}/'.format(self.user, self.url, self.job_name)
         
