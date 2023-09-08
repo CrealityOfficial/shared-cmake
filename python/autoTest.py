@@ -23,7 +23,8 @@ class AutoTestBench():
         self.user = self.JECKINS_INFO['USER']
         self.url = self.JECKINS_INFO['URL']
         self.download_url = self.JECKINS_INFO['DOWNLOAD_URL']
-        self.download_url = '{}/{}/{}.csv'.format(self.download_url, self.job_name, self.commit_id)
+        self.csv_name = '{}-{}.csv'.format(self.branch_name, self.commit_id)
+        self.download_url = '{}/{}/{}'.format(self.download_url, self.job_name, self.csv_name)
         self.scp_url = '{}:{}/{}/'.format(self.user, self.url, self.job_name)
         
         if self.system == 'Windows':
@@ -90,7 +91,7 @@ class AutoTestBench():
             writer.writerows(csv_datas)
             f.close()
         
-        scp_cmd = 'scp {} {}/{}-{}.csv'.format(csv_name, self.scp_url, self.branch_name, self.commit_id)            
+        scp_cmd = 'scp {} {}/{}'.format(csv_name, self.scp_url, self.csv_name)            
         ret, value = subprocess.getstatusoutput(scp_cmd)   
         if ret == 0:
             print(scp_cmd + " success!")
