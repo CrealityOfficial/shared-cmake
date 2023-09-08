@@ -18,6 +18,7 @@ class AutoTestBench():
         
         self.webhook = self.JECKINS_INFO['WEBHOOK']
         self.commit_id = self.JECKINS_INFO['COMMIT_ID']
+        self.branch_name = self.JECKINS_INFO['BRANCH_NAME']
         self.job_name = self.JECKINS_INFO['JOB_NAME']
         self.user = self.JECKINS_INFO['USER']
         self.url = self.JECKINS_INFO['URL']
@@ -89,7 +90,7 @@ class AutoTestBench():
             writer.writerows(csv_datas)
             f.close()
         
-        scp_cmd = 'scp {} {}/{}.csv'.format(csv_name, self.scp_url, self.commit_id)            
+        scp_cmd = 'scp {} {}/{}-{}.csv'.format(csv_name, self.scp_url, self.branch_name, self.commit_id)            
         ret, value = subprocess.getstatusoutput(scp_cmd)   
         if ret == 0:
             print(scp_cmd + " success!")
