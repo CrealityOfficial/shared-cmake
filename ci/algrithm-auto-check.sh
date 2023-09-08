@@ -6,6 +6,7 @@ origin_path=$PWD
 #compile
 echo "compile"
 python3 cmake/ci/conan-cmake.py -t linux
+cmake -S . -B linux-build/build/ -DONLY_UNIT_TESTS=ON
 cd linux-build/build/
 ninja all
 cd $origin_path
