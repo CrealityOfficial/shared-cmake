@@ -16,9 +16,11 @@
 #define BUNDLE_NAME "@BUNDLE_NAME@"
 #ifdef _DEBUG
 #define BINARY_ROOT "@BIN_OUTPUT_DIR@/Debug/"
+#define W_BINARY_ROOT L"@BIN_OUTPUT_DIR@/Debug/"
 #define BIN_RESOURCES_DIR "@DEBUG_RESOURCES_DIR@"
 #else
 #define BINARY_ROOT "@BIN_OUTPUT_DIR@/Release/"
+#define W_BINARY_ROOT L"@BIN_OUTPUT_DIR@/Release/"
 #define BIN_RESOURCES_DIR "@RELEASE_RESOURCES_DIR@"
 #endif
 
