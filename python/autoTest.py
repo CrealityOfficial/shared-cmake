@@ -72,6 +72,7 @@ class AutoTestBench():
     
     def send_feishu_notice(self, notice):
         self.save_scp_csv(notice['datas'])
+        notice['name'] = '{}-{}-{}'.format(notice['name'], self.branch_name, self.commit_id)
         notice['url'] = self.webhook
         notice['download_url'] = self.download_url
         
