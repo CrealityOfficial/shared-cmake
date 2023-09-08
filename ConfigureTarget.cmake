@@ -794,7 +794,7 @@ macro(__remap_target_debug_2_release targets)
 endmacro()
 
 macro(__add_include_interface package)
-	cmake_parse_arguments(package "" "INTERFACE;INTERFACE_DEF" "" ${ARGN})
+	cmake_parse_arguments(package "" "" "INTERFACE;INTERFACE_DEF" ${ARGN})
 
 	set(INCS ${CMAKE_CURRENT_SOURCE_DIR})
 	if(package_INTERFACE)
