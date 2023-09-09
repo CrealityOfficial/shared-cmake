@@ -235,7 +235,7 @@
     </lib>
     <lib name="nestplacer/1.0.0">
         <sublib name="libnest2d/1.0.0"/>
-		<sublib name="trimesh2/0.0.2"/>
+		<sublib name="trimesh2/0.0.3"/>
     </lib>
     <lib name="muparser/0.0.1">
     </lib>
