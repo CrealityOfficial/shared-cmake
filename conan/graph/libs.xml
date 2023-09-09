@@ -38,6 +38,7 @@
 	<lib name="openssl/0.0.2"/>
 	<lib name="freetype/0.0.2"/>
 	<lib name="nlopt/0.0.2"/>
+	<lib name="nlopt_static/1.0.0"/>
 	<lib name="dxflib/0.0.2"/>
 	<lib name="openjpeg/0.0.2"/>
 	<lib name="potrace/0.0.2"/>
