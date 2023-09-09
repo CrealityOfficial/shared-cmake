@@ -1,14 +1,12 @@
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake/cc/")
 
 macro(__cc_find)
-	message(STATUS "CC ****** Start Find ${ARGN}")
 	if(HAVE_CONAN_CACHE OR CREATE_CONAN_PACKAGE)
 		string(TOLOWER ${ARGN} LTARGET)
 		__conan_find(${LTARGET})
 	else()
-		find_package(_CC_${ARGN})
+		message(FATAL_ERROR "__cc_find must use conan, cc is abandoned.")
 	endif()
-	message(STATUS "CC ****** End Find ${ARGN}")
 endmacro()
 
 function(__test_import target type)
