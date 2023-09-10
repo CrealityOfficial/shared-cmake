@@ -1,4 +1,3 @@
 # nestplacer target
-__cc_find(libnest2d)
 
-__conan_import(nestplacer dll)
+__conan_import(nestplacer dll INTERFACE_DEF USE_NESTPLACER)
