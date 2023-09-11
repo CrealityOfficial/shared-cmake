@@ -12,8 +12,10 @@
     <lib name="stringutil/0.0.2"/>
     <lib name="clipper/0.0.2"/>
     <lib name="zlib/0.0.2"/>
+	<lib name="zlib_static/1.0.0"/>
     <lib name="pcre/0.0.2"/>
     <lib name="tinyxml/0.0.2"/>
+	<lib name="tinyxml/0.0.3"/>
     <lib name="osg/0.0.2"/>
     <lib name="qtadvanceddocking/0.0.2"/>
     <lib name="eigen/0.0.2"/>
@@ -163,6 +165,9 @@
     <lib name="zip/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
+    <lib name="zip/1.0.0">
+        <sublib name="zlib/1.0.0"/>
+    </lib>
     <lib name="png/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
@@ -195,6 +200,9 @@
     </lib>
     <lib name="lib3mf/0.0.2">
         <sublib name="zip/0.0.2"/>
+    </lib>
+    <lib name="lib3mf/1.0.0">
+        <sublib name="zip/1.0.0"/>
     </lib>
     <lib name="quazip/0.0.2">
         <sublib name="zip/0.0.2"/>

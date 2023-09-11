@@ -44,7 +44,7 @@ class AutoTestBench():
     def execute(self, name, tests):
         datas = []
         for test in tests:
-            exe_test = '{}/{} ./data/{}'.format(str(self.bin_path), name, test) 
+            exe_test = '{}/{} "./data/{}"'.format(str(self.bin_path), name, test) 
             ret, value = subprocess.getstatusoutput(exe_test)
             
             data = {}
