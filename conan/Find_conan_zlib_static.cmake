@@ -1,2 +1,2 @@
 # zlib_static target
-__conan_import_one(zlib_static lib NAME INTERFACE_DEF Z_PREFIX)
+__conan_import(zlib_static lib INTERFACE_DEF Z_PREFIX)

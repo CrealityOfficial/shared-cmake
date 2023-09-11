@@ -43,6 +43,7 @@
 	<lib name="nlopt_static/1.0.0"/>
 	<lib name="dxflib/0.0.2"/>
 	<lib name="openjpeg/0.0.2"/>
+	<lib name="open_jpeg/1.0.0"/>
 	<lib name="potrace/0.0.2"/>
 	<lib name="ffmpeglib/0.0.2"/>
 	<lib name="glew/0.0.2"/>
@@ -147,6 +148,10 @@
         <sublib name="openjpeg/0.0.2"/>
 		<sublib name="png/0.0.2"/>
     </lib>
+	<lib name="freeimage_static/1.0.0">
+        <sublib name="open_jpeg/1.0.0"/>
+		<sublib name="png_static/1.0.0"/>
+    </lib>
     <lib name="aliyunoss/0.0.2">
 		<sublib name="curl/0.0.2"/>
     </lib>
@@ -165,17 +170,26 @@
     <lib name="zip/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
-    <lib name="zip/1.0.0">
-        <sublib name="zlib/1.0.0"/>
+    <lib name="zip_static/1.0.0">
+        <sublib name="zlib_static/1.0.0"/>
     </lib>
     <lib name="png/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
+    <lib name="png_static/1.0.0">
+        <sublib name="zlib_static/1.0.0"/>
+    </lib>
     <lib name="minizip/0.0.2">
         <sublib name="zlib/0.0.2"/>
     </lib>
+    <lib name="minizip_static/1.0.0">
+        <sublib name="zlib_static/1.0.0"/>
+    </lib>
     <lib name="libxml/0.0.2">
         <sublib name="zlib/0.0.2"/>
+    </lib>
+    <lib name="libxml_static/1.0.0">
+        <sublib name="zlib_static/1.0.0"/>
     </lib>
     <lib name="msimplify/0.0.2">
         <sublib name="trimesh2/0.0.2"/>
@@ -201,8 +215,8 @@
     <lib name="lib3mf/0.0.2">
         <sublib name="zip/0.0.2"/>
     </lib>
-    <lib name="lib3mf/1.0.0">
-        <sublib name="zip/1.0.0"/>
+    <lib name="lib3mf_static/1.0.0">
+        <sublib name="zip_static/1.0.0"/>
     </lib>
     <lib name="quazip/0.0.2">
         <sublib name="zip/0.0.2"/>
@@ -268,8 +282,8 @@
         <sublib name="boost/0.0.2"/>		
     </lib>
     <lib name="colladadom_static/1.0.0">
-        <sublib name="minizip/0.0.2"/>
-		<sublib name="libxml/0.0.2"/>
+        <sublib name="minizip_static/1.0.0"/>
+		<sublib name="libxml_static/1.0.0"/>
         <sublib name="pcre/0.0.2"/>
         <sublib name="boost/0.0.2"/>		
     </lib>
@@ -289,6 +303,13 @@
 		<sublib name="lib3mf/0.0.2"/>
 		<sublib name="stringutil/0.0.2"/>
 		<sublib name="imageproc/0.0.3"/>
+    </lib>
+    <lib name="cxbin/1.0.0">
+        <sublib name="trimesh2/0.0.3"/>
+		<sublib name="colladadom_static/1.0.0"/>
+        <sublib name="lib3mf_static/1.0.0"/>
+		<sublib name="tinyxml/0.0.3"/>
+		<sublib name="freeimage_static/1.0.0"/>
     </lib>
 	<lib name="thumbnail/0.0.2">
         <sublib name="png/0.0.2"/>

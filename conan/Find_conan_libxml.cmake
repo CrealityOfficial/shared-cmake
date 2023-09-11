@@ -1,4 +1,3 @@
 # libxml target
-
-#__conan_import(libxml lib)
-__conan_import_one(libxml lib NAME libxml LIB LibXml2 DLL LibXml2)
+__cc_find(zlib_static)
+__conan_import(libxml lib)
