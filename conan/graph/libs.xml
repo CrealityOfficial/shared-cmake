@@ -267,6 +267,12 @@
         <sublib name="pcre/0.0.2"/>
         <sublib name="boost/0.0.2"/>		
     </lib>
+    <lib name="colladadom_static/1.0.0">
+        <sublib name="minizip/0.0.2"/>
+		<sublib name="libxml/0.0.2"/>
+        <sublib name="pcre/0.0.2"/>
+        <sublib name="boost/0.0.2"/>		
+    </lib>
     <lib name="cxbin/0.0.2">
         <sublib name="trimesh2/0.0.2"/>
 		<sublib name="colladadom/0.0.2"/>
