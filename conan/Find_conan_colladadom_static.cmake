@@ -4,8 +4,9 @@ __cc_find(zip_static)
 __cc_find(minizip_static)
 __cc_find(libxml_static)
 
-__conan_import(colladadom_static lib COMPONENT colladadom141 colladadom_static 
-									 ILIB libxml_static minizip_static zip_static colladadom141
+__conan_import(colladadom_static lib COMPONENT colladadom141)
+__conan_import(colladadom_static lib COMPONENT colladadom_static 
+									 ILIB libxml_static minizip_static zip_static
 										pcre_local pcrecpp_local pcreposix_local
 									 )
 
