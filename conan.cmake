@@ -109,8 +109,7 @@ macro(__conan_import package type)
 				endif()
 				if(package_ILIB)
 					set(_LIBS)
-					target_link_libraries(${_component} PRIVATE ${_LIBS}
-													PUBLIC ${package_ILIB}
+					target_link_libraries(${_component} INTERFACE ${package_ILIB}
 													)
 				endif()					
 			endif()
