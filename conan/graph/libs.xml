@@ -304,6 +304,15 @@
 		<sublib name="stringutil/0.0.2"/>
 		<sublib name="imageproc/0.0.3"/>
     </lib>
+    <lib name="cxbin/0.0.4">
+        <sublib name="mmesh/0.0.3"/>
+		<sublib name="colladadom/0.0.2"/>
+        <sublib name="tinyxml/0.0.2"/>
+        <sublib name="zip/0.0.2"/>
+		<sublib name="lib3mf/0.0.2"/>
+		<sublib name="stringutil/0.0.2"/>
+		<sublib name="imageproc/0.0.3"/>
+    </lib>
     <lib name="cxbin/1.0.0">
         <sublib name="trimesh2/0.0.3"/>
 		<sublib name="colladadom_static/1.0.0"/>
