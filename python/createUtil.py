@@ -281,7 +281,7 @@ def invoke_conan_upload(recipe, channel):
     cmd = 'conan upload ' + ref + ' -r artifactory --all -c'
     os.system(cmd)
             
-def build_recipes(recipes, channel, profile, xml_file):
+def build_recipes(recipes, channel, profile, xml_file, upload = True):
     params = {'name':'xxx', 'version':'0.0.0', 'profile':'linux', 'channel':'desktop/linux'}
     for recipe in recipes:
         seg = recipe.split('/')
@@ -295,7 +295,8 @@ def build_recipes(recipes, channel, profile, xml_file):
             
             subs = create_sub_libs_from_xml(xml_file, name, version)
             invoke_conan_build(params, subs)
-            invoke_conan_upload(recipe, params['channel'])
+            if upload == True:
+                invoke_conan_upload(recipe, params['channel'])
             
 def get_channel_from_type(name):
     channel = 'desktop/win'
