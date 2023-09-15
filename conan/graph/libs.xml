@@ -26,6 +26,7 @@
     <lib name="cgal/0.0.2">
         <sublib name="boost/0.0.2"/>
     </lib>
+    <lib name="cserialport/0.0.1"/>	
 	<lib name="stb/0.0.2"/>
 	<lib name="rapidjson/0.0.2"/>
 	<lib name="rapidjson/1.0.0"/>
