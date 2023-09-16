@@ -355,6 +355,12 @@
 		<sublib name="gmp/0.0.1"/>
 		<sublib name="mpfr/0.0.1"/>
     </lib>
+    <lib name="cmesh_noigl/1.0.0">
+		<sublib name="eigen/0.0.2"/>
+        <sublib name="cgal/0.0.2"/>
+        <sublib name="clipper/0.0.2"/>
+		<sublib name="tbb/0.0.2"/>
+    </lib>
     <lib name="fmesh/0.0.2">
         <sublib name="cmesh/0.0.2"/>
 		<sublib name="freetype/0.0.2"/>
