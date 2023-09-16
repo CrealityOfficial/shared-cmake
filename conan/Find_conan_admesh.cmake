@@ -1,5 +1,5 @@
 # nestplacer target
-__cc_find(Eigen)
-__cc_find(Boost)
+__cc_find(eigen)
+__cc_find(boost_header)
 
 __conan_import(admesh lib)
