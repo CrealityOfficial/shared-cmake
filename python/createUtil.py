@@ -2,6 +2,8 @@ import os
 import sys, getopt
 import tempfile
 import shutil
+from pathlib import Path
+
 from xml.etree import ElementTree as ET
 
 def toDotID(name, version):
@@ -28,14 +30,29 @@ def create_base_libs_from_xml(base_graph_file):
         subs[lib.attrib["name"]] = subss
     return subs
     
-def create_libs_from_txt(graph_file):
-    file = open(graph_file, 'r')
-    
+def get_txt_libs(file_name):
     libs = []
-    contents = file.readlines()
-    for content in contents:
-        libs.append(content.rstrip())
-    file.close()
+    with open(file_name, 'r') as file:
+        contents = file.readlines()
+        for content in contents:
+            libs.append(content.rstrip())
+            
+        print("{0} load recipes: {1}".format(file_name, libs))
+        file.close()    
+    return libs
+    
+def create_libs_from_txt(graph_file):
+    libs = get_txt_libs(Path(graph_file))
+    children = Path(graph_file).parent.iterdir()
+    for idx, element in enumerate(children):    
+        if element.is_dir():
+            child_graph_file = element.joinpath('graph.txt')
+            #print("create_libs_from_txt -> load {0}".format(child_graph_file))
+            
+            if child_graph_file.exists() == True:
+                sub_libs = get_txt_libs(child_graph_file)
+                libs.extend(sub_libs)
+        
     return libs
 
 def collect_unique_libs(subs, libs):

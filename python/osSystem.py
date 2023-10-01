@@ -5,6 +5,7 @@ import shutil
 import createUtil
 
 Global_Debug = False
+Global_conan = True
 
 def mkdirs(path_dir):
     if not os.path.exists(path_dir):
@@ -21,6 +22,9 @@ def working_path_from_ci(path):
     return path[0:-8]
     
 def conan_install(working_path, project_path, channel):
+    if Global_conan == False:
+        return
+        
     conan_file = project_path + '/conanfile.txt'
     graph_file = working_path + '/graph.txt'
     base_graph_file = working_path + '/cmake/conan/graph/libs.xml'
@@ -91,7 +95,7 @@ def conan_cmake():
     
     work_type = 'win'
     try:
-        opts, args = getopt.getopt(argv, '-d-t:')
+        opts, args = getopt.getopt(argv, '-d-c-t:')
         print("getopt.getopt -> :" + str(opts))
     except getopt.GetoptError:
         print("create.py -t <type>")
@@ -102,7 +106,10 @@ def conan_cmake():
         if opt in ('-d'):
             global Global_Debug
             Global_Debug = True
-                
+        if opt in ('-c'):
+            global Global_conan
+            Global_conan = False
+            
     if work_type == 'win':
         win_conan_cmake(working_path, 'desktop/win')
     if work_type == 'opensource-win':
