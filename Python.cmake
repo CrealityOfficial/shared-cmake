@@ -43,3 +43,8 @@ macro(__copy_python_pyc)
 		)
 
 endmacro()
+
+macro(__wrap_python_target target)
+	set_target_properties(${target} PROPERTIES DEBUG_POSTFIX "_d")
+	set_target_properties(${target} PROPERTIES SUFFIX ".pyd")
+endmacro()
