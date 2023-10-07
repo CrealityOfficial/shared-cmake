@@ -447,4 +447,7 @@
     </lib>
 	<lib name="data_polygon/0.0.1"/>
 	<lib name="testdata_format_check/0.0.1"/>
+    <lib name="wrapper_base/0.0.1">
+		<sublib name="boost/0.0.2"/>
+    </lib>
 </workspace>
