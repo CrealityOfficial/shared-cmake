@@ -160,6 +160,7 @@ function(__add_real_target target type)
 			list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__vld.cpp)
 		endif()
 		
+		
 		message(STATUS "add test __add_real_target ${target}-----------------------> ${type}")
 		
 		if(target_SOURCE_FOLDER)
@@ -192,6 +193,9 @@ function(__add_real_target target type)
 		endif()
 			
 		if(${type} STREQUAL "exe")
+			if(RENDER_DOC_ENABLED)
+				list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__renderdoc.cpp)
+			endif()
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		elseif(${type} STREQUAL "winexe")
 			add_executable(${target} WIN32 ${target_SOURCE} ${ExtraSrc})

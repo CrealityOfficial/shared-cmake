@@ -101,6 +101,10 @@ if(CXX_VLD)
 	__enable_vld()
 endif()
 
+if(RENDER_DOC)
+	include(RenderDoc)
+endif()
+
 macro(__enable_cxdef)
 	if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/cxdef)
 		message(FATAL_ERROR "not exist cxdef ${CMAKE_CURRENT_SOURCE_DIR}/cxdef")
