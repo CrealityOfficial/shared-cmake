@@ -28,6 +28,8 @@ macro(__use_python)
 		message(STATUS "Python3 Release LIBRARIES : ${Python3_LIBRARIES_RELEASE}")
 		#__import_target(Python3 dll)
 		set(PYTHON_LIBRARY Python3)
+		
+		set(PYTHON_MODULES "${CMAKE_SOURCE_DIR}/cmake/pmodules/")
 	else()
 		message(STATUS "Can't find Python3.")
 	endif()
