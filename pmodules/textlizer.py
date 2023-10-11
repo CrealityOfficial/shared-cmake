@@ -14,10 +14,10 @@ class Textlizer():
         with source_path.open('r', encoding='utf8') as source_file:
             content = source_file.read()
             with dest_path.open('w', encoding='utf8') as dest_file:
-                dest_file.write('const char {}[] = {{'.format(source_path.stem))
+                dest_file.write('const unsigned char {}[] = {{'.format(source_path.stem))
                 for c in content:
                     dest_file.write('{},'.format(ord(c)))
-                dest_file.write('};')
+                dest_file.write('\'\\0\'};')
                 
                 dest_file.close()
                 
