@@ -451,16 +451,16 @@
 		<sublib name="boost/0.0.2"/>
     </lib>
     <lib name="crslice/0.0.4">
-		<sublib "cxlog/0.0.2"/>
-		<sublib "trimesh2/0.0.3"/>
-		<sublib "stb/0.0.2"/>
-		<sublib "rapidjson/1.0.0"/>
-		<sublib "polyclipping/0.0.1"/>
-		<sublib "boost/0.0.2"/>
-		<sublib "eigen/0.0.2"/>
-		<sublib "cereal/0.0.1"/>
-		<sublib "admesh/0.0.1"/>
-		<sublib "tbb/0.0.2"/>
-		<sublib "clipper2/0.0.1"/>
+		<sublib name="cxlog/0.0.2"/>
+		<sublib name="trimesh2/0.0.3"/>
+		<sublib name="stb/0.0.2"/>
+		<sublib name="rapidjson/1.0.0"/>
+		<sublib name="polyclipping/0.0.1"/>
+		<sublib name="boost/0.0.2"/>
+		<sublib name="eigen/0.0.2"/>
+		<sublib name="cereal/0.0.1"/>
+		<sublib name="admesh/0.0.1"/>
+		<sublib name="tbb/0.0.2"/>
+		<sublib name="clipper2/0.0.1"/>
     </lib>
 </workspace>
