@@ -1,6 +1,6 @@
-import pw_trimesh
+import mix_global
 
-class Tracer(pw_trimesh.TTracer):
+class Tracer(mix_global.TTracer):
     #def __init__(self):
     #    super(pw_trimesh.TTracer, self).__init__()
         

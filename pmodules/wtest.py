@@ -1,12 +1,9 @@
 import ccglobal
 t = ccglobal.Tracer()
 
-import pw_trimesh
-tt = pw_trimesh.TTracer()
-
+import mix_io
 fileName = "C:\\Users\\anoob\\code\\data\\model\\cylinder.STL"
-print(pw_trimesh.load(fileName, tt))
-print(pw_trimesh.load(fileName, t))
+print(mix_io.load(fileName, t))
     
 # ## test derived
 #
