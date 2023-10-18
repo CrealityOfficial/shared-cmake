@@ -21,7 +21,7 @@ class CMake():
         suffix = 'win32-build/build/'
         self.project_path = self.source_path.joinpath(suffix)
         if not self.project_path.exists():
-            self.project_path.mkdir()
+            self.project_path.mkdir(parents=True, exist_ok=True)
             
     def print(self):
         print("system : {}".format(self.system))
