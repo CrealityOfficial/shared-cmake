@@ -103,7 +103,7 @@ namespace ccglobal
 		}
 	}
 
-	void cxndSaveStr(std::fstream& out, const std::string& str)
+	inline void cxndSaveStr(std::fstream& out, const std::string& str)
 	{
 		int size = (int)str.size();
 		cxndSaveT(out, size);
