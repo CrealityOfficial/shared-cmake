@@ -91,5 +91,24 @@ namespace ccglobal
 		if (num > 0)
 			out.write((const char*)&vecs.at(0), num * sizeof(T));
 	}
+
+	inline void cxndLoadStr(std::fstream& in, std::string& str)
+	{
+		int size = 0;
+		cxndLoadT(in, size);
+		if (size > 0)
+		{
+			str.resize(size);
+			in.read(str.data(), size);
+		}
+	}
+
+	void cxndSaveStr(std::fstream& out, const std::string& str)
+	{
+		int size = (int)str.size();
+		cxndSaveT(out, size);
+		if(size > 0)
+			out.write(str.c_str(), size);
+	}
 }
 #endif // CCGLOBAL_SERIAL_H
