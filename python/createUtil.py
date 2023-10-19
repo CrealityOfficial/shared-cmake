@@ -42,7 +42,7 @@ def get_txt_libs(file_name):
     return libs
     
 def create_libs_from_txt(graph_file):
-    libs = get_txt_libs(Path(graph_file))
+    libs = get_txt_libs(str(Path(graph_file)))
     children = Path(graph_file).parent.iterdir()
     for idx, element in enumerate(children):    
         if element.is_dir():
@@ -50,7 +50,7 @@ def create_libs_from_txt(graph_file):
             #print("create_libs_from_txt -> load {0}".format(child_graph_file))
             
             if child_graph_file.exists() == True:
-                sub_libs = get_txt_libs(child_graph_file)
+                sub_libs = get_txt_libs(str(child_graph_file))
                 libs.extend(sub_libs)
         
     return libs
