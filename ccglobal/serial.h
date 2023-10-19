@@ -99,7 +99,7 @@ namespace ccglobal
 		if (size > 0)
 		{
 			str.resize(size);
-			in.read(str.data(), size);
+			in.read((char*)str.data(), size);
 		}
 	}
 
