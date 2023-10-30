@@ -111,4 +111,28 @@ namespace ccglobal
 			out.write(str.c_str(), size);
 	}
 }
+
+#define cxndLoadComplexVectorT(in, vecs) \
+{ \
+	int num = 0; \
+	ccglobal::cxndLoadT(in, num);  \
+	if (num > 0) \
+	{ \
+		vecs.resize(num); \
+		for (int i = 0; i < num; ++i) \
+			_load(in, vecs.at(i)); \
+	} \
+}
+
+#define cxndSaveComplexVectorT(out, vecs) \
+{ \
+	int num = (int)vecs.size(); \
+	ccglobal::cxndSaveT(out, num); \
+	if (num > 0) \
+	{ \
+		for (int i = 0; i < num; ++i) \
+			_save(out, vecs.at(i)); \
+	} \
+}
+
 #endif // CCGLOBAL_SERIAL_H
