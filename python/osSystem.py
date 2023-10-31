@@ -3,6 +3,7 @@ import sys, getopt
 import tempfile
 import shutil
 import createUtil
+import ParamPackUtil
 
 Global_Debug = False
 Global_conan = True
@@ -94,6 +95,7 @@ def conan_cmake():
     print("[cmake/ci] working path :" + working_path)
     
     work_type = 'win'
+    build_type = 'Alpha'
     try:
         opts, args = getopt.getopt(argv, '-d-c-t:')
         print("getopt.getopt -> :" + str(opts))
@@ -128,3 +130,4 @@ def conan_cmake():
         mac_conan_cmake(working_path, 'opensource/mac')
     else:
         pass
+    ParamPackUtil.downloadParamPack(working_path, build_type)
