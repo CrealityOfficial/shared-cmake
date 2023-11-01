@@ -9,7 +9,7 @@ echo "build"
 rem rd /s /q build
 if not exist build md build
 if exist build\CMakeCache.txt del build\CMakeCache.txt
-python cmake\ci\conan-cmake.py -t jwin
+python cmake\ci\conan-cmake.py -t jwin -b %BUILD_TYPE%
 
 git show-ref %TAG_NAME% | awk -F ' ' '{print $1}' >cmmid
 set /p CMMID=<cmmid
