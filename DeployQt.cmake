@@ -165,6 +165,10 @@ function(__macdeployqt target)
 				-always-overwrite -qmldir="${QML_ENTRY_DIR}"
 			COMMENT "Deploying Qt...qml:${QML_ENTRY_DIR}"
 		)
+        add_custom_command(TARGET ${target} POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_directory "${Qt5Core_DIR}/../../../plugins/renderers/" "$<TARGET_FILE_DIR:${target}>/../PlugIns/renderers/"
+            COMMENT "Copy Render plugin $<TARGET_FILE_DIR:${target}>/renderers/"
+        )
 	endif()
 endfunction()
 
