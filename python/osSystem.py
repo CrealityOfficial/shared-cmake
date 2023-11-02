@@ -97,7 +97,7 @@ def conan_cmake():
     work_type = 'win'
     build_type = 'Alpha'
     try:
-        opts, args = getopt.getopt(argv, '-d-c-t:')
+        opts, args = getopt.getopt(argv, '-d-c-t-b:')
         print("getopt.getopt -> :" + str(opts))
     except getopt.GetoptError:
         print("create.py -t <type>")
@@ -111,6 +111,8 @@ def conan_cmake():
         if opt in ('-c'):
             global Global_conan
             Global_conan = False
+        if opt in ('-b'):
+            build_type = arg
             
     if work_type == 'win':
         win_conan_cmake(working_path, 'desktop/win')
