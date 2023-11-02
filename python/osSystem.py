@@ -97,7 +97,7 @@ def conan_cmake():
     work_type = 'win'
     build_type = 'Alpha'
     try:
-        opts, args = getopt.getopt(argv, '-d-c-t-b:')
+        opts, args = getopt.getopt(argv, '-d-c-t:-b:')
         print("getopt.getopt -> :" + str(opts))
     except getopt.GetoptError:
         print("create.py -t <type>")
