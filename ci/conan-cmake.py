@@ -7,5 +7,6 @@ if __name__ == "__main__":
     import osSystem
     osSystem.conan_cmake()
     
+    sys.path.append(sys.path[0] + '/../pmodules/')
     import ShaderBinarization
     ShaderBinarization.exec()
