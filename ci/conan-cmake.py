@@ -7,4 +7,5 @@ if __name__ == "__main__":
     import osSystem
     osSystem.conan_cmake()
     
-    
+    import ShaderBinarization
+    ShaderBinarization.exec()
