@@ -123,12 +123,15 @@ def traverse_directory(dir_path, operate_func, parameter):
             operate_func(parameter, dir_path, file)
       
 ##### main #####        
-def exec():
+def exec(project_path = ''):
+    if project_path == '':
+        project_path = sys.path[0].replace("\\", "/") + "/../../win32-build/build"
     base_directory = sys.path[0].replace("\\", "/") + "/../../shader_entity/shaders"
+        
     GL3_input_path = base_directory + "/gl/3.3"
-    GL3_output_path = base_directory + "/GL.code"
+    GL3_output_path = project_path + "/shader_entity/GL.code"
     GLES2_input_path = base_directory + "/gles/3"
-    GLES2_output_path = base_directory + "/GL.code"
+    GLES2_output_path = project_path + "/shader_entity/GL.code"
     
     gl3_shader_binarization = shader_binarization_t("gl3.0", "")
     traverse_directory(GL3_input_path, add_shader, gl3_shader_binarization)

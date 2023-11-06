@@ -5,8 +5,8 @@ if __name__ == "__main__":
     sys.path.append(sys.path[0] + '/../python/')
 
     import osSystem
-    osSystem.conan_cmake()
+    project_path = osSystem.conan_cmake()
     
     sys.path.append(sys.path[0] + '/../pmodules/')
     import ShaderBinarization
-    ShaderBinarization.exec()
+    ShaderBinarization.exec(project_path)
