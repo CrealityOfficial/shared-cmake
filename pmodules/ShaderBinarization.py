@@ -144,4 +144,7 @@ def exec(project_path = ''):
     gl3_shader_binarization.out_program_def(GL3_output_path, "a")
 
 if __name__ == "__main__":
-    exec()
+    if len(sys.argv) > 1:
+        exec(sys.argv[1])
+    else:
+        exec()
