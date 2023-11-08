@@ -5,6 +5,22 @@ set BUILD_TYPE=%3
 set SIGIN=%4
 set CUSTOM_TYPE=%5
 
+set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (
+  call %VSENV%
+  goto :build
+) else (echo "not find vs in" %VSENV%)
+
+set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (
+  call %VSENV%
+  goto :build
+) else (echo "not find vs in" %VSENV%)
+
+set VSENV="D:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+if exist %VSENV% (call %VSENV% ) else (exit /B)
+
+:build
 echo "build"
 rem rd /s /q build
 if not exist build md build
