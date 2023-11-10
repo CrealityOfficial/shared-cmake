@@ -63,12 +63,10 @@ class shader_binarization_t:
         
     def out_program_def(self, out_path, format):
         program_def_map = {}
-        c_shader_name = ""
         for i in range(0, len(self.shader_names)):
             shader_name = self.shader_names[i]
             shader_type = self.shader_types[i]
-            if c_shader_name != shader_name:
-                c_shader_name = shader_name
+            if (shader_name in program_def_map) == False:
                 program_def_map[shader_name] = [-1, -1, -1, -1, -1]
                 
             if shader_type == "vert":
