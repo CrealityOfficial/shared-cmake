@@ -101,8 +101,9 @@ def conan_cmake():
     
     work_type = 'win'
     build_type = 'Alpha'
+    app_name = ''
     try:
-        opts, args = getopt.getopt(argv, '-d-c-t:-b:')
+        opts, args = getopt.getopt(argv, '-d-c-t:-b:-n:')
         print("getopt.getopt -> :" + str(opts))
     except getopt.GetoptError:
         print("create.py -t <type>")
@@ -118,6 +119,8 @@ def conan_cmake():
             Global_conan = False
         if opt in ('-b'):
             build_type = arg
+        if opt in ('-n'):
+            app_name = arg
             
     project_path = ''
     if work_type == 'win':
@@ -138,5 +141,6 @@ def conan_cmake():
         project_path = mac_conan_cmake(working_path, 'opensource/mac')
     else:
         pass
-    ParamPackUtil.downloadParamPack(working_path, build_type)
+    if app_name == 'Creality_Print':
+        ParamPackUtil.downloadParamPack(working_path, build_type)
     return project_path

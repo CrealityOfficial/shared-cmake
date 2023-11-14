@@ -65,7 +65,7 @@ def downloadParamPack(working_path, build_type) -> None:
                 print(tmpdirname)
                 open(tmpdirname, 'wb+').write(r.content)
                 with zipfile.ZipFile(tmpdirname, 'r') as zObject: 
-                    zObject.extractall(path=os.path.join(default_path, "ParamPack", unique_printer_name))
+                    zObject.extractall(path=os.path.join(default_path, "parampack", unique_printer_name))
         else:
             print("get parampack cloud error")
     except Exception as e:
