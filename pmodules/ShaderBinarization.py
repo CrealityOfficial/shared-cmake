@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import sys;
-from pathlib import Path
 
 ##### class #####
 class file_info_t:
@@ -125,17 +124,17 @@ def traverse_directory(dir_path, operate_func, parameter):
 def exec(project_path = ''):
     print("shader binarization begin.")
     
-    script_path = sys.path[0]
+    script_path = sys.path[0].replace("\\", "/")
     if project_path == '':
         print("using default path.")
-        project_path = Path(script_path) / ("../../win32-build/build")
-    print("project path: " + str(project_path))
+        project_path = script_path + "/../../win32-build/build"
+    print("project path: " + project_path)
     
-    base_directory = Path(script_path) / ("../../shader_entity/shaders")
-    GL3_input_path = str(base_directory / "gl/3.3")
-    GL3_output_path = str(project_path / "shader_entity/GL.code")
-    GLES2_input_path = str(base_directory / "gles/3")
-    GLES2_output_path = str(project_path / "shader_entity/GL.code")
+    base_directory = script_path + "/../../shader_entity/shaders"
+    GL3_input_path = base_directory + "/gl/3.3"
+    GL3_output_path = project_path + "/shader_entity/GL.code"
+    GLES2_input_path = base_directory + "/gles/3"
+    GLES2_output_path = project_path + "/shader_entity/GL.code"
     print("gl3 shader directory: " + GL3_input_path)
     print("gles shader directory: " + GLES2_input_path)
     print("output: " + GL3_output_path)
