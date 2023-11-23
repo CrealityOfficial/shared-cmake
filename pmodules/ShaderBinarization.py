@@ -131,6 +131,9 @@ def exec(project_path = ''):
     print("project path: " + project_path)
     
     base_directory = script_path + "/../../shader_entity/shaders"
+    if os.path.exists(base_directory) == False:
+        return
+    
     GL3_input_path = base_directory + "/gl/3.3"
     GL3_output_path = project_path + "/shader_entity/GL.code"
     GLES2_input_path = base_directory + "/gles/3"
