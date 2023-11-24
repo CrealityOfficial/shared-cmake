@@ -40,7 +40,18 @@ class AutoTestBench():
         
     def reset_working_directory(self):
         osSystem.cd(str(self.bin_path))
-    
+        
+    def ListFilesToList(self, dir,file,wildcard,recursion):
+    exts = wildcard.split(" ")
+    for root, subdirs, files in os.walk(dir):
+        for name in files:
+            for ext in exts:
+                if(name.endswith(ext)):
+                    file.append(name + "\n")
+                    break
+        if(not recursion):
+            break
+            
     def execute(self, name, tests):
         datas = []
         for test in tests:
