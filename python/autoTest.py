@@ -47,7 +47,7 @@ class AutoTestBench():
             for name in files:
                 for ext in exts:
                     if(name.endswith(ext)):
-                        file.append(name + "\n")
+                        file.append(name)
                         break
             if(not recursion):
                 break
