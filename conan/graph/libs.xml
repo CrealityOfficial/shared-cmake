@@ -443,13 +443,16 @@
         <sublib name="curl/0.0.2"/>
 		<sublib name="zlib/0.0.2"/>
     </lib>
+	<lib name="msbase/0.0.2">
+		<sublib name="trimesh2/0.0.3"/>
+	</lib>
     <lib name="topomesh/0.0.1">
         <sublib name="trimesh2/0.0.3"/>
 		<sublib name="clipper/0.0.2"/>
 		<sublib name="eigen/0.0.2"/>
     </lib>
     <lib name="topomesh/0.0.2">
-        <sublib name="trimesh2/0.0.3"/>
+        <sublib name="msbase/0.0.2"/>
 		<sublib name="clipper/0.0.2"/>
 		<sublib name="eigen/0.0.2"/>
     </lib>
