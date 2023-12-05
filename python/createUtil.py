@@ -321,6 +321,8 @@ def get_channel_from_type(name):
         channel = 'desktop/linux'
     if name == 'mac':
         channel = 'desktop/mac'
+    if name == 'mac-arm64':
+        channel = 'desktop/mac-arm64'
     if name == 'opensource-linux':
         channel = 'opensource/linux'
     if name == 'opensource-mac':
@@ -338,4 +340,6 @@ def get_profile_from_type(name):
         profile = 'linux'
     if name == 'mac' or name == 'opensource-mac':
         profile = 'mac'
+    if name == 'mac-arm64':
+        profile = 'mac-arm64'
     return profile    
