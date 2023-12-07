@@ -1,6 +1,8 @@
 import sys
 import os
 import platform
+import tempfile
+import shutil
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -14,16 +16,18 @@ class Conan():
     '''
     def __init__(self, cpath):
         self.system = platform.system()
-        self.cmake_path = Path(cpath)   
-        self.xml_file = self.cmake_path.joinpath("/conan/graph/libs.xml")
-        self.conan_path = self.cmake_path.joinpath("/conan/")
-        self.whole_libs = _create_whole_libs()
+        self.cmake_path = Path(cpath).resolve()   
+        self.xml_file = self.cmake_path.joinpath('conan', 'graph', 'libs.xml')
+        self.conan_path = self.cmake_path.joinpath('conan')
+        
+        print('conan context : cmake_path {}, xml_file {}, conan_path {}'.format(str(self.cmake_path), str(self.xml_file), str(self.conan_path)))
+        self.whole_libs = self._create_whole_libs()
         
     '''
     load whole libs from conan/graph/libs.xml
     '''    
     def _create_whole_libs(self):
-        tree = ET.parse(self.xml_file)
+        tree = ET.parse(str(self.xml_file))
         root = tree.getroot()
         
         libs = root.findall("lib")
@@ -77,7 +81,7 @@ class Conan():
     '''
     def _collect_libs_from_txt(self, file_name):
         libs = []
-        with open(file_name, 'r') as file:
+        with open(str(file_name), 'r') as file:
             contents = file.readlines()
             for content in contents:
                 libs.append(content.rstrip())
@@ -91,7 +95,7 @@ class Conan():
     it will interate the children directory
     '''
     def _collect_libs_from_root_txt(self, graph_file):
-        libs = _collect_libs_from_txt(Path(graph_file))
+        libs = self._collect_libs_from_txt(Path(graph_file))
         children = Path(graph_file).parent.iterdir()
         for idx, element in enumerate(children):    
             if element.is_dir():
@@ -99,7 +103,7 @@ class Conan():
                 #print("create_libs_from_txt -> load {0}".format(child_graph_file))
                 
                 if child_graph_file.exists() == True:
-                    sub_libs = _collect_libs_from_txt(child_graph_file)
+                    sub_libs = self._collect_libs_from_txt(child_graph_file)
                     libs.extend(sub_libs)
             
         return libs
@@ -116,7 +120,7 @@ class Conan():
     '''
     def _collect_chain_sub_libs(self, recipe):
         result = []
-        subs = libDict
+        subs = self.whole_libs
         
         first = subs[recipe];
         second = []
@@ -141,7 +145,7 @@ class Conan():
     channel 
     '''
     def _create_one_conan_recipe(self, recipe, channel, upload):
-        if recipe not in libDict:
+        if recipe not in self.whole_libs:
             return
             
         segs = recipe.split('/')
@@ -152,13 +156,13 @@ class Conan():
             name = segs[0]
             version = segs[1]
 
-        if '{}/{}'.format(name, version) not in libDict:
+        if '{}/{}'.format(name, version) not in self.whole_libs:
             return
             
         directory = str(self.conan_path)
         profile = self._profile()
         user_channel = channel
-        subLibs = _collect_chain_sub_libs(recipe)
+        subLibs = self._collect_chain_sub_libs(recipe)
         
         with tempfile.TemporaryDirectory() as temp_directory:
             print("[conan DEBUG] created temporary directory ", temp_directory)
@@ -208,7 +212,7 @@ class Conan():
     '''
     def _create_conan_recipes(self, recipes, channel, upload):
         for recipe in recipes:
-            _create_one_conan_recipe(self, recipe, channel, upload)
+            self._create_one_conan_recipe(recipe, channel, upload)
     
     '''
     type [linux mac win opensource-mac opensource-win opensource-linux]
@@ -253,7 +257,7 @@ class Conan():
         return 'win'    
         
     '''
-    api , create from one, patches, subs, whole
+    api , create from one, patches, subs, whole, project
     '''
     def create_from_patch_file(self, file_name, channel_name, upload):
         subs = self._collect_libs_from_txt(file_name)
@@ -261,7 +265,7 @@ class Conan():
 
     def create_from_subs_file(self, file_name, channel_name, upload):
         subs = self._collect_libs_from_txt(file_name)
-        seq_subs = self._collect_sequece_libs(libDict, subs)
+        seq_subs = self._collect_sequece_libs(self.whole_libs, subs)
         self._create_conan_recipes(seq_subs, self._channel(channel_name), upload)
         
     def create_one(self, recipe, channel_name, upload):
@@ -270,5 +274,12 @@ class Conan():
         self._create_conan_recipes(libs, self._channel(channel_name), upload)
         
     def create_whole(self, channel_name, upload):
-        libs = self._collect_sequece_libs(libDict, libDict.keys())
+        libs = self._collect_sequece_libs(self.whole_libs, self.whole_libs.keys())
         self._create_conan_recipes(libs, self._channel(channel_name), upload)
+        
+    def create_project_conan(self, channel_name, upload):
+        graph_txt = self.cmake_path.joinpath('..', 'graph.txt')
+        subs = self._collect_libs_from_root_txt(graph_txt)    
+        libs = self._collect_sequece_libs(self.whole_libs, subs)
+        #print('project conans : {}'.format(libs))
+        self._create_conan_recipes(libs, self._channel(channel_name), upload)        
