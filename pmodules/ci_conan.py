@@ -3,6 +3,7 @@ import os
 import platform
 import tempfile
 import shutil
+import subprocess
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -216,7 +217,15 @@ class Conan():
     
     def _remove_packages(self, recipes, channel):
         for recipe in recipes:
-            self._create_one_conan_recipe(recipe, channel, upload)        
+            name = '{0}@{1}'.format(recipe, channel)
+            if self._check_package(name) == True:
+                print('remove package [{}]'.format(name))
+                cmd = 'conan remove {0} -f'.format(name)        
+                os.system(cmd)
+    
+    def _check_package(self, name):
+        ret, value = subprocess.getstatusoutput('conan search {0}'.format(name))   
+        return True if ret == 0 else False
         
     '''
     type [linux mac win opensource-mac opensource-win opensource-linux]

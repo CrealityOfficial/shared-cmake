@@ -50,3 +50,6 @@ if install_conan == True:
     
 print("cmake args : {}".format(cmake_args))       
 cmake.build(cmake_args)
+
+import ShaderBinarization
+ShaderBinarization.exec(str(cmake.project_path))

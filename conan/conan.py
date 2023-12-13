@@ -40,17 +40,17 @@ for opt, arg in opts:
             upload = True
             
 if recipe_type.startswith('recipe'):
-    conan.create_one(recipe_type.split('|')[1], channel_name, upload)
+    conan.create_one(recipe_type.split('|')[1], channel_name, upload, True)
     
 if recipe_type.startswith('patch'):
-    conan.create_from_patch_file(recipe_type.split('|')[1], channel_name, upload)
+    conan.create_from_patch_file(recipe_type.split('|')[1], channel_name, upload, True)
     
 if recipe_type.startswith('subs'):
-    conan.create_from_subs_file(recipe_type.split('|')[1], channel_name, upload)
+    conan.create_from_subs_file(recipe_type.split('|')[1], channel_name, upload, True)
     
 if recipe_type.startswith('whole'):
-    conan.create_whole(channel_name, upload)
+    conan.create_whole(channel_name, upload, True)
     
 if recipe_type.startswith('project'):
-    conan.create_project_conan(channel_name, upload)
+    conan.create_project_conan(channel_name, upload, True)
     
