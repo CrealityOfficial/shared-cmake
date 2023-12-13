@@ -13,19 +13,22 @@ class CMake():
     '''
     def __init__(self, origin):
         self.system = platform.system()
-        self.source_path = Path(origin)
+        self.source_path = Path(origin).resolve()
         
         self._calculate_project_path()     
         
     def _calculate_project_path(self):
         suffix = 'win32-build/build/'
         self.project_path = self.source_path.joinpath(suffix)
+        self.cmake_path = self.source_path.joinpath('cmake')
+        
         if not self.project_path.exists():
             self.project_path.mkdir(parents=True, exist_ok=True)
             
     def print(self):
         print("system : {}".format(self.system))
         print("source root : {}".format(self.source_path))
+        print("cmake root : {}".format(self.cmake_path))
         print("project path : {}".format(self.project_path))
         
     def build(self, cmake_args):

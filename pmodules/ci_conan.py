@@ -22,7 +22,7 @@ class Conan():
         
         print('conan context : cmake_path {}, xml_file {}, conan_path {}'.format(str(self.cmake_path), str(self.xml_file), str(self.conan_path)))
         self.whole_libs = self._create_whole_libs()
-        
+            
     '''
     load whole libs from conan/graph/libs.xml
     '''    
@@ -255,7 +255,18 @@ class Conan():
         if self.system == 'Darwin':
             return 'mac'
         return 'win'    
-        
+    
+    def _write_conan_file(self, conanfile, libs, channel):
+        '''
+        write conan file
+        '''
+        file = open(str(conanfile), "w")
+        file.write('[requires]\n')
+        for lib in libs:
+            file.write(lib + '@' + channel)
+            file.write('\n')
+        file.close()
+    
     '''
     api , create from one, patches, subs, whole, project
     '''
@@ -282,4 +293,25 @@ class Conan():
         subs = self._collect_libs_from_root_txt(graph_txt)    
         libs = self._collect_sequece_libs(self.whole_libs, subs)
         #print('project conans : {}'.format(libs))
-        self._create_conan_recipes(libs, self._channel(channel_name), upload)        
+        self._create_conan_recipes(libs, self._channel(channel_name), upload)
+
+    def install(self, dest_path, source_path, channel_name='desktop'):
+        conan_file = Path(dest_path).joinpath('conanfile.txt')
+        graph_file = Path(source_path).joinpath('graph.txt')
+        
+        print('conan install output : {}'.format(str(conan_file)))
+        print('conan install input : {}'.format(str(graph_file)))
+        subs = self._collect_libs_from_root_txt(graph_file)    
+        libs = self._collect_sequece_libs(self.whole_libs, subs)
+        self._write_conan_file(conan_file, libs, self._channel(channel_name))
+        
+        project_path = str(Path(dest_path))
+        if os.path.exists(str(conan_file)):
+            cmd = 'conan install  -g cmake_multi -s build_type=Debug\
+                    --build=missing -if {0} {1} --update'\
+                        .format(project_path, project_path)
+            os.system(cmd)
+            cmd = 'conan install -g cmake_multi -s build_type=Release\
+                    --build=missing -if {0} {1} --update'\
+                        .format(project_path, project_path)
+            os.system(cmd)         
