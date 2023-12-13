@@ -44,7 +44,7 @@ if install_conan == True:
     print('cmake install conan channel: {}'.format(conan_channel))
     conan = ci_conan.Conan(cmake.cmake_path)
     if build_conan == True:
-        conan.create_project_conan(conan_channel, upload_conan)
+        conan.create_project_conan(conan_channel, upload_conan, True)
     
     conan.install(cmake.project_path, cmake.source_path, conan_channel)
     

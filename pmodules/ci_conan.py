@@ -214,6 +214,10 @@ class Conan():
         for recipe in recipes:
             self._create_one_conan_recipe(recipe, channel, upload)
     
+    def _remove_packages(self, recipes, channel):
+        for recipe in recipes:
+            self._create_one_conan_recipe(recipe, channel, upload)        
+        
     '''
     type [linux mac win opensource-mac opensource-win opensource-linux]
     '''
@@ -270,29 +274,43 @@ class Conan():
     '''
     api , create from one, patches, subs, whole, project
     '''
-    def create_from_patch_file(self, file_name, channel_name, upload):
+    def create_from_patch_file(self, file_name, channel_name, upload, remove=False):
         subs = self._collect_libs_from_txt(file_name)
+        if remove == True:
+            self._remove_packages(subs, self._channel(channel_name))
+            
         self._create_conan_recipes(subs, self._channel(channel_name), upload)
 
-    def create_from_subs_file(self, file_name, channel_name, upload):
+    def create_from_subs_file(self, file_name, channel_name, upload, remove=False):
         subs = self._collect_libs_from_txt(file_name)
         seq_subs = self._collect_sequece_libs(self.whole_libs, subs)
+        if remove == True:
+            self._remove_packages(seq_subs, self._channel(channel_name))
+            
         self._create_conan_recipes(seq_subs, self._channel(channel_name), upload)
         
-    def create_one(self, recipe, channel_name, upload):
+    def create_one(self, recipe, channel_name, upload, remove=False):
         libs = []
         libs.append(recipe)
+        if remove == True:
+            self._remove_packages(libs, self._channel(channel_name))        
+ 
         self._create_conan_recipes(libs, self._channel(channel_name), upload)
         
-    def create_whole(self, channel_name, upload):
+    def create_whole(self, channel_name, upload, remove=False):
         libs = self._collect_sequece_libs(self.whole_libs, self.whole_libs.keys())
+        if remove == True:
+            self._remove_packages(libs, self._channel(channel_name)) 
+            
         self._create_conan_recipes(libs, self._channel(channel_name), upload)
         
-    def create_project_conan(self, channel_name, upload):
+    def create_project_conan(self, channel_name, upload, remove=False):
         graph_txt = self.cmake_path.joinpath('..', 'graph.txt')
         subs = self._collect_libs_from_root_txt(graph_txt)    
         libs = self._collect_sequece_libs(self.whole_libs, subs)
-        #print('project conans : {}'.format(libs))
+        if remove == True:
+            self._remove_packages(libs, self._channel(channel_name)) 
+            
         self._create_conan_recipes(libs, self._channel(channel_name), upload)
 
     def install(self, dest_path, source_path, channel_name='desktop'):
