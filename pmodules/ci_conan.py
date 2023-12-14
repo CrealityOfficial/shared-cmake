@@ -223,6 +223,7 @@ class Conan():
     channel 
     '''
     def _create_conan_recipes(self, recipes, channel, upload):
+        print('_create_conan_recipes : {0}'.format(recipes))
         for recipe in recipes:
             self._create_one_conan_recipe(recipe, channel, upload)
     
@@ -295,7 +296,7 @@ class Conan():
     api , create from one, patches, subs, whole, project
     '''
     def create_from_patch_file(self, file_name, channel_name, upload, remove=False):
-        subs = self._collect_libs_from_txt(file_name)
+        subs = self._collect_libs_from_txt(str(self.conan_path) + file_name)
         if remove == True:
             self._remove_packages(subs, self._channel(channel_name))
             
@@ -341,6 +342,8 @@ class Conan():
         print('conan install input : {}'.format(str(graph_file)))
         subs = self._collect_libs_from_root_txt(graph_file)    
         libs = self._collect_sequece_libs(self.whole_libs, subs)
+        print('conan install recipes : {0}'.format(str(libs)))
+        
         self._write_conan_file(conan_file, libs, self._channel(channel_name))
         
         project_path = str(Path(dest_path))
