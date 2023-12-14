@@ -35,6 +35,6 @@
 #else
 #define SYSTEM_TICK(x) (void)0
 #define SYSTEM_RESET() (void)0
-#define SYSTEM_DATA_COPY() (void)0
+#define SYSTEM_DATA_COPY() system_support::IdenDataSnap()
 #endif
 #endif // __CC_GLOBAL_SHINY__

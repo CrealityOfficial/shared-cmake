@@ -3,8 +3,10 @@ import sys, getopt
 import tempfile
 import shutil
 import createUtil
+import ParamPackUtil
 
 Global_Debug = False
+Global_conan = True
 
 def mkdirs(path_dir):
     if not os.path.exists(path_dir):
@@ -21,6 +23,9 @@ def working_path_from_ci(path):
     return path[0:-8]
     
 def conan_install(working_path, project_path, channel):
+    if Global_conan == False:
+        return
+        
     conan_file = project_path + '/conanfile.txt'
     graph_file = working_path + '/graph.txt'
     base_graph_file = working_path + '/cmake/conan/graph/libs.xml'
@@ -45,6 +50,7 @@ def win_conan_cmake(working_path, channel):
     cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path + debug_str + ' -T host=x64 -A x64'
         
     os.system(cmd)
+    return project_path
     
 def emcc_conan_cmake(working_path):
     project_path = working_path + '/emcc-build/build/'
@@ -54,6 +60,7 @@ def emcc_conan_cmake(working_path):
     conan_install(working_path, project_path, 'desktop/emscripten')
     cmd = 'emcmake cmake -G "MinGW Makefiles" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
     os.system(cmd)
+    return project_path
     
 def linux_conan_cmake(working_path, channel):
     project_path = working_path + '/linux-build/build/'
@@ -64,6 +71,7 @@ def linux_conan_cmake(working_path, channel):
     cmd = 'cmake -G "Ninja" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
         
     os.system(cmd)
+    return project_path
     
 def mac_conan_cmake(working_path, channel):
     project_path = working_path + '/mac-build/build/'
@@ -74,6 +82,7 @@ def mac_conan_cmake(working_path, channel):
     cmd = 'cmake -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path
         
     os.system(cmd)
+    return project_path
     
 def jwin_conan_cmake(working_path):
     project_path = working_path + '/build/'
@@ -83,6 +92,7 @@ def jwin_conan_cmake(working_path):
     conan_install(working_path, project_path, 'desktop/win')
     cmd = 'cmake -G "Ninja" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path   
     os.system(cmd)  
+    return project_path
     
 def conan_cmake():
     argv = sys.argv[1:]
@@ -90,8 +100,10 @@ def conan_cmake():
     print("[cmake/ci] working path :" + working_path)
     
     work_type = 'win'
+    build_type = 'Alpha'
+    app_name = ''
     try:
-        opts, args = getopt.getopt(argv, '-d-t:')
+        opts, args = getopt.getopt(argv, '-d-c-t:-b:-n:')
         print("getopt.getopt -> :" + str(opts))
     except getopt.GetoptError:
         print("create.py -t <type>")
@@ -102,22 +114,35 @@ def conan_cmake():
         if opt in ('-d'):
             global Global_Debug
             Global_Debug = True
-                
+        if opt in ('-c'):
+            global Global_conan
+            Global_conan = False
+        if opt in ('-b'):
+            build_type = arg
+        if opt in ('-n'):
+            app_name = arg
+            
+    project_path = ''
     if work_type == 'win':
-        win_conan_cmake(working_path, 'desktop/win')
+        project_path = win_conan_cmake(working_path, 'desktop/win')
     if work_type == 'opensource-win':
-        win_conan_cmake(working_path, 'opensource/win')
+        project_path = win_conan_cmake(working_path, 'opensource/win')
     if work_type == 'jwin':
-        jwin_conan_cmake(working_path)
+        project_path = jwin_conan_cmake(working_path)
     elif work_type == 'linux':
-        linux_conan_cmake(working_path, 'desktop/linux')
+        project_path = linux_conan_cmake(working_path, 'desktop/linux')
     elif work_type == 'opensource-linux':
-        linux_conan_cmake(working_path, 'opensource/linux')
+        project_path = linux_conan_cmake(working_path, 'opensource/linux')
     elif work_type == 'emcc':
-        emcc_conan_cmake(working_path)
+        project_path = emcc_conan_cmake(working_path)
     elif work_type == 'mac':
-        mac_conan_cmake(working_path, 'desktop/mac')
+        project_path = mac_conan_cmake(working_path, 'desktop/mac')
+    elif work_type == 'mac-arm64':
+        project_path = mac_conan_cmake(working_path, 'desktop/mac-arm64')
     elif work_type == 'opensource-mac':
-        mac_conan_cmake(working_path, 'opensource/mac')
+        project_path = mac_conan_cmake(working_path, 'opensource/mac')
     else:
         pass
+    if app_name == 'Creality_Print':
+        ParamPackUtil.downloadParamPack(working_path, build_type)
+    return project_path

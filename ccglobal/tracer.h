@@ -24,6 +24,7 @@ namespace ccglobal
 		virtual void failed(const char* msg) = 0;
 		virtual void success() = 0;
 		virtual void message(int msg, int ext1, int ext2, bool differentThread) {};
+		virtual void variadicFormatMessage(int msg, ...) {}
 
 		void formatMessage(const char* format, ...)
 		{

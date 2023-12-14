@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 #include <functional>
 
 #include "ccglobal/log.h"
@@ -90,5 +91,48 @@ namespace ccglobal
 		if (num > 0)
 			out.write((const char*)&vecs.at(0), num * sizeof(T));
 	}
+
+	inline void cxndLoadStr(std::fstream& in, std::string& str)
+	{
+		int size = 0;
+		cxndLoadT(in, size);
+		if (size > 0)
+		{
+			str.resize(size);
+			in.read((char*)str.data(), size);
+		}
+	}
+
+	inline void cxndSaveStr(std::fstream& out, const std::string& str)
+	{
+		int size = (int)str.size();
+		cxndSaveT(out, size);
+		if(size > 0)
+			out.write(str.c_str(), size);
+	}
 }
+
+#define cxndLoadComplexVectorT(in, vecs) \
+{ \
+	int num = 0; \
+	ccglobal::cxndLoadT(in, num);  \
+	if (num > 0) \
+	{ \
+		vecs.resize(num); \
+		for (int i = 0; i < num; ++i) \
+			_load(in, vecs.at(i)); \
+	} \
+}
+
+#define cxndSaveComplexVectorT(out, vecs) \
+{ \
+	int num = (int)vecs.size(); \
+	ccglobal::cxndSaveT(out, num); \
+	if (num > 0) \
+	{ \
+		for (int i = 0; i < num; ++i) \
+			_save(out, vecs.at(i)); \
+	} \
+}
+
 #endif // CCGLOBAL_SERIAL_H

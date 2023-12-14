@@ -151,7 +151,7 @@ include(Dependency)
 #target function
 function(__add_real_target target type)
 	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT;FORCE_DLL" ""
-		"SOURCE;INC;LIB;ILIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUT_NAME;MAC_GUI_IDENTIFIER;QML_PLUGINS;INTERFACE_DEF" ${ARGN})
+		"SOURCE;INC;LIB;ILIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUT_NAME;MAC_GUI_IDENTIFIER;QML_PLUGINS;INTERFACE_DEF;GENERATED_SOURCE" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
@@ -159,6 +159,7 @@ function(__add_real_target target type)
 		if(CXX_VLD_ENABLED STREQUAL "ON")
 			list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__vld.cpp)
 		endif()
+		
 		
 		message(STATUS "add test __add_real_target ${target}-----------------------> ${type}")
 		
@@ -173,6 +174,9 @@ function(__add_real_target target type)
 		if(target_QTQRC AND TARGET Qt${QT_VERSION_MAJOR}::Core)
 			qt5_add_resources(QT_QRC ${target_QTQRC})
 			list(APPEND target_SOURCE ${QT_QRC})
+		endif()
+		if(target_GENERATED_SOURCE)
+			list(APPEND target_SOURCE ${target_GENERATED_SOURCE})
 		endif()
 		
 		if(target_OPENMP)
@@ -192,6 +196,9 @@ function(__add_real_target target type)
 		endif()
 			
 		if(${type} STREQUAL "exe")
+			if(RENDER_DOC_ENABLED)
+				list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__renderdoc.cpp)
+			endif()
 			add_executable(${target} ${target_SOURCE} ${ExtraSrc})
 		elseif(${type} STREQUAL "winexe")
 			add_executable(${target} WIN32 ${target_SOURCE} ${ExtraSrc})
