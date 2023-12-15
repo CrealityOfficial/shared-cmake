@@ -215,8 +215,13 @@ class Conan():
             os.system(release_cmd)
         
         if upload == True:
-            conan_upload(recipe, channel)
-            
+            self._conan_upload(recipe, user_channel)
+
+    def _conan_upload(self, recipe, channel):
+        ref = recipe + '@' + channel
+        cmd = 'conan upload ' + ref + ' -r artifactory --all -c'
+        os.system(cmd)
+    
     '''
     create one conan recipe package
     recipe xxx/x.x.x
