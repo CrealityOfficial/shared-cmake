@@ -16,15 +16,16 @@ class Conan():
     conan_path  //conan directory
     use_external_rep  //use github repository
     '''
-    def __init__(self, cpath):
+    def __init__(self, cpath, logger):
         self.system = platform.system()
         self.cmake_path = Path(cpath).resolve()   
         self.xml_file = self.cmake_path.joinpath('conan', 'graph', 'libs.xml')
         self.conan_path = self.cmake_path.joinpath('conan')
         self.external_cmake_rep = 'https://github.com/CrealityOfficial/shared-cmake.git'
         self.use_external_rep = False
+        self.logger = logger
         
-        print('conan context : cmake_path {}, xml_file {}, conan_path {}'.format(str(self.cmake_path), str(self.xml_file), str(self.conan_path)))
+        self.logger.info('conan context : cmake_path {}, xml_file {}, conan_path {}'.format(str(self.cmake_path), str(self.xml_file), str(self.conan_path)))
         self.whole_libs = self._create_whole_libs()
     
     def set_use_external_rep(self, use):
@@ -93,7 +94,7 @@ class Conan():
             for content in contents:
                 libs.append(content.rstrip())
                 
-            print("{0} load recipes: {1}".format(file_name, libs))
+            self.logger.info("{0} load recipes: {1}".format(file_name, libs))
             file.close()    
         return libs
         
@@ -107,7 +108,6 @@ class Conan():
         for idx, element in enumerate(children):    
             if element.is_dir():
                 child_graph_file = element.joinpath('graph.txt')
-                #print("create_libs_from_txt -> load {0}".format(child_graph_file))
                 
                 if child_graph_file.exists() == True:
                     sub_libs = self._collect_libs_from_txt(child_graph_file)
@@ -152,7 +152,7 @@ class Conan():
     channel 
     '''
     def _create_one_conan_recipe(self, recipe, channel, upload):
-        print('_create_one_conan_recipe : [{0}]'.format(recipe))
+        self.logger.warning('_create_one_conan_recipe : [{0}]'.format(recipe))
         if recipe not in self.whole_libs:
             return
             
@@ -173,8 +173,7 @@ class Conan():
         subLibs = self._collect_chain_sub_libs(recipe)
         
         with tempfile.TemporaryDirectory() as temp_directory:
-            print("[conan DEBUG] created temporary directory ", temp_directory)
-            print("[conan DEBUG] temp directory exist ", os.path.exists(temp_directory))
+            self.logger.info("created temporary directory {0}".format(temp_directory))
             
             create_script_src = directory + "/scripts/conanfile.py"
             cmake_script_src = directory + "/scripts/CMakeLists.txt"
@@ -228,7 +227,7 @@ class Conan():
     channel 
     '''
     def _create_conan_recipes(self, recipes, channel, upload):
-        print('_create_conan_recipes : {0}'.format(recipes))
+        self.logger.info('_create_conan_recipes : {0}'.format(recipes))
         for recipe in recipes:
             self._create_one_conan_recipe(recipe, channel, upload)
     
@@ -236,7 +235,7 @@ class Conan():
         for recipe in recipes:
             name = '{0}@{1}'.format(recipe, channel)
             if self._check_package(name) == True:
-                print('remove package [{}]'.format(name))
+                self.logger.warning('remove package [{}]'.format(name))
                 cmd = 'conan remove {0} -f'.format(name)        
                 os.system(cmd)
     
