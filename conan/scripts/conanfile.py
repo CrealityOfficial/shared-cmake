@@ -91,8 +91,8 @@ class MainEntry(ConanFile):
         if self.settings.build_type == "Debug":
             cmake.definitions["CMAKE_BUILD_TYPE"] = "Debug"
             
-        if self.settings.os != "Windows":
-            cmake.parallel = False
+        #if self.settings.os != "Windows":
+        #    cmake.parallel = False
             
         for d in self.defs :
             cmake.definitions[d] = "ON"
