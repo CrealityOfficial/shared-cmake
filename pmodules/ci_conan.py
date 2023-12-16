@@ -3,7 +3,7 @@ import os
 import platform
 import tempfile
 import shutil
-import subprocess
+import executor
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
@@ -120,7 +120,7 @@ class Conan():
     '''
     def _conan_upload(self, recipe, channel):
         cmd = 'conan upload {}@{} -r artifactory --all -c'.format(recipe, channel)
-        os.system(cmd)
+        executor.run(cmd, False, self.logger)
     
     '''
     collect chain sub libs of one recipe
@@ -146,16 +146,8 @@ class Conan():
         
         return result
     
-    '''
-    create one conan recipe package
-    recipe xxx/x.x.x
-    channel 
-    '''
-    def _create_one_conan_recipe(self, recipe, channel, upload):
-        self.logger.warning('_create_one_conan_recipe : [{0}]'.format(recipe))
-        if recipe not in self.whole_libs:
-            return
-            
+    def _create_conan_1(self, recipe, profile, channel, sub_libs, temp_directory):
+        directory = str(self.conan_path)
         segs = recipe.split('/')
         name = 'xxx'
         version = 'x.x.x'
@@ -167,59 +159,59 @@ class Conan():
         if '{}/{}'.format(name, version) not in self.whole_libs:
             return
             
-        directory = str(self.conan_path)
-        profile = self._profile()
-        user_channel = channel
-        subLibs = self._collect_chain_sub_libs(recipe)
+        self.logger.info("created temporary directory {0}".format(temp_directory))
         
+        create_script_src = directory + "/scripts/conanfile.py"
+        cmake_script_src = directory + "/scripts/CMakeLists.txt"
+        meta_data_src = directory + "/recipes/" + name + "/conandata.yml";
+        shutil.copy2(create_script_src, temp_directory)
+        shutil.copy2(meta_data_src, temp_directory)
+        shutil.copy2(cmake_script_src, temp_directory)
+        
+        meta_data_dest = temp_directory + "/conandata.yml"
+        meta_file = open(meta_data_dest, "a")
+        
+        meta_file.write("version: " + "\"" + version + "\"\n")
+        meta_file.write("name: " + "\"" + name + "\"\n")
+        meta_file.write("channel: " + "\"" + channel + "\"\n")
+        if self.use_external_rep == True:
+            meta_file.write("use_external: true\n")
+            meta_file.write("cmake_rep: \"{0}\"\n".format(self.external_cmake_rep))
+                        
+        meta_file.close()
+        cmake_script_dest = temp_directory + "/CMakeLists.txt"
+        cmake_file = open(cmake_script_dest, "a")
+        cmake_file.write("add_subdirectory(" + name + ")")
+        cmake_file.close()       
+        sublibs_dest = temp_directory + "/requires.txt"
+        subLibs_file = open(sublibs_dest, "w")
+        for sub in sub_libs:
+            subLibs_file.write(sub)
+            subLibs_file.write('\n')
+        subLibs_file.close() 
+        
+        #os.system("pause")
+        debug_cmd = 'conan create --profile {} -s build_type=Debug {} {}'.format(profile, temp_directory, channel)
+        executor.run(debug_cmd, True, self.logger)
+        release_cmd = 'conan create --profile {} -s build_type=Release {} {}'.format(profile, temp_directory, channel)        
+        executor.run(release_cmd, True, self.logger)             
+        
+    '''
+    create one conan recipe package
+    recipe xxx/x.x.x
+    channel 
+    '''
+    def _create_one_conan_recipe(self, recipe, channel, upload):
+        self.logger.info('_create_one_conan_recipe : [{0}]'.format(recipe))
+        if recipe not in self.whole_libs:
+            return
+            
+        subLibs = self._collect_chain_sub_libs(recipe)
         with tempfile.TemporaryDirectory() as temp_directory:
-            self.logger.info("created temporary directory {0}".format(temp_directory))
-            
-            create_script_src = directory + "/scripts/conanfile.py"
-            cmake_script_src = directory + "/scripts/CMakeLists.txt"
-            meta_data_src = directory + "/recipes/" + name + "/conandata.yml";
-            shutil.copy2(create_script_src, temp_directory)
-            shutil.copy2(meta_data_src, temp_directory)
-            shutil.copy2(cmake_script_src, temp_directory)
-            
-            meta_data_dest = temp_directory + "/conandata.yml"
-            meta_file = open(meta_data_dest, "a")
-            if channel == 'jwin':
-                user_channel = 'desktop/win'
-                meta_file.write("generator: Ninja\n")
-                
-            meta_file.write("version: " + "\"" + version + "\"\n")
-            meta_file.write("name: " + "\"" + name + "\"\n")
-            meta_file.write("channel: " + "\"" + user_channel + "\"\n")
-            if self.use_external_rep == True:
-                meta_file.write("use_external: true\n")
-                meta_file.write("cmake_rep: \"{0}\"\n".format(self.external_cmake_rep))
-                            
-            meta_file.close()
-            cmake_script_dest = temp_directory + "/CMakeLists.txt"
-            cmake_file = open(cmake_script_dest, "a")
-            cmake_file.write("add_subdirectory(" + name + ")")
-            cmake_file.close()       
-            sublibs_dest = temp_directory + "/requires.txt"
-            subLibs_file = open(sublibs_dest, "w")
-            for sub in subLibs:
-                subLibs_file.write(sub)
-                subLibs_file.write('\n')
-            subLibs_file.close() 
-            
-            #os.system("pause")
-            debug_cmd = 'conan create --profile {} -s build_type=Debug {} {}'.format(profile, temp_directory, user_channel)
-            os.system(debug_cmd)
-            release_cmd = 'conan create --profile {} -s build_type=Release {} {}'.format(profile, temp_directory, user_channel)        
-            os.system(release_cmd)
+            self._create_conan_1(recipe, self._profile(), channel, subLibs, temp_directory)
         
         if upload == True:
-            self._conan_upload(recipe, user_channel)
-
-    def _conan_upload(self, recipe, channel):
-        ref = recipe + '@' + channel
-        cmd = 'conan upload ' + ref + ' -r artifactory --all -c'
-        os.system(cmd)
+            self._conan_upload(recipe, channel)
     
     '''
     create one conan recipe package
@@ -240,8 +232,7 @@ class Conan():
                 os.system(cmd)
     
     def _check_package(self, name):
-        ret, value = subprocess.getstatusoutput('conan search {0}'.format(name))   
-        return True if ret == 0 else False
+        return executor.run('conan search {0}'.format(name))   
         
     '''
     type [linux mac win opensource-mac opensource-win opensource-linux]
@@ -338,25 +329,31 @@ class Conan():
             
         self._create_conan_recipes(libs, self._channel(channel_name), upload)
 
-    def install(self, dest_path, source_path, channel_name='desktop'):
-        conan_file = Path(dest_path).joinpath('conanfile.txt')
-        graph_file = Path(source_path).joinpath('graph.txt')
-        
-        print('conan install output : {}'.format(str(conan_file)))
-        print('conan install input : {}'.format(str(graph_file)))
-        subs = self._collect_libs_from_root_txt(graph_file)    
-        libs = self._collect_sequece_libs(self.whole_libs, subs)
-        print('conan install recipes : {0}'.format(str(libs)))
-        
+    def _install(self, dest_path, libs, channel_name, update_from_remote=False):
+        self.logger.info('conan install recipes : {0}'.format(str(libs)))
+        conan_file = Path(dest_path).joinpath('conanfile.txt')  
+        self.logger.info('conan install output : {}'.format(str(conan_file)))        
         self._write_conan_file(conan_file, libs, self._channel(channel_name))
+        
+        update_cmd = '--update' if update_from_remote else ''
         
         project_path = str(Path(dest_path))
         if os.path.exists(str(conan_file)):
-            cmd = 'conan install  -g cmake_multi -s build_type=Debug\
-                    --build=missing -if {0} {1} --update'\
-                        .format(project_path, project_path)
-            os.system(cmd)
-            cmd = 'conan install -g cmake_multi -s build_type=Release\
-                    --build=missing -if {0} {1} --update'\
-                        .format(project_path, project_path)
-            os.system(cmd)         
+            cmd = 'conan install  -g cmake_multi -s build_type=Debug --build=missing -if {0} {1} {2}'\
+                        .format(project_path, project_path, update_cmd)
+            executor.run(cmd, True, self.logger)
+            cmd = 'conan install -g cmake_multi -s build_type=Release --build=missing -if {0} {1} {2}'\
+                        .format(project_path, project_path, update_cmd)
+            executor.run(cmd, True, self.logger)
+        else:
+            self.logger.error('conan file create error {}'.format(str(conan_file)))
+        
+        
+    def install_from_txt(self, dest_path, source_path, update_from_remote=False, channel_name='desktop'):
+        graph_file = Path(source_path).joinpath('graph.txt')
+        self.logger.info('conan install input : {}'.format(str(graph_file)))
+        
+        subs = self._collect_libs_from_root_txt(graph_file)    
+        libs = self._collect_sequece_libs(self.whole_libs, subs)
+        self._install(dest_path, libs, channel_name, update_from_remote) 
+       

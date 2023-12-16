@@ -1,26 +1,52 @@
 import logging
 import tempfile
+import os
+import sys
+import pathlib
 
 def create_log(name):
     logger = logging.getLogger(name)
     logger.setLevel(logging.DEBUG)
     handler1 = logging.StreamHandler()
+    fmt1 = logging.Formatter(fmt="%(levelname)-9s %(message)s")
+    handler1.setFormatter(fmt1)
+    logger.addHandler(handler1)
     
-    dir_name = tempfile.mkdtemp(suffix=name, prefix='python_log_')
-    #文件输出
+    dir_name = get_datadir() / 'python_cache'
+    
+    try:
+        dir_name.mkdir(parents=True)
+    except OSError as error:
+        logger.info('create_log OSError {}'.format(error))
+        
     file_name = '{0}/{1}.log'.format(str(dir_name), name)
     handler2 = logging.FileHandler(filename=file_name,mode='w')
-
-    fmt1 = logging.Formatter(fmt="%(levelname)-9s - %(filename)-8s : %(lineno)s line - %(message)s")
     
     fmt2 = logging.Formatter(fmt="%(asctime)s - %(name)s - %(levelname)-9s - %(filename)-8s : %(lineno)s line - %(message)s"
-                        ,datefmt="%Y/%m/%d %H:%M:%S")
+                        ,datefmt="%H:%M:%S")
     
-    handler1.setFormatter(fmt1)
     handler2.setFormatter(fmt2)
-    logger.addHandler(handler1)
     logger.addHandler(handler2)
-
+    
     logger.info('create_log in {}'.format(file_name))
     return logger
-    
+
+def get_datadir() -> pathlib.Path:
+
+    """
+    Returns a parent directory path
+    where persistent application data can be stored.
+
+    # linux: ~/.local/share
+    # macOS: ~/Library/Application Support
+    # windows: C:/Users/<USER>/AppData/Roaming
+    """
+
+    home = pathlib.Path.home()
+
+    if sys.platform == "win32":
+        return home / "AppData/Roaming"
+    elif sys.platform == "linux":
+        return home / ".local/share"
+    elif sys.platform == "darwin":
+        return home / "Library/Application Support"
