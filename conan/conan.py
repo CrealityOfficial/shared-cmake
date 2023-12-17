@@ -64,4 +64,6 @@ if recipe_type.startswith('whole'):
     
 if recipe_type.startswith('project'):
     conan.create_project_conan(channel_name, upload, True)
-    
+
+if recipe_type.startswith('circle'):
+    conan.create_circle_conan(channel_name, upload)

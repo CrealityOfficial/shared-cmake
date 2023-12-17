@@ -25,6 +25,7 @@ def run_subprocess(cmd, logger=None):
     
 def run(cmd, forceExit=False, logger=None):
     if not logger == None:
+        print("\n ********************************************")
         logger.info('Run: {0}'.format(cmd))
     
     result = True
@@ -35,9 +36,10 @@ def run(cmd, forceExit=False, logger=None):
 
     if not logger == None:
         if result:
-            logger.info('RUN SUCCESS.\n')
+            logger.info('RUN SUCCESS.')
         else:
-            logger.error('RUN FAILED.\n')
+            logger.error('RUN FAILED.')
+        print("********************************************\n")
             
     if result == False and forceExit:       
         sys.exit(2)

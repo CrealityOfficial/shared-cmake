@@ -3,6 +3,7 @@ import tempfile
 import os
 import sys
 import pathlib
+import shutil
 
 def create_log(name):
     logger = logging.getLogger(name)
@@ -31,6 +32,12 @@ def create_log(name):
     logger.info('create_log in {}'.format(file_name))
     return logger
 
+def get_clear_temp_dir(name)->pathlib.Path:
+    dir_name = get_datadir() / name
+    shutil.rmtree(dir_name, ignore_errors=True)
+    dir_name.mkdir(parents=True, exist_ok=True) 
+    return dir_name
+    
 def get_datadir() -> pathlib.Path:
 
     """
