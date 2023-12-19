@@ -203,7 +203,7 @@ class Conan():
             meta_data_dest = temp_directory + "/conandata.yml"
             meta_file = open(meta_data_dest, "a")
             
-            meta_file.write("version: " + "\"" + version + "\"\n")
+            meta_file.write("\nversion: " + "\"" + version + "\"\n")
             meta_file.write("name: " + "\"" + name + "\"\n")
             meta_file.write("channel: " + "\"" + channel + "\"\n")
             meta_file.write('commit_id: "{}"\n'.format(commit_id))
@@ -223,7 +223,7 @@ class Conan():
                 subLibs_file.write('\n')
             subLibs_file.close() 
             
-            os.system("pause")
+            #os.system("pause")
             debug_cmd = 'conan create --profile {} -s build_type=Debug {} {}'.format(profile, temp_directory, channel)
             executor.run(debug_cmd, True, self.logger)
             release_cmd = 'conan create --profile {} -s build_type=Release {} {}'.format(profile, temp_directory, channel)        
@@ -290,7 +290,7 @@ class Conan():
             self._remove_package(recipe, channel)
     
     def _check_package(self, name):
-        return executor.run('conan search {0}'.format(name))   
+        return executor.silient_run('conan search {0}'.format(name))   
         
     '''
     type [linux mac win opensource-mac opensource-win opensource-linux]
@@ -443,15 +443,18 @@ class ConanCircleCreator():
     def _create_conan_meta(self, meta_file, name, version):
         meta = ConanMetaYml()
         meta.name = self._version_name(name, version)
-        with open(str(meta_file), encoding='utf-8') as file:          
-            lines = file.readlines()
-            for line in lines:
-                segs = line.split(':', 1)
-                if len(segs) == 2 and len(segs[1].strip()) > 0:
-                    if segs[0] == 'build_deps':                        
-                        meta.build_deps = segs[1].strip().split(',')
-                    if segs[0] == 'search_deps':
-                        meta.search_deps = segs[1].strip().split(',')
+        try:
+            with open(str(meta_file), encoding='utf-8') as file:          
+                lines = file.readlines()
+                for line in lines:
+                    segs = line.split(':', 1)
+                    if len(segs) == 2 and len(segs[1].strip()) > 0:
+                        if segs[0] == 'build_deps':                        
+                            meta.build_deps = segs[1].strip().split(',')
+                        if segs[0] == 'search_deps':
+                            meta.search_deps = segs[1].strip().split(',')
+        except Exception as error:
+            self.logger.warning(error)
         return meta
     
     def _print_meta(self, meta):
@@ -473,7 +476,10 @@ class ConanCircleCreator():
         
     def _conan_commit_id(self, name, version, channel):
         cmd = 'conan inspect --raw conan_data {}/{}@{}'.format(name, version, channel)
-        conan_datas = eval(executor.run_result(cmd))
+        result = executor.run_result(cmd)
+        if result == '' or not result.startswith('{'):    
+            result = '{}'
+        conan_datas = eval(result)
         commit_id = ''
         if 'commit_id' in conan_datas:
                 commit_id = conan_datas['commit_id']
@@ -491,10 +497,11 @@ class ConanCircleCreator():
                 'git pull origin version-{}'.format(version)
             ]
         for cmd in cmds:
-            executor.run(cmd, True, self.logger)
+            executor.run(cmd, False, self.logger)
         return cmake_rep
         
     def create_circle_recipe(self, recipe, channel):
+        self.logger.info('create_circle_recipe {}@{}'.format(recipe, channel))
         name, version = self.conan.recipe_2_name_version(recipe)
         conan_commit_id = self._conan_commit_id(name, version, channel)
         url = self.conan.get_recipe_url(name, self.conan.use_external_rep)

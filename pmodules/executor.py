@@ -45,7 +45,10 @@ def run(cmd, forceExit=False, logger=None):
         sys.exit(2)
         
     return result
-        
+
+def silient_run(cmd):
+    return run_subprocess(cmd)
+    
 def run_result(cmd):
     retcode, ret = subprocess.getstatusoutput(cmd)
     return ret if retcode == 0 else ''
