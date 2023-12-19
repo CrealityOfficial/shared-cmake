@@ -46,4 +46,6 @@ def run(cmd, forceExit=False, logger=None):
         
     return result
         
-    
+def run_result(cmd):
+    retcode, ret = subprocess.getstatusoutput(cmd)
+    return ret if retcode == 0 else ''
