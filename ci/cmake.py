@@ -24,10 +24,11 @@ build_conan = False
 upload_conan = False
 use_external_rep = False
 update_from_remote = False
+use_conandata = True
 conan_channel = 'desktop'
 #parse args
 try:
-    opts, args = getopt.getopt(sys.argv[1:], '-c-b-u-r-e',['cmake_args=', 'channel_name='])
+    opts, args = getopt.getopt(sys.argv[1:], '-c-b-u-r-e-p',['cmake_args=', 'channel_name='])
     logger.info("getopt.getopt -> : {}".format(str(opts)))
 except getopt.GetoptError:
     logger.warning("_parse_args error.")
@@ -45,6 +46,8 @@ for opt, arg in opts:
         use_external_rep = True
     if opt == '-r':
         update_from_remote = True
+    if opt == '-p':
+        use_conandata = False
     if opt == '--channel_name':
         conan_channel = arg 
 
@@ -58,7 +61,10 @@ if install_conan == True:
     if build_conan == True:
         conan.create_project_conan(conan_channel, upload_conan, True)
     
-    conan.install_from_txt(cmake.project_path, cmake.source_path, update_from_remote, conan_channel)
+    if use_conandata == True:
+        conan.install_from_conandata_file(cmake.project_path, cmake.source_path, update_from_remote, conan_channel)
+    else:
+        conan.install_from_txt(cmake.project_path, cmake.source_path, update_from_remote, conan_channel)
     
 logger.info("cmake args : {}".format(cmake_args))       
 cmake.build(cmake_args)
