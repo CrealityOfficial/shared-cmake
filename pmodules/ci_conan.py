@@ -334,7 +334,9 @@ class Conan():
             self._remove_package(recipe, channel)
     
     def _check_package(self, name):
-        return executor.silient_run('conan search {0}'.format(name))   
+        ret = executor.run_result('conan search {0}'.format(name))
+        #self.logger.info('_check_package result {}'.format(ret))
+        return len(ret) > 0 and not 'There are no packages' in ret;
         
     '''
     type [linux mac win opensource-mac opensource-win opensource-linux]
@@ -556,7 +558,8 @@ class ConanCircleCreator():
         rep_commit_id = self._rep_commit_id(cmake_rep)
         
         self.logger.info('{} ^^ {}'.format(conan_commit_id, rep_commit_id))
-        if self.conan._check_package('{}@{}'.format(recipe, channel)) and conan_commit_id == rep_commit_id:
+        recipe_exist = self.conan._check_package('{}@{}'.format(recipe, channel))
+        if recipe_exist == True and conan_commit_id == rep_commit_id:
             self.logger.info('{} is updated'.format(recipe))
             return
    

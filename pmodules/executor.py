@@ -23,13 +23,13 @@ def run_subprocess(cmd, logger=None):
 
     return True if p.returncode == 0 else False
     
-def run(cmd, forceExit=False, logger=None):
+def run(cmd, forceExit=False, logger=None, useSubprocess=False):
     if not logger == None:
         print("\n ********************************************")
         logger.info('Run: {0}'.format(cmd))
     
     result = True
-    if True:
+    if useSubprocess == False:
         result = run_system(cmd, logger)
     else:
         result = run_subprocess(cmd, logger)
