@@ -78,6 +78,21 @@ class Conan():
             
             subs[lib.attrib["name"]] = subss
         return subs
+    
+    def _collect_unique_libs(self, libDict, lib):
+        self.logger.info('_collect_unique_libs {} from {}'.format(lib, libDict))
+        result = []
+        first = libDict[lib]
+        second = []
+        while len(first) > 0:
+            for sub in first:
+                if not sub in result:
+                    result.append(sub)
+                if sub in libDict:
+                    second += libDict[sub]
+            first = list(set(second))
+            second = []
+        return result
         
     '''
     input patches, output libs chain 
@@ -230,6 +245,7 @@ class Conan():
         success = True
         with tempfile.TemporaryDirectory() as temp_directory:                
             self.logger.info("created temporary directory {0}".format(temp_directory))
+            self.logger.info("_create_from_internal_template subs {}".format(sub_libs))
             
             try:
                 shutil.copy2(conan_file, temp_directory)
@@ -265,9 +281,9 @@ class Conan():
             
             #os.system("pause")
             debug_cmd = 'conan create --profile {} -s build_type=Debug {} {}'.format(profile, temp_directory, channel)
-            success = success and executor.run(debug_cmd, False, self.logger)
+            success = success and executor.run(debug_cmd, True, self.logger)
             release_cmd = 'conan create --profile {} -s build_type=Release {} {}'.format(profile, temp_directory, channel)        
-            success = success and executor.run(release_cmd, False, self.logger)            
+            success = success and executor.run(release_cmd, True, self.logger)            
         return success
         
     def _create_conan_1(self, recipe, profile, channel, sub_libs):
@@ -295,8 +311,6 @@ class Conan():
         cmake_file = directory + "/scripts/CMakeLists.txt"
         success = self._create_from_internal_template(name, version, self._profile(), channel, sub_libs, conan_file, cmake_file, meta_file, commit_id)
         self.logger.info(success)
-        if success == False:
-            self._remove_package('{}/{}'.format(name, version), channel)
         
     '''
     create one conan recipe package
@@ -326,17 +340,20 @@ class Conan():
     
     def _remove_package(self, recipe, channel):
         name = '{0}@{1}'.format(recipe, channel)
-        if self._check_package(name) == True:
+        if self._check_package(name, False) == True:
             executor.run('conan remove {0} -f'.format(name))
                 
     def _remove_packages(self, recipes, channel):
         for recipe in recipes:
             self._remove_package(recipe, channel)
     
-    def _check_package(self, name):
+    def _check_package(self, name, checkBinary=True):
         ret = executor.run_result('conan search {0}'.format(name))
         #self.logger.info('_check_package result {}'.format(ret))
-        return len(ret) > 0 and not 'There are no packages' in ret;
+        if checkBinary == True:
+            return len(ret) > 0 and not 'There are no packages' in ret
+        else:
+            return len(ret) > 0
         
     '''
     type [linux mac win opensource-mac opensource-win opensource-linux]
@@ -471,27 +488,60 @@ class Conan():
 
 class ConanMetaYml:
     def __init__(self):
-        self.name = 'xxx/x.x.x'
+        self.name = 'xxx'
+        self.version = 'xxx'
+        self.name_version = 'xxx/x.x.x'
         self.build_deps = []
         self.search_deps = []
+        self.cmake_rep = Path()
+        self.meta_yml = Path()
+        self.rep_commit_id = ''
         
 class ConanCircleCreator():
     def __init__(self, conan):
         self.conan = conan
         self.logger = conan.logger
         self.temp_directory = log.get_clear_temp_dir("circle_conan_cache")
+        self.dep_graph = {}
+        self.conan_metas = {}
+
         self.logger.info('ConanCircleCreator : {}'.format(str(self.temp_directory)))
         
     def create_circle_recipes(self, recipes, channel, upload):
         for recipe in recipes:
+            self.start_cache(recipe, channel)
+        for key, recipe_meta in self.conan_metas.items():    
+            self._print_meta(recipe_meta)
+        for recipe in recipes:
             self.create_circle_recipe(recipe, channel, upload)
 
+    def start_cache(self, recipe, channel):
+        if not recipe in self.conan_metas:        
+            self.logger.info('create_circle_recipe {}@{}'.format(recipe, channel))
+            name, version = self.conan.recipe_2_name_version(recipe)
+            url = self.conan.get_recipe_url(name, self.conan.use_external_rep)
+            cmake_rep = self._sparse_checkout(url, name, version)
+            rep_commit_id = self._rep_commit_id(cmake_rep)
+            meta_yml = cmake_rep / 'conandata.yml'
+            recipe_meta = self._create_conan_meta(str(meta_yml), name, version)
+            recipe_meta.cmake_rep = cmake_rep
+            recipe_meta.rep_commit_id = rep_commit_id
+            recipe_meta.meta_yml = meta_yml
+            
+            self.conan_metas[recipe] = recipe_meta
+            self.dep_graph[recipe] = recipe_meta.build_deps
+
+            for sub in recipe_meta.build_deps:
+                self.start_cache(sub, channel)        
+        
     def _version_name(self, name, version):
         return '{}-{}'.format(name, version)
         
     def _create_conan_meta(self, meta_file, name, version):
         meta = ConanMetaYml()
-        meta.name = self._version_name(name, version)
+        meta.name_version = self._version_name(name, version)
+        meta.name = name
+        meta.version = version
         try:
             with open(str(meta_file), encoding='utf-8') as file:          
                 lines = file.readlines()
@@ -507,10 +557,12 @@ class ConanCircleCreator():
         return meta
     
     def _print_meta(self, meta):
-        self.logger.warning('{}*************************'.format(meta.name))
+        self.logger.warning('{}*************************'.format(meta.name_version))
         self.logger.warning('build_deps : {}'.format(meta.build_deps))
         self.logger.warning('search_deps : {}'.format(meta.search_deps))
-        self.logger.warning('***********************************\n'.format(meta.name))
+        self.logger.warning('cmake_rep : {}'.format(str(meta.cmake_rep)))
+        self.logger.warning('rep_commit_id : {}'.format(meta.rep_commit_id))
+        self.logger.warning('{}***********************************\n'.format(meta.name_version))
         
     def _clone_meta_json(self, url, output, version):
         cmd = 'git archive --remote={0} --output={1} version-{2} conandata.yml'.format(url, output, version)
@@ -550,32 +602,20 @@ class ConanCircleCreator():
         return cmake_rep
         
     def create_circle_recipe(self, recipe, channel, upload):
-        self.logger.info('create_circle_recipe {}@{}'.format(recipe, channel))
-        name, version = self.conan.recipe_2_name_version(recipe)
-        conan_commit_id = self._conan_commit_id(name, version, channel)
-        url = self.conan.get_recipe_url(name, self.conan.use_external_rep)
-        cmake_rep = self._sparse_checkout(url, name, version)
-        rep_commit_id = self._rep_commit_id(cmake_rep)
-        
-        self.logger.info('{} ^^ {}'.format(conan_commit_id, rep_commit_id))
+        meta = self.conan_metas[recipe]
+        conan_commit_id = self._conan_commit_id(meta.name, meta.version, channel)
+        self.logger.info('{} {} ^^ {}'.format(recipe, conan_commit_id, meta.rep_commit_id))
         recipe_exist = self.conan._check_package('{}@{}'.format(recipe, channel))
-        if recipe_exist == True and conan_commit_id == rep_commit_id:
+        if recipe_exist == True and conan_commit_id == meta.rep_commit_id:
             self.logger.info('{} is updated'.format(recipe))
             return
-   
-        #conandata_yml_zip = self.temp_directory / '{}-{}.zip'.format(name, version)
-        #self._clone_meta_json(url, str(conandata_yml_zip), version)
-        #recipe_directory = self.temp_directory/self._version_name(name, version)
-        #shutil.unpack_archive(str(conandata_yml_zip), str(recipe_directory), 'zip')
-        meta_yml = cmake_rep / 'conandata.yml'
-        recipe_meta = self._create_conan_meta(str(meta_yml), name, version)
-        self._print_meta(recipe_meta)
-        
-        for sub in recipe_meta.build_deps:
+         
+        for sub in meta.build_deps:
             self.create_circle_recipe(sub, channel, upload)
             
-        meta_file = str(meta_yml) 
-        self.conan.create_conan_2(name, version, channel, recipe_meta.build_deps, meta_file, rep_commit_id)
+        meta_file = str(meta.meta_yml) 
+        self.conan.create_conan_2(meta.name, meta.version, channel, self.conan._collect_unique_libs(self.dep_graph, recipe),\
+meta_file, meta.rep_commit_id)
         if upload == True:
             self.conan._conan_upload(recipe, channel)
         
