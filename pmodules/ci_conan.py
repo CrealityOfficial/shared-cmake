@@ -181,6 +181,7 @@ class Conan():
                             libs = segs[1].strip().split(',')
         except Exception as error:
             self.logger.warning(error) 
+        self.logger.info("collect libs {} from {}".format(libs, str(file_name)))
         return libs
         
     '''
