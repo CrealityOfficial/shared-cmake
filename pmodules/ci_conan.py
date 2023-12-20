@@ -230,10 +230,15 @@ class Conan():
         with tempfile.TemporaryDirectory() as temp_directory:                
             self.logger.info("created temporary directory {0}".format(temp_directory))
             
-            shutil.copy2(conan_file, temp_directory)
-            shutil.copy2(cmake_file, temp_directory)
-            shutil.copy2(meta_file, temp_directory)
-            
+            try:
+                shutil.copy2(conan_file, temp_directory)
+                shutil.copy2(cmake_file, temp_directory)
+                shutil.copy2(meta_file, temp_directory)
+            except Exception as error:
+                self.logger.warning(error)
+                exit(2)
+                return False
+                
             meta_data_dest = temp_directory + "/conandata.yml"
             meta_file = open(meta_data_dest, "a")
             
@@ -449,6 +454,9 @@ class Conan():
         else:
             self.logger.error('conan file create error {}'.format(str(conan_file)))
         
+    def install_from_conandata_file(self, dest_path, source_path, update_from_remote=False, channel_name='desktop'):
+        libs = self._collect_libs_from_conandata()
+        self._install(dest_path, libs, channel_name, update_from_remote)
         
     def install_from_txt(self, dest_path, source_path, update_from_remote=False, channel_name='desktop'):
         graph_file = Path(source_path).joinpath('graph.txt')
@@ -547,7 +555,7 @@ class ConanCircleCreator():
         rep_commit_id = self._rep_commit_id(cmake_rep)
         
         self.logger.info('{} ^^ {}'.format(conan_commit_id, rep_commit_id))
-        if conan_commit_id == rep_commit_id:
+        if self.conan._check_package('{}@{}'.format(recipe, channel)) and conan_commit_id == rep_commit_id:
             self.logger.info('{} is updated'.format(recipe))
             return
    
