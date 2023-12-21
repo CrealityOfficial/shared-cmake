@@ -26,7 +26,8 @@ class Conan():
         self.external_cmake_rep = 'https://github.com/CrealityOfficial/shared-cmake.git'
         self.use_external_rep = False
         self.logger = logger
-        
+        self.creator = ConanCircleCreator(self) 
+                
         self.logger.info('conan context : cmake_path {}, xml_file {}, conan_path {}'.format(str(self.cmake_path), str(self.xml_file), str(self.conan_path)))
         self.whole_libs = self._create_whole_libs()
         self.internal_reps = {}
@@ -79,9 +80,11 @@ class Conan():
             subs[lib.attrib["name"]] = subss
         return subs
     
-    def _collect_unique_libs(self, libDict, lib):
+    def _collect_unique_libs(self, libDict, lib, includeSelf=False):
         self.logger.info('_collect_unique_libs {} from {}'.format(lib, libDict))
         result = []
+        if includeSelf == True:
+            result.append(lib)
         first = libDict[lib]
         second = []
         while len(first) > 0:
@@ -452,8 +455,7 @@ class Conan():
 
     def create_circle_conan(self, channel_name, upload):
         libs = self._collect_libs_from_conandata()
-        creator = ConanCircleCreator(self) 
-        creator.create_circle_recipes(libs, self._channel(channel_name), upload)        
+        self.creator.create_circle_recipes(libs, self._channel(channel_name), upload)        
         
     def _install(self, dest_path, libs, channel_name, update_from_remote=False):
         self.logger.info('conan install recipes : {0}'.format(str(libs)))
@@ -475,7 +477,8 @@ class Conan():
             self.logger.error('conan file create error {}'.format(str(conan_file)))
         
     def install_from_conandata_file(self, dest_path, source_path, update_from_remote=False, channel_name='desktop'):
-        libs = self._collect_libs_from_conandata()
+        root_libs = self._collect_libs_from_conandata()
+        libs = self.creator.install_circle_recipes(root_libs, self._channel(channel_name))
         self._install(dest_path, libs, channel_name, update_from_remote)
         
     def install_from_txt(self, dest_path, source_path, update_from_remote=False, channel_name='desktop'):
@@ -503,10 +506,19 @@ class ConanCircleCreator():
         self.logger = conan.logger
         self.temp_directory = log.get_clear_temp_dir("circle_conan_cache")
         self.dep_graph = {}
+        self.search_graph = {}
         self.conan_metas = {}
 
         self.logger.info('ConanCircleCreator : {}'.format(str(self.temp_directory)))
         
+    def install_circle_recipes(self, recipes, channel):
+        libs = []
+        for recipe in recipes:
+            self.start_cache(recipe, channel)
+        for recipe in recipes:    
+            libs += self.conan._collect_unique_libs(self.search_graph, recipe, True)
+        return list(set(libs))
+    
     def create_circle_recipes(self, recipes, channel, upload):
         for recipe in recipes:
             self.start_cache(recipe, channel)
@@ -530,7 +542,8 @@ class ConanCircleCreator():
             
             self.conan_metas[recipe] = recipe_meta
             self.dep_graph[recipe] = recipe_meta.build_deps
-
+            self.search_graph[recipe] = recipe_meta.search_deps
+            
             for sub in recipe_meta.build_deps:
                 self.start_cache(sub, channel)        
         
@@ -591,6 +604,10 @@ class ConanCircleCreator():
         cmake_rep = self.temp_directory / sub_dir
         cmake_rep.mkdir(parents=True, exist_ok=True)
         os.chdir(str(cmake_rep))
+
+        if executor.run('git pull origin version-{}'.format(version), False, self.logger) == True:
+            return cmake_rep
+            
         cmds = ['git init',
                 'git config core.sparseCheckout true',
                 'echo conandata.yml >> .git/info/sparse-checkout',

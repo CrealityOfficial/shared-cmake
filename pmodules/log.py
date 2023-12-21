@@ -34,7 +34,7 @@ def create_log(name):
 
 def get_clear_temp_dir(name)->pathlib.Path:
     dir_name = get_datadir() / name
-    shutil.rmtree(dir_name, ignore_errors=True)
+    #shutil.rmtree(dir_name, ignore_errors=True)
     dir_name.mkdir(parents=True, exist_ok=True) 
     return dir_name
     

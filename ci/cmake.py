@@ -59,7 +59,7 @@ if install_conan == True:
         conan.set_use_external_rep(use_external_rep)
         
     if build_conan == True:
-        conan.create_project_conan(conan_channel, upload_conan, True)
+        conan.create_circle_conan(conan_channel, upload_conan)
     
     if use_conandata == True:
         conan.install_from_conandata_file(cmake.project_path, cmake.source_path, update_from_remote, conan_channel)
