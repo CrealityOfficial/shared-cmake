@@ -54,9 +54,7 @@ for opt, arg in opts:
 if install_conan == True:
     import ci_conan
     logger.info('cmake install conan channel: {}'.format(conan_channel))
-    conan = ci_conan.Conan(cmake.cmake_path, logger)
-    if use_external_rep == True:
-        conan.set_use_external_rep(use_external_rep)
+    conan = ci_conan.Conan(cmake.cmake_path, logger, use_external_rep)
         
     if build_conan == True:
         conan.create_circle_conan(conan_channel, upload_conan)
