@@ -10,7 +10,7 @@ set(BOOST_COMPONETS boost_filesystem
 					boost_chrono
 					)
 					
-__conan_import(boost lib COMPONENT ${BOOST_COMPONETS})
+__conan_import(boost_static lib COMPONENT ${BOOST_COMPONETS})
 
 foreach(_component ${BOOST_COMPONETS} )
 	__add_target_interface(${_component} DEF BOOST_ALL_NO_LIB)
