@@ -18,13 +18,13 @@ class Conan():
     conan_path  //conan directory
     use_external_rep  //use github repository
     '''
-    def __init__(self, cpath, logger):
+    def __init__(self, cpath, logger, use_external):
         self.system = platform.system()
         self.cmake_path = Path(cpath).resolve()   
         self.xml_file = self.cmake_path.joinpath('conan', 'graph', 'libs.xml')
         self.conan_path = self.cmake_path.joinpath('conan')
         self.external_cmake_rep = 'https://github.com/CrealityOfficial/shared-cmake.git'
-        self.use_external_rep = False
+        self.use_external_rep = use_external
         self.logger = logger
         self.creator = ConanCircleCreator(self) 
                 
@@ -255,7 +255,7 @@ class Conan():
                 shutil.copy2(cmake_file, temp_directory)
                 shutil.copy2(meta_file, temp_directory)
             except Exception as error:
-                self.logger.warning(error)
+                self.logger.error(error)
                 exit(2)
                 return False
                 
@@ -504,7 +504,10 @@ class ConanCircleCreator():
     def __init__(self, conan):
         self.conan = conan
         self.logger = conan.logger
-        self.temp_directory = log.get_clear_temp_dir("circle_conan_cache")
+        if self.conan.use_external_rep == True:
+            self.temp_directory = log.get_clear_temp_dir("circle_conan_github_cache")
+        else:
+            self.temp_directory = log.get_clear_temp_dir("circle_conan_cache")
         self.dep_graph = {}
         self.search_graph = {}
         self.conan_metas = {}

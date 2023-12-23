@@ -10,9 +10,7 @@ cmake_path = sys.path[0] + '/../'
 
 import log
 logger = log.create_log('conan')
-
 import ci_conan
-conan = ci_conan.Conan(cmake_path, logger)
 
 channel_name = 'desktop'
 
@@ -46,10 +44,8 @@ for opt, arg in opts:
     if opt in ("-u"):
         if arg == "True":
             upload = True
-
-if use_external_rep == True:
-    conan.set_use_external_rep(use_external_rep)
-    
+            
+conan = ci_conan.Conan(cmake_path, logger, use_external_rep)
 if recipe_type.startswith('recipe'):
     conan.create_one(recipe_type.split('|')[1], channel_name, upload, True)
     
