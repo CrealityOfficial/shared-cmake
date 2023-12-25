@@ -167,7 +167,7 @@
 		<sublib name="aliyunoss/0.0.2"/>
     </lib>
 	<lib name="osswrapper_static/1.0.0">
-		<sublib name="aliyunoss/0.0.2"/>
+		<sublib name="aliyunoss/1.0.0"/>
     </lib>
     <lib name="enchase/0.0.2">
         <sublib name="trimesh2/0.0.2"/>
