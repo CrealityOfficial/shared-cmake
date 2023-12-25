@@ -138,6 +138,9 @@
 	<lib name="curl/0.0.2">
         <sublib name="openssl/0.0.2"/>
     </lib>
+	<lib name="curl_static/1.0.0">
+        <sublib name="openssl/0.0.2"/>
+    </lib>
 	<lib name="sensors_analytics_sdk/0.0.1">
 		<sublib name="curl/0.0.2"/>
 		<sublib name="zlib/0.0.2"/>
@@ -157,7 +160,13 @@
     <lib name="aliyunoss/0.0.2">
 		<sublib name="curl/0.0.2"/>
     </lib>
+    <lib name="aliyunoss_static/1.0.0">
+		<sublib name="curl_static/1.0.0"/>
+    </lib>
 	<lib name="osswrapper/0.0.2">
+		<sublib name="aliyunoss/0.0.2"/>
+    </lib>
+	<lib name="osswrapper_static/1.0.0">
 		<sublib name="aliyunoss/0.0.2"/>
     </lib>
     <lib name="enchase/0.0.2">
@@ -288,7 +297,7 @@
     <lib name="muparser/0.0.1">
     </lib>
     <lib name="admesh/0.0.1">
-	    <sublib name="boost/0.0.2"/>
+	    <sublib name="boost_static/1.0.0"/>
 		<sublib name="eigen/0.0.2"/>
     </lib>
 	<lib name="libprotobuf/0.0.1">
@@ -458,6 +467,10 @@
     <lib name="cpr/0.0.2">
         <sublib name="curl/0.0.2"/>
 		<sublib name="zlib/0.0.2"/>
+    </lib>
+    <lib name="cpr_static/1.0.0">
+        <sublib name="curl_static/1.0.0"/>
+		<sublib name="zlib_static/1.0.0"/>
     </lib>
 	<lib name="msbase/0.0.2">
 		<sublib name="trimesh2/0.0.3"/>
