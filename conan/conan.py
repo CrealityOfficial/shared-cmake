@@ -25,25 +25,26 @@ project
 
 upload = False
 use_external_rep = False
+conan_channel = 'desktop'
 #parse args
 argv = sys.argv[1:]
 try:
-    opts, args = getopt.getopt(argv,"n:t:u:-e")
-except getopt.GetoptError:
-    logger.warning("create.py -n <name>")
+    opts, args = getopt.getopt(argv,"-u-e",['type=', 'channel_name='])
+except getopt.GetoptError as e:
+    logger.error(e)
     sys.exit(2)
+    
 logger.info('args {}'.format(opts))
 
 for opt, arg in opts:
-    if opt in ("-n"):
-        channel_name = arg
-    if opt in ("-t"):
+    if opt == '--channel_name':
+        conan_channel = arg 
+    if opt == '--type':
         recipe_type = arg
     if opt in ("-e"):
         use_external_rep = True
     if opt in ("-u"):
-        if arg == "True":
-            upload = True
+        upload = True
             
 conan = ci_conan.Conan(cmake_path, logger, use_external_rep)
 if recipe_type.startswith('recipe'):

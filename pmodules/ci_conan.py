@@ -435,7 +435,8 @@ class Conan():
         if remove == True:
             self._remove_packages(libs, self._channel(channel_name))        
  
-        self._create_conan_recipes(libs, self._channel(channel_name), upload)
+        self.creator.create_circle_recipes(libs, self._channel(channel_name), upload) 
+        #self._create_conan_recipes(libs, self._channel(channel_name), upload)
         
     def create_whole(self, channel_name, upload, remove=False):
         libs = self._collect_sequece_libs(self.whole_libs, self.whole_libs.keys())
