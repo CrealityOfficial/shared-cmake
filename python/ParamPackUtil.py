@@ -38,11 +38,16 @@ def downloadParamPack(working_path, build_type) -> None:
         base_url = 'https://api.crealitycloud.cn/'
     try:
         response = requests.post(
-            base_url + "api/cxy/v2/slice/profile/official/printerList", data=json.dumps({"engineVersion": "5.2.0"}), 
+            base_url + "api/cxy/v2/slice/profile/official/printerList", data=json.dumps({"engineVersion": "1.6.0"}), 
             headers=getCommonHeaders()).text
         response = json.loads(response)
         if (response["code"] == 0):
-            default_path = os.path.join(working_path, "build", "resources", "sliceconfig", "default")
+            if sys.platform.startswith('win'):
+                default_path = os.path.join(working_path, "win32-build", "build","resources", "sliceconfig", "default")
+            if sys.platform.startswith('linux'):
+                default_path = os.path.join(working_path, "linux-build", "build","resources", "sliceconfig", "default")
+            if sys.platform.startswith('darwin'):
+                default_path = os.path.join(working_path, "mac-build", "build","resources", "sliceconfig", "default")    
             file_path = os.path.join(default_path, "machineList.json")
             print(file_path)
             if os.path.exists(default_path):
