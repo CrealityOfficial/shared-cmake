@@ -43,7 +43,7 @@ def downloadParamPack(working_path, build_type) -> None:
         response = json.loads(response)
         if (response["code"] == 0):
             if sys.platform.startswith('win'):
-                default_path = os.path.join(working_path, "win32-build", "build","resources", "sliceconfig", "default")
+                default_path = os.path.join(working_path, "build", "build","resources", "sliceconfig", "default")
             if sys.platform.startswith('linux'):
                 default_path = os.path.join(working_path, "linux-build", "build","resources", "sliceconfig", "default")
             if sys.platform.startswith('darwin'):
