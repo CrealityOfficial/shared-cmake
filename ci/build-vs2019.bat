@@ -29,7 +29,11 @@ if [%6] == [] (
 ) else (
   set CUSTOM_TYPE=%6
 )
-
+if [%7] == [] (
+	set SIGIN_PACKAGE_OUT="OFF"
+) else (
+  set SIGIN_PACKAGE_OUT=%7
+)
 set APP_VER=%1
 set APP_VER=%APP_VER:~1%
 for /f "tokens=1,* delims=." %%a in ("%APP_VER%") do (
@@ -91,6 +95,7 @@ cmake ^
   -DAPPNAME=%APPNAME% ^
   -DCUSTOM_TYPE=%CUSTOM_TYPE% ^
   -DSIGN_PACKAGE=%SIGN_PACKAGE% ^
+  -DSIGIN_PACKAGE_OUT=%SIGIN_PACKAGE_OUT% ^
   ..\ || exit /b 2
 
 rem Build and install the application
