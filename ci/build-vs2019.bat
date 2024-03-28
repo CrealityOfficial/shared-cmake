@@ -95,7 +95,7 @@ cmake ^
   -DAPPNAME=%APPNAME% ^
   -DCUSTOM_TYPE=%CUSTOM_TYPE% ^
   -DSIGN_PACKAGE=%SIGN_PACKAGE% ^
-  -DSIGIN_PACKAGE_OUT=%SIGIN_PACKAGE_OUT% ^
+  -DSIGN_PACKAGE_OUT=%SIGIN_PACKAGE_OUT% ^
   ..\ || exit /b 2
 
 rem Build and install the application

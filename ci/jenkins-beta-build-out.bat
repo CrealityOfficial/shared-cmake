@@ -35,7 +35,7 @@ set /p MAXCMMID=<maxcmmid
 set /p TAGCMMID=<tagcmmid
 set /a TAGNUMB=%MAXCMMID%-%TAGCMMID%
 set TAG_NAME=%TAG_NAME%.%TAGNUMB%
-call %~dp0\build-vs2019.bat %TAG_NAME% package %BUILD_TYPE% %SIGIN% %APP_NAME% "" "OFF" || exit /b 2
+call %~dp0\build-vs2019.bat %TAG_NAME% package %BUILD_TYPE% %SIGIN% %APP_NAME% "" "ON" || exit /b 2
 set EXE_NAME=%APP_NAME%-%TAG_NAME%-win64-%BUILD_TYPE%.exe
 cd build
 "C:\curl.exe" -X POST -F file=@%EXE_NAME% http://172.20.180.14:3001/sign
