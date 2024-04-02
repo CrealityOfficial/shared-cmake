@@ -71,6 +71,18 @@ def downloadParamPack(working_path, build_type) -> None:
                 open(tmpdirname, 'wb+').write(r.content)
                 with zipfile.ZipFile(tmpdirname, 'r') as zObject: 
                     zObject.extractall(path=os.path.join(default_path, "parampack", unique_printer_name))
+                #download thumb
+                thumb_url = printer['thumbnail']
+                if thumb_url == "":
+                    continue
+                r = requests.get(thumb_url, allow_redirects=True)
+                imagedir = os.path.join(default_path, "machineImages")
+                if not os.path.exists(imagedir):
+                    os.makedirs(imagedir)
+                imagedirname = os.path.join(imagedir, unique_printer_name + '.png')
+                print(imagedirname)
+                open(imagedirname, 'wb+').write(r.content)
+
         else:
             print("get parampack cloud error")
     except Exception as e:
