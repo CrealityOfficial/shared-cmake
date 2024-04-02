@@ -79,7 +79,7 @@ def downloadParamPack(working_path, build_type) -> None:
                 imagedir = os.path.join(default_path, "machineImages")
                 if not os.path.exists(imagedir):
                     os.makedirs(imagedir)
-                imagedirname = os.path.join(imagedir, unique_printer_name + '.png')
+                imagedirname = os.path.join(imagedir, printer['printerIntName'] + '.png')
                 print(imagedirname)
                 open(imagedirname, 'wb+').write(r.content)
 
