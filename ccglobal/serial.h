@@ -110,6 +110,26 @@ namespace ccglobal
 		if(size > 0)
 			out.write(str.c_str(), size);
 	}
+
+	inline void cxndLoadStrs(std::fstream& in, std::vector<std::string>& strs)
+	{
+		int size = 0;
+		cxndLoadT(in, size);
+		if (size > 0)
+		{
+			strs.resize(size);
+			for (int i = 0; i < size; ++i)
+				cxndLoadStr(in, strs.at(i));
+		}
+	}
+
+	inline void cxndSaveStrs(std::fstream& out, const std::vector<std::string>& strs)
+	{
+		int size = (int)strs.size();
+		cxndSaveT(out, size);
+		for (int i = 0; i < size; ++i)
+			cxndSaveStr(out, strs.at(i));
+	}
 }
 
 #define cxndLoadComplexVectorT(in, vecs) \
