@@ -33,9 +33,9 @@ def getCommonHeaders() -> Dict[str, str]:
     return headers
 
 def downloadParamPack(working_path, build_type) -> None:
-    base_url = 'https://admin-pre.crealitycloud.cn/'
-    if base_url == 'Release':
-        base_url = 'https://api.crealitycloud.cn/'
+    base_url = 'https://api.crealitycloud.cn/'
+    if build_type == 'Alpha':
+        base_url = 'https://admin-pre.crealitycloud.cn/'
     try:
         response = requests.post(
             base_url + "api/cxy/v2/slice/profile/official/printerList", data=json.dumps({"engineVersion": "1.6.0"}), 
