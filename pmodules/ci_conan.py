@@ -20,6 +20,7 @@ class Conan():
     '''
     def __init__(self, cpath, logger, use_external):
         self.system = platform.system()
+        self.arch = platform.architecture()
         self.cmake_path = Path(cpath).resolve()   
         self.xml_file = self.cmake_path.joinpath('conan', 'graph', 'libs.xml')
         self.conan_path = self.cmake_path.joinpath('conan')
@@ -27,7 +28,8 @@ class Conan():
         self.use_external_rep = use_external
         self.logger = logger
         self.creator = ConanCircleCreator(self) 
-                
+        
+        self.logger.info('system {}, arch {}'.format(str(self.system), str(self.arch)))
         self.logger.info('conan context : cmake_path {}, xml_file {}, conan_path {}'.format(str(self.cmake_path), str(self.xml_file), str(self.conan_path)))
         self.whole_libs = self._create_whole_libs()
         self.internal_reps = {}
