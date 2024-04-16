@@ -25,7 +25,6 @@ project
 
 upload = False
 use_external_rep = False
-conan_channel = 'desktop'
 #parse args
 argv = sys.argv[1:]
 try:
@@ -38,7 +37,7 @@ logger.info('args {}'.format(opts))
 
 for opt, arg in opts:
     if opt == '--channel_name':
-        conan_channel = arg 
+        channel_name = arg 
     if opt == '--type':
         recipe_type = arg
     if opt in ("-e"):
