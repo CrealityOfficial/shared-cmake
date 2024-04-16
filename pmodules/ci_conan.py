@@ -400,7 +400,10 @@ class Conan():
         if self.system == 'Linux':
             return 'linux'
         if self.system == 'Darwin':
-            return 'mac'
+            if self.machine == 'arm64':
+                return 'mac-arm64'
+            else:
+                return 'mac'
         return 'win'    
     
     def _write_conan_file(self, conanfile, libs, channel):
