@@ -1,7 +1,7 @@
 #target OpenMP::OpenMP_CXX
 
 macro(__enable_openmp)
-	if(CC_BC_WIN OR CC_BC_MAC)
+	if(CC_BC_WIN)
 		find_package(OpenMP REQUIRED)
 		if(OPENMP_FOUND)
 			message("__enable_opemmp Find OpenMP.")
