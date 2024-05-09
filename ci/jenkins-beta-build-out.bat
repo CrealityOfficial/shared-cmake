@@ -5,6 +5,15 @@ set BUILD_TYPE=%3
 set SIGIN=%4
 set CUSTOM_TYPE=%5
 
+@REM example: VS_PATH=D:\Microsoft Visual Studio\2022\Enterprise in system PATH
+set VSENV="%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
+if not "%VS_PATH%" == "" (
+  if exist %VSENV% (
+    call %VSENV%
+    goto :build
+  ) else (echo "not find vs in" %VSENV%)
+) else (echo "not find vs in" %VSENV%)
+
 set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 if exist %VSENV% (
   call %VSENV%
@@ -39,7 +48,7 @@ call %~dp0\build-vs2019.bat %TAG_NAME% package %BUILD_TYPE% %SIGIN% %APP_NAME% "
 set EXE_NAME=%APP_NAME%-%TAG_NAME%-win64-%BUILD_TYPE%.exe
 cd build
 "C:\curl.exe" -X POST -F file=@%EXE_NAME% http://172.20.180.14:3001/sign
-"C:\curl.exe" -L http://172.20.180.14:3001/exe/%EXE_NAME% -O 
+"C:\curl.exe" -L http://172.20.180.14:3001/exe/%EXE_NAME% -O
  cd ..
 
 echo SIGN_PACKAGE_PATH=%JOB_NAME%> var.prop

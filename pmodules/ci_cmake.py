@@ -35,7 +35,10 @@ class CMake():
             self.project_path.mkdir(parents=True, exist_ok=True)
     
     def _system_cmake_str(self, cmake_args):
-        cmake_str = ' -G "Visual Studio 16 2019" -T host=x64 -A x64 {}'.format(cmake_args)
+        # example: VS_VERSION=Visual Studio 17 2022 in system PATH
+        vs_version = os.environ.get('VS_VERSION', 'Visual Studio 16 2019')
+        cmake_str = ' -G "{}" -T host=x64 -A x64 {}'.format(vs_version, cmake_args)
+
         if self.system == 'Linux':
             cmake_str = ' -G "Ninja" {}'.format(cmake_args)
         if self.system == 'Darwin':

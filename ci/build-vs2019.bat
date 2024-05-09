@@ -66,6 +66,15 @@ echo CUSTOM_TYPE=%CUSTOM_TYPE%
 echo SIGN_PACKAGE=%SIGN_PACKAGE%
 rem Configure the application in the current directory
 
+@REM example: VS_PATH=D:\Microsoft Visual Studio\2022\Enterprise in system PATH
+set VSENV="%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
+if not "%VS_PATH%" == "" (
+  if exist %VSENV% (
+    call %VSENV%
+    goto :build
+  ) else (echo "not find vs in" %VSENV%)
+) else (echo "not find vs in" %VSENV%)
+
 set VSENV="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
 if exist %VSENV% (
   call %VSENV%

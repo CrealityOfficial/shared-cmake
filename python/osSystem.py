@@ -41,14 +41,17 @@ def conan_install(working_path, project_path, channel):
 def win_conan_cmake(working_path, channel):
     project_path = working_path + '/win32-build/build/'
     mkdirs(project_path)
-      
+
     print("[cmake/ci] project path :" + project_path)
     debug_str = ""
     if(Global_Debug == True):
         debug_str = " -DCXX_VLD=ON"
     conan_install(working_path, project_path, channel)
-    cmd = 'cmake -G "Visual Studio 16 2019" -DCMAKE_USE_CONAN=ON -S ' + working_path + ' -B ' + project_path + debug_str + ' -T host=x64 -A x64'
-        
+
+    # example: VS_VERSION=Visual Studio 17 2022 in system PATH
+    vs_version = os.environ.get('VS_VERSION', 'Visual Studio 16 2019')
+    cmd = f'cmake -G "{vs_version}" -DCMAKE_USE_CONAN=ON -S {working_path} -B {project_path}{debug_str} -T host=x64 -A x64'
+
     os.system(cmd)
     return project_path
     
