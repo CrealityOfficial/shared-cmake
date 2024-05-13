@@ -1,7 +1,7 @@
 license: "<GLP>"
 author: "<zenggui> <anoob@sina.cn>"
 url: "<xxxxxx>"
-repository: "http://172.20.180.12:8050/thirdparty/thirdparty/metartc"
+repository: "http://172.20.180.12:8050/yanfa4/thirdparty/metartc"
 external_repository: "https://github.com/CrealityOfficial/metartc"
 description: "<metartc>"
 topics: "<metartc>"
