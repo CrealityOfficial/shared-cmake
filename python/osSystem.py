@@ -104,6 +104,8 @@ def conan_cmake():
     
     work_type = 'win'
     build_type = 'Alpha'
+    engine_type = 'orca'
+    engine_version = '1.6.0'
     app_name = ''
     try:
         opts, args = getopt.getopt(argv, '-d-c-t:-b:-n:')
@@ -147,5 +149,5 @@ def conan_cmake():
     else:
         pass
     if app_name == 'Creality_Print':
-        ParamPackUtil.downloadParamPack(working_path, build_type)
+        ParamPackUtil.downloadParamPack(working_path, build_type, engine_type, engine_version)
     return project_path
