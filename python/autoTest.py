@@ -51,7 +51,28 @@ class AutoTestBench():
                         break
             if(not recursion):
                 break
+         
+    def execute_directory(self, name, directory):
+        files = os.listdir(directory)
+        
+        datas = []
+        for file in files:
+            exe_test = '{}/{} "./{}/{}"'.format(str(self.bin_path), name, directory, file) 
+            ret, value = subprocess.getstatusoutput(exe_test)
             
+            data = {}
+            data['input'] = file
+            data['value'] = value
+            if ret == 0:
+                print(exe_test + " success!")
+            else:
+                data['value'] = "subprocess error! " + data['value']
+                print("subprocess.getstatusoutput error.")        
+            
+            datas.append(data)
+            
+        return datas
+        
     def execute(self, name, tests):
         datas = []
         for test in tests:
@@ -70,6 +91,16 @@ class AutoTestBench():
             datas.append(data)
             
         return datas
+        
+    def clone_source_to(self, url, name):
+        path = Path(name)
+        if path.exists():
+            osSystem.cd(str(path))
+            osSystem.system("git pull")
+        else:
+            osSystem.system("git clone {} {}".format(str(url), name))
+            
+        self.reset_working_directory()
         
     def clone_source(self, url):
         path = Path('data')
