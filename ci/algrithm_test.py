@@ -24,4 +24,4 @@ conan = ci_conan.Conan(cmake.cmake_path, logger, use_external_rep)
 conan.install_from_conandata_file(cmake.project_path, cmake.source_path, update_from_remote, conan_channel)
 
 logger.info("cmake args : {}".format(cmake_args))       
-cmake.test(cmake_args)
+cmake.run_test(cmake_args)

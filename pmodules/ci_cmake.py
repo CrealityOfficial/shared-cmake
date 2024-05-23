@@ -58,14 +58,25 @@ class CMake():
         
         executor.run(cmd, True, self.logger)
         
+    def compile(self):
+        cmd = "make"
+        if self.system == 'Linux':
+            cmd = 'make -j8'
+        if self.system == 'Darwin':
+            cmd = 'make -j8'
+
+        executor.run(cmd, True, self.logger)
+        
+    def test(self):
+        executor.run('make test', True, self.logger)
+        
     #build, compile, test
-    def test(self, cmake_args):
-        cmd = 'cmake -S {} -B {}   -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_USE_CONAN=ON '.format(self.source_path, self.project_path)
-        executor.run(cmd, True, self.logger)
+    def run_test(self, cmake_args):
+        if self.system == "Windows":
+            self.logger.info("system windows not support")
+            return
         
-        cmd = "ninja"
-        executor.run(cmd, True, self.logger)
-        
-        cmd = "make test"
-        executor.run(cmd, True, self.logger)        
+        self.build(cmake_args)
+        self.compile()
+        self.test()
         
