@@ -57,3 +57,15 @@ class CMake():
         cmd = cmake_str + system_str
         
         executor.run(cmd, True, self.logger)
+        
+    #build, compile, test
+    def test(self, cmake_args):
+        cmd = 'cmake -S {} -B {}   -G "Ninja" -DCMAKE_BUILD_TYPE=Release -DCMAKE_USE_CONAN=ON '.format(self.source_path, self.project_path)
+        executor.run(cmd, True, self.logger)
+        
+        cmd = "ninja"
+        executor.run(cmd, True, self.logger)
+        
+        cmd = "make test"
+        executor.run(cmd, True, self.logger)        
+        
