@@ -40,7 +40,7 @@ class CMake():
         cmake_str = ' -G "{}" -T host=x64 -A x64 {}'.format(vs_version, cmake_args)
 
         if self.system == 'Linux':
-            cmake_str = ' -G "Ninja" {}'.format(cmake_args)
+            cmake_str = ' {}'.format(cmake_args)
         if self.system == 'Darwin':
             cmake_str = ' {}'.format(cmake_args)
         return cmake_str
