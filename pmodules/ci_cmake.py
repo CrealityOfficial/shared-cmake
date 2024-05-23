@@ -76,6 +76,9 @@ class CMake():
             self.logger.info("system windows not support")
             return
         
+        import osSystem
+        osSystem.cd(str(self.project_path))
+        
         self.build(cmake_args)
         self.compile()
         self.test()
