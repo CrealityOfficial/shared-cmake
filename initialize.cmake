@@ -29,7 +29,7 @@ endif()
 
 message(STATUS "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
-__build_info_header()
+#__build_info_header()
 include_directories(${CMAKE_BINARY_DIR})
 
 #install
