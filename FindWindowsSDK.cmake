@@ -77,6 +77,7 @@ endmacro()
 # used by the installer.
 set(_winsdk_win10vers
 	10.0.22000.0
+	10.0.20348.0 # temporary fix error: 'winrt/robuffer.h' file not found
 	10.0.19041.0
 	10.0.18362.0 # Win10 1903 "19H1"
 	10.0.17763.0 # Win10 1809 "October 2018 Update"
