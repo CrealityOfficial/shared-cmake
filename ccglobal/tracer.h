@@ -27,9 +27,9 @@ namespace ccglobal
 		virtual void success() = 0;
 		virtual void message(int msg, int ext1, int ext2, bool differentThread) {};
 		virtual void variadicFormatMessage(int msg, ...) {}
-		virtual void recordExtraMessage(const char* keyMsg, const char* valueMsg) {};
+		virtual void recordExtraMessage(const char* keyMsg, const char* valueMsg, size_t objId) {};
 		virtual int extraMessageSize() { return 0; };
-		virtual std::map<std::string, std::string> getExtraRecordMessage() { return std::map<std::string, std::string>(); };
+		virtual std::map< std::string, std::pair<std::string, size_t> > getExtraRecordMessage() { return std::map<std::string, std::pair<std::string, size_t>>(); };
 
 		void formatMessage(const char* format, ...)
 		{
