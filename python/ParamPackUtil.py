@@ -31,7 +31,19 @@ def getCommonHeaders() -> Dict[str, str]:
         "__CXY_TIMEZONE_": str(time.time())
     }
     return headers
-
+def processLocalParamPack(working_path, build_type, engine_type, engine_version) -> None:
+    server_path_prefixes = ["server_0", "server_1"]
+    for server_path_prefix in server_path_prefixes:
+        if sys.platform.startswith('win'):
+            default_path = os.path.join(working_path, "build","resources", "sliceconfig",server_path_prefix)
+        if sys.platform.startswith('linux'):
+            default_path = os.path.join(working_path, "linux-build", "build","resources", "sliceconfig")
+        if sys.platform.startswith('darwin'):
+            default_path = os.path.join(working_path, "mac-build", "build","resources", "sliceconfig")  
+        if os.path.exists(default_path):
+            shutil.rmtree(default_path)
+        shutil.copytree(os.path.join(working_path, "resources", "sliceconfig", server_path_prefix), default_path)    
+        print("use local parampack:"+os.path.join(working_path, "resources", "sliceconfig", server_path_prefix))     
 def downloadParamPack(working_path, build_type, engine_type, engine_version) -> None:
     server_path_prefixes = ["server_0", "server_1"]
     base_urls = ['https://api.crealitycloud.cn/', 'https://api.crealitycloud.com/']

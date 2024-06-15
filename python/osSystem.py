@@ -106,9 +106,10 @@ def conan_cmake():
     build_type = 'Alpha'
     engine_type = 'orca'
     engine_version = '1.6.0'
+    use_local_package = 0
     app_name = ''
     try:
-        opts, args = getopt.getopt(argv, '-d-c-t:-b:-n:')
+        opts, args = getopt.getopt(argv, '-d-c-t:-b:-n:-p:')
         print("getopt.getopt -> :" + str(opts))
     except getopt.GetoptError:
         print("create.py -t <type>")
@@ -126,6 +127,8 @@ def conan_cmake():
             build_type = arg
         if opt in ('-n'):
             app_name = arg
+        if opt in ('-p'):
+            use_local_package = arg
             
     project_path = ''
     if work_type == 'win':
@@ -149,5 +152,8 @@ def conan_cmake():
     else:
         pass
     if app_name == 'Creality_Print':
-        ParamPackUtil.downloadParamPack(working_path, build_type, engine_type, engine_version)
+        if(use_local_package == "0"):
+            ParamPackUtil.downloadParamPack(working_path, build_type, engine_type, engine_version)
+        else:
+            ParamPackUtil.processLocalParamPack(working_path, build_type, engine_type, engine_version)
     return project_path

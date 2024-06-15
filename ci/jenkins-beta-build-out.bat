@@ -5,6 +5,11 @@ set BUILD_TYPE=%3
 set SIGIN=%4
 set CUSTOM_TYPE=%5
 
+if [%6] == [] (
+	set USE_LOCAL_PARAM_PACKAGE=0
+) else (
+	set USE_LOCAL_PARAM_PACKAGE=%6
+)
 @REM example: VS_PATH=D:\Microsoft Visual Studio\2022\Enterprise in system PATH
 set VSENV="%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
 if not "%VS_PATH%" == "" (
@@ -34,7 +39,7 @@ echo "build"
 rem rd /s /q build
 if not exist build md build
 if exist build\CMakeCache.txt del build\CMakeCache.txt
-python cmake\ci\conan-cmake.py -t jwin -b %BUILD_TYPE% -n %APP_NAME%
+python cmake\ci\conan-cmake.py -t jwin -b %BUILD_TYPE% -n %APP_NAME% -p %USE_LOCAL_PARAM_PACKAGE%
 
 git show-ref %TAG_NAME% | awk -F ' ' '{print $1}' >cmmid
 set /p CMMID=<cmmid
