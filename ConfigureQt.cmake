@@ -5,7 +5,7 @@ macro(__enable_qt5)
 		set(CMAKE_AUTOMOC ON)
 		set(CMAKE_AUTORCC ON)
 	
-		find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Multimedia Concurrent OpenGL WebSockets LinguistTools Svg)
+		find_package(Qt5 COMPONENTS Core Widgets Gui Quick Qml Xml QuickWidgets 3DCore 3DRender 3DExtras 3DInput 3DLogic 3DQuick SerialPort Multimedia Concurrent OpenGL WebSockets LinguistTools Svg)
 		
 		if(TARGET Qt5::Core)
 			include(qml)
