@@ -92,6 +92,7 @@ macro(__enable_vld)
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/vld_x64.dll ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/dbghelp.dll ${BIN_OUTPUT_DIR}/Debug/
 			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/Microsoft.DTfW.DHL.manifest ${BIN_OUTPUT_DIR}/Debug/
+			COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/cmake/vld/vld.ini ${BIN_OUTPUT_DIR}/Debug/
 			)
 		set(CXX_VLD_ENABLED "ON")
 	endif()

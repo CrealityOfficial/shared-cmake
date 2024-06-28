@@ -150,14 +150,16 @@ include(Dependency)
 
 #target function
 function(__add_real_target target type)
-	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT;FORCE_DLL" ""
+	cmake_parse_arguments(target "SOURCE_FOLDER;OPENMP;DEPLOYQT;MAC_DEPLOYQT;FORCE_DLL;DISABLE_VLD" ""
 		"SOURCE;INC;LIB;ILIB;DEF;DEP;INTERFACE;FOLDER;PCH;OBJ;QTUI;QTQRC;MAC_ICON;MAC_OUTPUT_NAME;MAC_GUI_IDENTIFIER;QML_PLUGINS;INTERFACE_DEF;GENERATED_SOURCE" ${ARGN})
 	if(target_SOURCE)
 		#target
 		#message(STATUS "target_SOURCE ${target_SOURCE}")
 		set(ExtraSrc)
 		if(CXX_VLD_ENABLED STREQUAL "ON")
-			list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__vld.cpp)
+			if(NOT target_DISABLE_VLD)
+				list(APPEND ExtraSrc ${CMAKE_SOURCE_DIR}/cmake/source/__vld.cpp)
+			endif()
 		endif()
 		
 		
