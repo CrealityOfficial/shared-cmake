@@ -4,11 +4,14 @@ set TAG_NAME=%2
 set BUILD_TYPE=%3
 set SIGIN=%4
 set CUSTOM_TYPE=%5
-
-if [%6] == [] (
+set PACKAGE_TYPE=package
+if [%6] == [1] (
+	set PACKAGE_TYPE=package_zip
+)
+if [%7] == [] (
 	set USE_LOCAL_PARAM_PACKAGE=0
 ) else (
-	set USE_LOCAL_PARAM_PACKAGE=%6
+	set USE_LOCAL_PARAM_PACKAGE=%7
 )
 @REM example: VS_PATH=D:\Microsoft Visual Studio\2022\Enterprise in system PATH
 set VSENV="%VS_PATH%\VC\Auxiliary\Build\vcvars64.bat"
@@ -49,7 +52,7 @@ set /p MAXCMMID=<maxcmmid
 set /p TAGCMMID=<tagcmmid
 set /a TAGNUMB=%MAXCMMID%-%TAGCMMID%
 set TAG_NAME=%TAG_NAME%.%TAGNUMB%
-call %~dp0\build-vs2019.bat %TAG_NAME% package %BUILD_TYPE% %SIGIN% %APP_NAME% %CUSTOM_TYPE% "ON" || exit /b 2
+call %~dp0\build-vs2019.bat %TAG_NAME% %PACKAGE_TYPE% %BUILD_TYPE% %SIGIN% %APP_NAME% %CUSTOM_TYPE% "ON" || exit /b 2
 set EXE_NAME=%APP_NAME%-%TAG_NAME%-win64-%BUILD_TYPE%.exe
 cd build
 "C:\curl.exe" -X POST -F file=@%EXE_NAME% http://172.20.180.14:3001/sign

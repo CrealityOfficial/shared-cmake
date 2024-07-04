@@ -5,9 +5,14 @@ if [%1] == [] (
 	echo "Build and package:build.bat v0.1.0.1 package Alpha 0 Creality_Print"
 	exit /b 0
 )
+if [%2] == [package] (
+	set PACKAGE_TYPE="NSIS"
+) else (
+	set PACKAGE_TYPE="ZIP"
+)
 
 if [%3] == [] (
-	set VERSION_EXTRA="test"
+	set VERSION_EXTRA= "test"
 ) else (
 	set VERSION_EXTRA=%3
 )
@@ -19,7 +24,7 @@ if "%4" == "0" (
 )
 
 if [%5] == [] (
-	set APPNAME="Creality Print"
+	set APPNAME="Creality_Print"
 ) else (
   set APPNAME=%5
 )
@@ -61,6 +66,7 @@ echo MINOR=%MINOR%
 echo PATCH=%PATCH%
 echo BUILD=%BUILD%
 echo VERSION_EXTRA=%VERSION_EXTRA%
+echo PACKAGE_TYPE=%PACKAGE_TYPE%
 echo APPNAME=%APPNAME%
 echo CUSTOM_TYPE=%CUSTOM_TYPE%
 echo SIGN_PACKAGE=%SIGN_PACKAGE%
@@ -103,6 +109,7 @@ cmake ^
   -DPROJECT_VERSION_EXTRA=%VERSION_EXTRA% ^
   -DAPPNAME=%APPNAME% ^
   -DCUSTOM_TYPE=%CUSTOM_TYPE% ^
+  -DPACKAGE_TYPE=%PACKAGE_TYPE% ^
   -DSIGN_PACKAGE=%SIGN_PACKAGE% ^
   -DSIGN_PACKAGE_OUT=%SIGIN_PACKAGE_OUT% ^
   ..\ || exit /b 2
@@ -111,6 +118,10 @@ rem Build and install the application
 
 ninja || exit /b 2
 if "%2"=="package" (
+  ninja install || exit /b 2
+  ninja package || exit /b 2
+)
+else if "%2"=="package_zip" (
   ninja install || exit /b 2
   ninja package || exit /b 2
 )
