@@ -54,11 +54,17 @@ set /a TAGNUMB=%MAXCMMID%-%TAGCMMID%
 set TAG_NAME=%TAG_NAME%.%TAGNUMB%
 call %~dp0\build-vs2019.bat %TAG_NAME% %PACKAGE_TYPE% %BUILD_TYPE% %SIGIN% %APP_NAME% %CUSTOM_TYPE% "ON" || exit /b 2
 set EXE_NAME=%APP_NAME%-%TAG_NAME%-win64-%BUILD_TYPE%.exe
-cd build
-"C:\curl.exe" -X POST -F file=@%EXE_NAME% http://172.20.180.14:3001/sign
-"C:\curl.exe" -L http://172.20.180.14:3001/exe/%EXE_NAME% -O
- cd ..
-
+echo CUR_PACKAGE_TYPE = %PACKAGE_TYPE%
+if [%PACKAGE_TYPE%] == [package_zip] (
+  set EXE_NAME=%APP_NAME%-%TAG_NAME%-win64-%BUILD_TYPE%.zip
+  echo PACKAGE_TYPE2= %PACKAGE_TYPE%
+) else (
+  cd build
+  "C:\curl.exe" -X POST -F file=@%EXE_NAME% http://172.20.180.14:3001/sign
+  "C:\curl.exe" -L http://172.20.180.14:3001/exe/%EXE_NAME% -O
+  cd ..
+)
+echo CUR_EXE_NAME = %EXE_NAME%
 echo SIGN_PACKAGE_PATH=%JOB_NAME%> var.prop
 echo SIGN_PACKAGE_NAME=%EXE_NAME%>> var.prop
 mkdir %JOB_NAME%
