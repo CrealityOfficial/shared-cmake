@@ -56,12 +56,7 @@ call %~dp0\build-vs2019.bat %TAG_NAME% %PACKAGE_CMD% %BUILD_TYPE% %SIGIN% %APP_N
 set EXE_NAME=%APP_NAME%-%TAG_NAME%-win64-%BUILD_TYPE%.exe
 echo PACKAGE_CMD = %PACKAGE_CMD%
 if [%PACKAGE_CMD%] == [package_zip] (
-  for /f "tokens=1-3 delims=/ " %%a in ('date /t') do (
-    set "year=%%c"
-    set "month=%%a"
-    set "day=%%b"
-  )
-  set EXE_NAME=%APP_NAME%-%TAG_NAME%-%month%%day%-win64-%BUILD_TYPE%.zip
+  set EXE_NAME=%APP_NAME%-%TAG_NAME%-win64-%BUILD_TYPE%.zip
   echo CUS_PACKAGE_TYPE= %PACKAGE_CMD%
 ) else (
   cd build
