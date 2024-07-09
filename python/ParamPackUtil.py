@@ -50,10 +50,10 @@ def downloadParamPack(working_path, build_type, engine_type, engine_version) -> 
     base_alpha_urls = ['https://admin-pre.crealitycloud.cn/', 'https://admin-pre.crealitycloud.com/']
     idx = 0
     for server_path_prefix in server_path_prefixes:
-        if build_type == 'Alpha':
-            base_url = base_alpha_urls[idx]
-        else:
+        if build_type == 'Release' or build_type == 'Beta':
             base_url = base_urls[idx]
+        else:
+            base_url = base_alpha_urls[idx]     
         idx+=1
         try:
             response = requests.post(
