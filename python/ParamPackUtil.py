@@ -47,7 +47,7 @@ def processLocalParamPack(working_path, build_type, engine_type, engine_version)
 def downloadParamPack(working_path, build_type, engine_type, engine_version) -> None:
     server_path_prefixes = ["server_0", "server_1"]
     base_urls = ['https://api.crealitycloud.cn/', 'https://api.crealitycloud.com/']
-    base_alpha_urls = ['https://admin-pre.crealitycloud.cn/', 'https://admin-pre.crealitycloud.com/']
+    base_alpha_urls = ['https://admin-pre.crealitycloud.cn/', 'https://admin-pre.crealitycloud.cn/']
     idx = 0
     for server_path_prefix in server_path_prefixes:
         if build_type == 'Release' or build_type == 'Beta':
