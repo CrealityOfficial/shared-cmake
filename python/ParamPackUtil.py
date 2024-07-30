@@ -108,7 +108,7 @@ def downloadParamPack(working_path, build_type, engine_type, engine_version) -> 
             print("get parampack exception" + str(e))            
         try:
             response = requests.post(
-                base_url + "api/cxy/v2/slice/profile/official/materialList", data=json.dumps({"engineVersion": engine_version}), 
+                base_url + "api/cxy/v2/slice/profile/official/materialList", data=json.dumps({"engineVersion": engine_version, "pageSize": 1000}), 
                 headers=getCommonHeaders()).text
             response = json.loads(response)
             if (response["code"] == 0):
