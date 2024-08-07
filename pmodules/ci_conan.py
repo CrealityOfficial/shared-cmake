@@ -84,7 +84,7 @@ class Conan():
         return subs
     
     def _collect_unique_libs(self, libDict, lib, includeSelf=False):
-        self.logger.info('_collect_unique_libs {} from {}'.format(lib, libDict))
+        #self.logger.info('_collect_unique_libs {} from {}'.format(lib, libDict))
         result = []
         if includeSelf == True:
             result.append(lib)
