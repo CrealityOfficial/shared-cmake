@@ -5,4 +5,5 @@ repository: "http://172.20.180.12:8050/yanfa4/third/opencascade"
 external_repository: "https://github.com/CrealityOfficial/opencascade"
 description: "<opencascade>"
 topics: "<opencascade>"
+parallel: False
 
