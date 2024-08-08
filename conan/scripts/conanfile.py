@@ -31,11 +31,11 @@ class MainEntry(ConanFile):
             self.defs = self.conan_data["defs"].split(" ")
         if "cmake_rep" in self.conan_data:
             self.cmake_rep = self.conan_data["cmake_rep"]
-                    
-        print("[conan DEBUG] conan data: ")
-        print(self.conan_data)
-                    
+                                        
     def config_options(self):
+        print("[conan DEBUG] conan data: ")
+        print(self.conan_data)    
+   
         print("[conan DEBUG] config_options.")
         print("[conan DEBUG] conanfile.py init.")
         print("[conan DEBUG] self.recipe_folder: " + self.recipe_folder)

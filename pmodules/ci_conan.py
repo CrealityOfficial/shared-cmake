@@ -609,9 +609,13 @@ class ConanCircleCreator():
     def _conan_commit_id(self, name, version, channel):
         cmd = 'conan inspect --raw conan_data {}/{}@{}'.format(name, version, channel)
         result = executor.run_result(cmd)
+        
+        #self.logger.info('{} ->\n {}'.format(cmd, result))
         if result == '' or not result.startswith('{'):    
             result = '{}'
         conan_datas = eval(result)
+        #self.logger.info('eval result ->\n {}'.format(conan_datas))
+        
         commit_id = ''
         if 'commit_id' in conan_datas:
                 commit_id = conan_datas['commit_id']
